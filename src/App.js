@@ -19,7 +19,6 @@ const NavBar = styled.div`
   gap: 16px;
   background-color: #f0f1f5;
   min-width: 160px;
-  flex-shrink: 0;
 `;
 
 const Section = styled.div`
@@ -56,7 +55,6 @@ const NoticeList = styled.div`
   flex-direction: column;
   border-radius: 8px 8px 0 0;
   background-color: #f0f1f5;
-  flex-grow: 1;
   border-radius: 8px;
   overflow: hidden;
 `;
@@ -101,6 +99,32 @@ const NoticeInfo = styled.span`
   letter-spacing: -1px;
 `;
 
+const SelectedSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const SelectedSectionIcon = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
+const SelectedSectionName = styled.span`
+  color: #3c414c;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -2px;
+`;
+
+const MoveLink = styled.u`
+  color: #a0a0a0;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  cursor: pointer;
+`;
+
 function App() {
   return (
     <div className="App">
@@ -117,28 +141,38 @@ function App() {
         </div>
       </div>
       <div className="App-Content">
-        <NavBar>
-          <Section>
-            <SectionIcon src={noticeFA1Icon} />
-            <SectionName>일반공지</SectionName>
-          </Section>
-          <Section>
-            <SectionIcon src={noticeFA2Icon} />
-            <SectionName>학사공지</SectionName>
-          </Section>
-          <Section>
-            <SectionIcon src={noticeFA35Icon} />
-            <SectionName>창업공지</SectionName>
-          </Section>
-          <Section>
-            <SectionIcon src={noticeSC1Icon} />
-            <SectionName>장학공지</SectionName>
-          </Section>
-          <Section>
-            <SectionIcon src={noticeFA34Icon} />
-            <SectionName>직원채용</SectionName>
-          </Section>
-        </NavBar>
+        <div className="dummy" />
+        <div className="App-Content-Top">
+          <SelectedSection>
+            <SelectedSectionIcon src={noticeFA1Icon} />
+            <SelectedSectionName>일반공지</SelectedSectionName>
+          </SelectedSection>
+          <MoveLink>사이트 이동</MoveLink>
+        </div>
+        <div>
+          <NavBar>
+            <Section>
+              <SectionIcon src={noticeFA1Icon} />
+              <SectionName>일반공지</SectionName>
+            </Section>
+            <Section>
+              <SectionIcon src={noticeFA2Icon} />
+              <SectionName>학사공지</SectionName>
+            </Section>
+            <Section>
+              <SectionIcon src={noticeFA35Icon} />
+              <SectionName>창업공지</SectionName>
+            </Section>
+            <Section>
+              <SectionIcon src={noticeSC1Icon} />
+              <SectionName>장학공지</SectionName>
+            </Section>
+            <Section>
+              <SectionIcon src={noticeFA34Icon} />
+              <SectionName>직원채용</SectionName>
+            </Section>
+          </NavBar>
+        </div>
         <NoticeList>
           <NoticeItem>
             <NoticeTitle>2021학년도 1학기 장학금 신청 안내</NoticeTitle>

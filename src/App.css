@@ -8,14 +8,21 @@
 }
 
 .App-Content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 160px 1fr;
 
     width: 100%;
     max-width: 1080px;
-    margin: 16px auto;
-    gap: 24px;
+    margin: 40px auto 0 auto;
+    gap: 16px 24px;
+}
+
+.App-Content-Top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .App-Topbar {
