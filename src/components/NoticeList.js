@@ -19,13 +19,6 @@ const NoticeList = () => {
       {items.map((item, index) => (
         <NoticeItem key={index} data={item} />
       ))}
-      <NoticeItem>
-        <NoticeTitle>2021학년도 1학기 장학금 신청 안내</NoticeTitle>
-        <NoticeWrapper>
-          <NoticeInfo>2021.03.01</NoticeInfo>
-          <NoticeInfo>학생지원처</NoticeInfo>
-        </NoticeWrapper>
-      </NoticeItem>
     </NoticeListContainer>
   );
 
