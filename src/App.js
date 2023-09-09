@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from './images/logo.svg';
 import foodIcon from './images/food-icon.svg';
@@ -35,7 +36,13 @@ const MoveLink = styled.u`
   cursor: pointer;
 `;
 
-function App() {
+const App = () => {
+  const [selectedSection, setSelectedSection] = useState('FA1');
+
+  const selectSection = (id) => {
+    setSelectedSection(id);
+  };
+
   return (
     <div className="App">
       <div className="App-Topbar">
@@ -60,14 +67,17 @@ function App() {
           <MoveLink>사이트 이동</MoveLink>
         </div>
         <div>
-          <NavBar>
-          </NavBar>
+          <NavBar
+            onSectionClick={selectSection}
+            selectedSection={selectedSection}
+          />
         </div>
-        <NoticeList>
-        </NoticeList>
+        <NoticeList
+          selectedSection={selectedSection}
+        />
       </div>
     </div>
   );
-}
+};
 
 export default App;

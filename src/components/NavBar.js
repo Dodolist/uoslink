@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
 import styled, { css }from 'styled-components';
 import noticeFA1Icon from '../images/notice-FA1-icon.svg';
 import noticeFA2Icon from '../images/notice-FA2-icon.svg';
 import noticeFA35Icon from '../images/notice-FA35-icon.svg';
 import noticeSC1Icon from '../images/notice-SC1-icon.svg';
 import noticeFA34Icon from '../images/notice-FA34-icon.svg';
-
 
 const SectionList = [
   {
@@ -36,13 +34,7 @@ const SectionList = [
 ];
 
 
-const NavBar = () => {
-  const [selectedSection, setSelectedSection] = useState('FA1');
-
-  const changeSection = (id) => {
-    setSelectedSection(id);
-  };
-
+const NavBar = ({onSectionClick, selectedSection}) => {
   return (
     <NavBarContainer>
       {SectionList.map((section) => (
@@ -50,7 +42,7 @@ const NavBar = () => {
           selected={section.id === selectedSection}
           className={section.id === selectedSection ? 'selected' : ''}
           onClick={() => {
-            changeSection(section.id);
+            onSectionClick(section.id);
           }}>
           <SectionIcon src={section.icon} />
           <SectionName selected={

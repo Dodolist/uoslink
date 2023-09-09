@@ -2,18 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const NoticeList = () => {
+const NoticeList = ({selectedSection}) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    axios.get('https://api.adrinerlab.co.kr/articles/FA1')
+    let url = 'https://api.adrinerlab.co.kr/articles/' + selectedSection;
+    axios.get(url)
       .then(response => {
         setItems(response.data);
       })
       .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
-  }, []);
+  }, [selectedSection]);
   return (
     <NoticeListContainer>
       {items.map((item, index) => (
