@@ -7,6 +7,17 @@
     background-color: #e5e6ec;
 }
 
+.App-Content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    width: 100%;
+    max-width: 1080px;
+    margin: 16px auto;
+    gap: 24px;
+}
+
 .App-Topbar {
     display: flex;
     flex-direction: row;
