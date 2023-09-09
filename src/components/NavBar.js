@@ -33,7 +33,6 @@ const SectionList = [
   },
 ];
 
-
 const NavBar = ({onSectionClick, selectedSection}) => {
   return (
     <NavBarContainer>

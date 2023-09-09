@@ -7,6 +7,10 @@ import libraryIcon from './images/library-icon.svg';
 import mapIcon from './images/map-icon.svg';
 import settingIcon from './images/setting-icon.svg';
 import noticeFA1Icon from './images/notice-FA1-icon.svg';
+import noticeFA2Icon from './images/notice-FA2-icon.svg';
+import noticeFA35Icon from './images/notice-FA35-icon.svg';
+import noticeSC1Icon from './images/notice-SC1-icon.svg';
+import noticeFA34Icon from './images/notice-FA34-icon.svg';
 import NavBar from './components/NavBar';
 import NoticeList from './components/NoticeList';
 
@@ -36,11 +40,48 @@ const MoveLink = styled.u`
   cursor: pointer;
 `;
 
+const SectionList = [
+  {
+    id: 'FA1',
+    icon: noticeFA1Icon,
+    name: '일반공지',
+  },
+  {
+    id: 'FA2',
+    icon: noticeFA2Icon,
+    name: '학사공지',
+  },
+  {
+    id: 'FA35',
+    icon: noticeFA35Icon,
+    name: '창업공지',
+  },
+  {
+    id: 'SC1',
+    icon: noticeSC1Icon,
+    name: '장학공지',
+  },
+  {
+    id: 'FA34',
+    icon: noticeFA34Icon,
+    name: '직원채용',
+  },
+];
+
 const App = () => {
   const [selectedSection, setSelectedSection] = useState('FA1');
+  const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
+  const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
 
   const selectSection = (id) => {
     setSelectedSection(id);
+
+    for(let i = 0; i < SectionList.length; i++) {
+      if(SectionList[i].id === id) {
+        setSelectedSectionIcon(SectionList[i].icon);
+        setSelectedSectionName(SectionList[i].name);
+      }
+    }
   };
 
   return (
@@ -61,8 +102,8 @@ const App = () => {
         <div className="dummy" />
         <div className="App-Content-Top">
           <SelectedSection>
-            <SelectedSectionIcon src={noticeFA1Icon} />
-            <SelectedSectionName>일반공지</SelectedSectionName>
+            <SelectedSectionIcon src={selectedSectionIcon} />
+            <SelectedSectionName>{selectedSectionName}</SelectedSectionName>
           </SelectedSection>
           <MoveLink>사이트 이동</MoveLink>
         </div>
