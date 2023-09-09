@@ -32,12 +32,13 @@ const SelectedSectionName = styled.span`
   letter-spacing: -2px;
 `;
 
-const MoveLink = styled.u`
+const MoveLink = styled.a`
   color: #a0a0a0;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -1px;
   cursor: pointer;
+  text-decoration: underline;
 `;
 
 const SectionList = [
@@ -45,6 +46,7 @@ const SectionList = [
     id: 'FA1',
     icon: noticeFA1Icon,
     name: '일반공지',
+    link: 'https://www.uos.ac.kr/korNotice/list.do?list_id=FA1'
   },
   {
     id: 'FA2',
@@ -72,6 +74,7 @@ const App = () => {
   const [selectedSection, setSelectedSection] = useState('FA1');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
+  const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
 
   const selectSection = (id) => {
     setSelectedSection(id);
@@ -80,6 +83,11 @@ const App = () => {
       if(SectionList[i].id === id) {
         setSelectedSectionIcon(SectionList[i].icon);
         setSelectedSectionName(SectionList[i].name);
+        if(id == 'SC1') {
+          setSelectedSectionLink('https://scholarship.uos.ac.kr/scholarship/notice/notice/list.do?brdBbsseq=1');
+        } else {
+          setSelectedSectionLink('https://www.uos.ac.kr/korNotice/list.do?list_id=' + SectionList[i].id);
+        }
       }
     }
   };
@@ -105,7 +113,7 @@ const App = () => {
             <SelectedSectionIcon src={selectedSectionIcon} />
             <SelectedSectionName>{selectedSectionName}</SelectedSectionName>
           </SelectedSection>
-          <MoveLink>사이트 이동</MoveLink>
+          <MoveLink href={selectedSectionLink}>사이트 이동</MoveLink>
         </div>
         <div>
           <NavBar
