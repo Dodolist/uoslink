@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import logo from './images/logo.svg';
 import foodIcon from './images/food-icon.svg';
@@ -13,6 +13,8 @@ import noticeSC1Icon from './images/notice-SC1-icon.svg';
 import noticeFA34Icon from './images/notice-FA34-icon.svg';
 import NavBar from './components/NavBar';
 import NoticeList from './components/NoticeList';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 const SelectedSection = styled.div`
   display: flex;
@@ -39,6 +41,28 @@ const MoveLink = styled.a`
   letter-spacing: -1px;
   cursor: pointer;
   text-decoration: underline;
+`;
+
+const Offline = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 64px;
+  border-radius: 16px;
+  background-color: #ffdb7c;
+`
+
+const OfflineText = styled.span`
+  color: #00000080;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -2px;
 `;
 
 const SectionList = [
@@ -71,6 +95,7 @@ const SectionList = [
 ];
 
 const App = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [selectedSection, setSelectedSection] = useState('FA1');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
@@ -92,6 +117,22 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    // 온라인 및 오프라인 상태 변경 이벤트 핸들러 등록
+    window.addEventListener('online', handleOnlineStatusChange);
+    window.addEventListener('offline', handleOnlineStatusChange);
+
+    return () => {
+      // 컴포넌트 언마운트 시 이벤트 핸들러 제거
+      window.removeEventListener('online', handleOnlineStatusChange);
+      window.removeEventListener('offline', handleOnlineStatusChange);
+    };
+  }, []);
+
+  const handleOnlineStatusChange = () => {
+    setIsOnline(navigator.onLine);
+  };
+
   return (
     <div className="App">
       <div className="App-Topbar">
@@ -106,25 +147,33 @@ const App = () => {
           <img className="icon" src={settingIcon} />
         </div>
       </div>
-      <div className="App-Content">
-        <div className="dummy" />
-        <div className="App-Content-Top">
-          <SelectedSection>
-            <SelectedSectionIcon src={selectedSectionIcon} />
-            <SelectedSectionName>{selectedSectionName}</SelectedSectionName>
-          </SelectedSection>
-          <MoveLink href={selectedSectionLink}>사이트 이동</MoveLink>
-        </div>
-        <div>
-          <NavBar
-            onSectionClick={selectSection}
+      {
+      isOnline ? (
+        <div className="App-Content">
+          <div className="dummy" />
+          <div className="App-Content-Top">
+            <SelectedSection>
+              <SelectedSectionIcon src={selectedSectionIcon} />
+              <SelectedSectionName>{selectedSectionName}</SelectedSectionName>
+            </SelectedSection>
+            <MoveLink href={selectedSectionLink}>사이트 이동</MoveLink>
+          </div>
+          <div>
+            <NavBar
+              onSectionClick={selectSection}
+              selectedSection={selectedSection}
+            />
+          </div>
+          <NoticeList
             selectedSection={selectedSection}
           />
         </div>
-        <NoticeList
-          selectedSection={selectedSection}
-        />
-      </div>
+      ) : (
+        <Offline>
+          <FontAwesomeIcon icon={faTriangleExclamation} size="4x" bounce style={{color: "#ffb800",}} />
+          <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
+        </Offline>
+      )}
     </div>
   );
 };
