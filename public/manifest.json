@@ -3,8 +3,10 @@
     "description": "한 눈에 확인하는 서울시립대",
     "manifest_version": 3,
     "version": "0.1.0",
-    "permissions": ["tabs", "activeTab"],
-    "background": {
-        "service_worker": "background.js"
+    "permissions": [
+        "storage"
+    ],
+    "chrome_url_overrides" : {
+        "newtab": "index.html"
     }
 }
