@@ -9,10 +9,9 @@ const NoticeList = () => {
     axios.get('https://api.adrinerlab.co.kr/articles/FA1')
       .then(response => {
         setItems(response.data);
-        console.log(response.data);
       })
       .catch(error => {
-        console.error('API 요청 중 오류 발생:', error);
+        console.error('API 요청 중 오류 발생:');
       });
   }, []);
   return (
@@ -51,10 +50,16 @@ export default NoticeList;
 const NoticeListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 8px 8px 0 0;
+  height: 75vh;
   background-color: #f0f1f5;
   border-radius: 8px;
-  overflow: hidden;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라 브라우저 */
+  }
 `;
 
 const NoticeItemContainer = styled.a`
