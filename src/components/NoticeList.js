@@ -1,6 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const showNoticeAnimation = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  } 
+`;
 
 const NoticeList = ({selectedSection}) => {
   const [items, setItems] = useState([]);
@@ -18,17 +29,17 @@ const NoticeList = ({selectedSection}) => {
   return (
     <NoticeListContainer>
       {items.map((item, index) => (
-        <NoticeItem key={index} data={item} />
+        <NoticeItem key={index} data={item} index={index} />
       ))}
     </NoticeListContainer>
   );
 
-  function NoticeItem({ data }) {
+  function NoticeItem({ data, index }) {
     if (!data || typeof data !== 'object' || !data.title) {
       return null; // 렌더링하지 않음 또는 오류 처리
     }
     return (
-      <NoticeItemContainer href={data.link}>
+      <NoticeItemContainer href={data.link} style={{animationDelay: `${index * 0.05}s`}}>
         <NoticeTitle>{data.title}</NoticeTitle>
         <NoticeWrapper>
           <NoticeInfo>{data.writtenAt}</NoticeInfo>
@@ -57,6 +68,9 @@ const NoticeListContainer = styled.div`
 `;
 
 const NoticeItemContainer = styled.a`
+  animation: ${showNoticeAnimation} 0.5s ease-in-out forwards;
+  opacity: 0;
+
   transition: all 0.2s;
   display: flex;
   flex-direction: column;
