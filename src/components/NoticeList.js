@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const showNoticeAnimation = keyframes`
@@ -15,19 +15,24 @@ const showNoticeAnimation = keyframes`
 
 const NoticeList = ({selectedSection}) => {
   const [items, setItems] = useState([]);
+  const listRef = useRef(null);
 
   useEffect(() => {
     let url = 'https://api.adrinerlab.co.kr/articles/' + selectedSection;
     axios.get(url)
       .then(response => {
         setItems(response.data);
+        if (listRef.current) {
+          listRef.current.scrollTop = 0;
+        }
       })
       .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
   }, [selectedSection]);
+
   return (
-    <NoticeListContainer>
+    <NoticeListContainer ref={listRef}>
       {items.map((item, index) => (
         <NoticeItem key={index} data={item} index={index} />
       ))}
