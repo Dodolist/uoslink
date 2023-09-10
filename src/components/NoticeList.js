@@ -18,7 +18,9 @@ const NoticeList = ({selectedSection}) => {
   const listRef = useRef(null);
 
   useEffect(() => {
-    let url = 'https://api.adrinerlab.co.kr/articles/' + selectedSection;
+    let url = 'https://www.iflab.run/api/notice/' + selectedSection;
+    setItems([]);
+
     axios.get(url)
       .then(response => {
         setItems(response.data);
@@ -49,6 +51,7 @@ const NoticeList = ({selectedSection}) => {
         <NoticeWrapper>
           <NoticeInfo>{data.writtenAt}</NoticeInfo>
           <NoticeInfo>{data.author}</NoticeInfo>
+          <NoticeInfo>{data.views}회</NoticeInfo>
         </NoticeWrapper>
       </NoticeItemContainer>
     );
@@ -114,5 +117,10 @@ const NoticeInfo = styled.span`
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -1px;
+
+  &:last-child {
+    flex-grow: 1;
+    text-align: right;
+  }
 `;
 
