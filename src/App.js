@@ -12,6 +12,7 @@ import noticeFA35Icon from './images/notice-FA35-icon.svg';
 import noticeSC1Icon from './images/notice-SC1-icon.svg';
 import noticeFA34Icon from './images/notice-FA34-icon.svg';
 import NavBar from './components/NavBar';
+import FoodCard from './components/FoodCard';
 import NoticeList from './components/NoticeList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -141,6 +142,7 @@ const App = () => {
           <span className="title">한 눈에 확인하는 서울시립대</span>
         </div>
         <div className="right-wrap">
+          <FoodCard />
           <img className="icon" src={foodIcon} />
           <img className="icon" src={libraryIcon} />
           <img className="icon" src={mapIcon} />
