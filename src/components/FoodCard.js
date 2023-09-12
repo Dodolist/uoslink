@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import foodIcon from '../images/white-food-icon.svg';
 import closeIcon from '../images/white-close-icon.svg';
@@ -8,7 +9,8 @@ import lunchIcon from '../images/lunch-icon.svg';
 import dinnerIcon from '../images/dinner-icon.svg';
 import clockIcon from '../images/clock-icon.svg';
 
-const FoodCardContainer = styled.div`
+const FoodCardContainer = styled('div')`
+  transition: all 0.5s;
   position: fixed;
   top: 60px;
   right: 80px;
@@ -22,6 +24,11 @@ const FoodCardContainer = styled.div`
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0px 4px 24px 0px #cecece;
+
+  transform: ${(props) => (props.isshow ? 'translateY(0)' : 'translateY(-24px)')};
+  opacity: ${(props) => (props.isshow ? '1' : '0')};
+  user-select: ${(props) => (props.isshow ? 'auto' : 'none')};
+  pointer-events: ${(props) => (props.isshow ? 'auto' : 'none')};
 `
 
 const FoodCardHeader = styled.div`
@@ -196,9 +203,9 @@ const MenuSubPriceText = styled.span`
 `
 
 
-const FoodCard = () => {
+const FoodCard = ({ isShow }) => {
   return (
-    <FoodCardContainer>
+    <FoodCardContainer isshow={undefined ? undefined : isShow}>
       <FoodCardHeader>
         <FoodCardTopBar>
           <CardTopBarLeft>

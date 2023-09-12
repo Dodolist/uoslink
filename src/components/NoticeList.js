@@ -58,7 +58,7 @@ const NoticeList = ({selectedSection}) => {
   }
 };
 
-export default NoticeList;
+export default React.memo(NoticeList);
 
 const NoticeListContainer = styled.div`
   display: flex;

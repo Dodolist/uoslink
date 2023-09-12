@@ -101,6 +101,7 @@ const App = () => {
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
+  const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
 
   const selectSection = (id) => {
     setSelectedSection(id);
@@ -133,6 +134,10 @@ const App = () => {
   const handleOnlineStatusChange = () => {
     setIsOnline(navigator.onLine);
   };
+  
+  const handleOpenCard = () => {
+    setIsOpenedFoodCard(!isOpenedFoodCard);
+  };
 
   return (
     <div className="App">
@@ -142,8 +147,9 @@ const App = () => {
           <span className="title">한 눈에 확인하는 서울시립대</span>
         </div>
         <div className="right-wrap">
-          <FoodCard />
-          <img className="icon" src={foodIcon} />
+          <div>{isOpenedFoodCard}</div>
+          <FoodCard isShow={isOpenedFoodCard} />
+          <img className="icon" onClick={handleOpenCard} src={foodIcon} />
           <img className="icon" src={libraryIcon} />
           <img className="icon" src={mapIcon} />
           <img className="icon" src={settingIcon} />
