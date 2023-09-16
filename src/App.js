@@ -12,7 +12,7 @@ import noticeFA35Icon from './images/notice-FA35-icon.svg';
 import noticeSC1Icon from './images/notice-SC1-icon.svg';
 import noticeFA34Icon from './images/notice-FA34-icon.svg';
 import NavBar from './components/NavBar';
-import FoodCard from './components/FoodCard';
+import FoodCard from './components/FoodCard/index.js';
 import NoticeList from './components/NoticeList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -102,6 +102,8 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
+  const [selectedFoodTime, setSelectedFoodTime] = useState('breakfast');
+  const [selectedFoodPlace, setSelectedFoodPlace] = useState('020');
 
   const selectSection = (id) => {
     setSelectedSection(id);
@@ -148,7 +150,13 @@ const App = () => {
         </div>
         <div className="right-wrap">
           <div>{isOpenedFoodCard}</div>
-          <FoodCard isShow={isOpenedFoodCard} />
+          <FoodCard
+            isShow={isOpenedFoodCard}
+            onFoodTimeClick = {setSelectedFoodTime}
+            onFoodPlaceClick = {setSelectedFoodPlace}
+            selectedFoodTime = {selectedFoodTime}
+            selectedFoodPlace = {selectedFoodPlace}
+          />
           <img className="icon" onClick={handleOpenCard} src={foodIcon} />
           <img className="icon" src={libraryIcon} />
           <img className="icon" src={mapIcon} />
