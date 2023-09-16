@@ -156,112 +156,13 @@ const FoodTimeList = [
   }
 ];
 
-const FoodMenuList = [
-  {
-    id: 'breakfast',
-    wrap: [
-      {
-        time: '08:00 ~ 10:00',
-        corner: [
-          {
-            id: ' ',
-            mainMenu: ['계란볶음밥'],
-            subMenu: ['자장소스', '순두부닭', '김치'],
-            mainPrice: '1,000원'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'lunch',
-    wrap: [
-      {
-        time: '11:00 ~ 14:00',
-        corner: [
-          {
-            id: 'A',
-            mainMenu: ['라면'],
-            mainPrice: '2,000원',
-            subMenu: ['치즈 / 떡 / 만두 / 공기밥'],
-            subPrice: '500원',
-          },
-          {
-            id: 'B',
-            mainMenu: ['덮밥'],
-            mainPrice: '3,800원',
-            subMenu: ['참치마요덮밥', '스팸마요덮밥', '치킨마요덮밥'],
-          },
-          {
-            id: 'C',
-            mainMenu: ['사골떡국', '매콤콩나물불고기'],
-            mainPrice: '3,800원',
-          },
-          {
-            id: 'Self',
-            subMenu: ['장국 / 콩나물무침 / 맛김치']
-          }
-        ]
-      },
-      {
-        time: '11:00 ~ 13:30',
-        corner: [
-          {
-            id: 'E',
-            mainMenu: ['떡볶이'],
-            mainPrice: '5,000원',
-            subMenu: ['치즈', '참치마요', '스팸마요', '치킨마요'],
-          }
-        ],
-      },
-    ],
-  },
-  {
-    id: 'dinner',
-    wrap: [
-      {
-        time: '17:00 ~ 18:30',
-        corner: [
-          {
-            id: 'B',
-            mainMenu: ['덮밥'],
-            mainPrice: '3,800원',
-            subMenu: ['참치마요덮밥', '스팸마요덮밥', '치킨마요덮밥'],
-          },
-          {
-            id: 'C',
-            mainMenu: ['사골떡국', '매콤콩나물불고기'],
-            mainPrice: '3,800원',
-          },
-          {
-            id: 'E',
-            mainMenu: ['떡볶이'],
-            mainPrice: '5,000원',
-            subMenu: ['치즈', '참치마요', '스팸마요', '치킨마요'],
-          },
-          {
-            id: 'Self',
-            subMenu: ['장국 / 콩나물무침 / 맛김치']
-          }
-        ],
-      },
-    ],
-  }
-];
-
 const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick, selectedFoodPlace, handleClose }) => {
   let renderComponent;
-
   const [foodInfo, setFoodInfo] = useState([]);
-  var nowMenu;
-  var nowTime;
-  var nowMainMenu;
-  var nowSubMenu;
-  var nowPrice;
 
   useEffect(() => {
     if (selectedFoodPlace == '030') return;
-    axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/20230915')
+    axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/20230918')
       .then(response => {
         console.log(response.data);
         setFoodInfo(response.data);
@@ -272,17 +173,33 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
   }, [isShow, selectedFoodTime, selectedFoodPlace]);
 
 
-  // 양식당 030
-  if (selectedFoodPlace == '030') {
+  if (selectedFoodPlace == '020') {
     renderComponent = (
       <MenuContainer>
-        <InfoWrapper>
-          <NoMenuCard>
-            <NoMenuIcon src={roadworkIcon} />
-            <NoMenuText>임시 휴업중입니다</NoMenuText>
-            <NoMenuText size={'small'}>9월 중 재개 예정</NoMenuText>
-          </NoMenuCard>
-        </InfoWrapper>
+        {foodInfo[selectedFoodTime] && foodInfo[selectedFoodTime].wrap && foodInfo[selectedFoodTime].wrap.map((food, index) => (
+          <InfoWrapper key={index}>
+            <OpenTime time={food.time} />
+            <MenuCard>
+              {food.corner && food.corner.map((corner, index) => (
+                <CornerWrapper key={index}>
+                  {corner.id != ' ' && <CornerText>{corner.id}</CornerText>}
+                  <MenuWrapper>
+                    <MenuRow>
+                      <MenuName name={corner.main} />
+                      <MenuPrice price={corner.price} />
+                    </MenuRow>
+                    {corner.sub && corner.sub.split(" ").map(item => (
+                      <MenuRow key={item}>
+                          <MenuName name={item} type={'sub'} />
+                          {corner.subprice ? <MenuPrice price={corner.subprice} type={'sub'} /> : null}
+                      </MenuRow>
+                    ))}
+                  </MenuWrapper>
+                </CornerWrapper>
+              ))}
+            </MenuCard>
+          </InfoWrapper>
+        ))}
       </MenuContainer>
     );
   }
@@ -299,7 +216,7 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
                   <MenuName name={food.main} />
                   <MenuPrice price={food.price} />
                 </MenuRow>
-                {food.sub.split(" ").map(item => (
+                {food.sub && food.sub.split(" ").map(item => (
                   <MenuRow key={item}>
                       <MenuName name={item} type={'sub'} />
                   </MenuRow>
@@ -318,102 +235,21 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
       )}
       </MenuContainer>
     );
-  } else {
+  }
+  // 양식당 030
+  else {
     renderComponent = (
       <MenuContainer>
         <InfoWrapper>
-          <OpenTime time={'11:00 ~ 14:00'} />
-          <MenuCard>
-            <CornerWrapper>
-              <CornerText>A</CornerText>
-              <MenuWrapper>
-                <MenuRow>
-                  <MenuName name={'라면'} />
-                  <MenuPrice price={'2,000원'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'치즈, 떡, 만두, 공기밥'} type={'sub'} />
-                  <MenuPrice price={'+ 500원'} type={'sub'} />
-                </MenuRow>
-              </MenuWrapper>
-            </CornerWrapper>
-            <CornerWrapper>
-              <CornerText>B</CornerText>
-              <MenuWrapper>
-                <MenuRow>
-                  <MenuName name={'덮밥'} />
-                  <MenuPrice price={'3,800원'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'참치마요덮밥'} type={'sub'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'스팸마요덮밥'} type={'sub'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'치킨마요덮밥'} type={'sub'} />
-                </MenuRow>
-              </MenuWrapper>
-            </CornerWrapper>
-            <CornerWrapper>
-              <CornerText>C</CornerText>
-              <MenuWrapper>
-                <MenuRow>
-                  <MenuName name={'사골떡국'} />
-                  <MenuPrice price={'3,800원'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'매콤콩나물불고기'} />
-                  <MenuPrice price={'3,800원'} />
-                </MenuRow>
-              </MenuWrapper>
-            </CornerWrapper>
-            <CornerWrapper>
-              <CornerText>Self</CornerText>
-              <MenuWrapper>
-                <MenuRow>
-                  <MenuName name={'장국, 콩나물무침, 맛김치'} type={'sub'} />
-                </MenuRow>
-              </MenuWrapper>
-            </CornerWrapper>
-          </MenuCard>
-        </InfoWrapper>
-        <InfoWrapper>
-          <OpenTime time={'11:00 ~ 13:30'} />
-          <MenuCard>
-            <CornerWrapper>
-              <CornerText>E</CornerText>
-              <MenuWrapper>
-                <MenuRow>
-                  <MenuName name={'참치김치찌개'} />
-                  <MenuPrice price={'5,000원'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'새우볼튀김'} type={'sub'} />
-                </MenuRow>
-                <MenuRow>
-                  <MenuName name={'숙주오이무침'} type={'sub'} />
-                </MenuRow>
-              </MenuWrapper>
-            </CornerWrapper>
-          </MenuCard>
+          <NoMenuCard>
+            <NoMenuIcon src={roadworkIcon} />
+            <NoMenuText>임시 휴업중입니다</NoMenuText>
+            <NoMenuText size={'small'}>9월 중 재개 예정</NoMenuText>
+          </NoMenuCard>
         </InfoWrapper>
       </MenuContainer>
     );
   }
-
-  /*
-  useEffect(() => {
-    let url = 'https://www.iflab.run/api/food';
-    axios.get(url)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('API 요청 중 오류 발생:');
-      });
-  }, []);
-  */
   return (
     <FoodCardContainer isshow={undefined ? undefined : isShow}>
       <FoodCardHeader>
