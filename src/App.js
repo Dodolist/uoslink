@@ -147,6 +147,10 @@ const App = () => {
       setIsOpenedFoodCard(!isOpenedFoodCard);
     }
   };
+  
+  const closeFoodCard = () => {
+    setIsOpenedFoodCard(false);
+  };
 
   return (
     <div className="App">
@@ -163,6 +167,7 @@ const App = () => {
               onFoodPlaceClick = {setSelectedFoodPlace}
               selectedFoodTime = {selectedFoodTime}
               selectedFoodPlace = {selectedFoodPlace}
+              handleClose = {closeFoodCard}
             />
             <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
           </CardWrapper>

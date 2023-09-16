@@ -25,14 +25,14 @@ const CardTitle = styled.span`
   letter-spacing: -0.5px;
 `
 
-const TopBar = () => {
+const TopBar = ({handleClose}) => {
   return (
     <FoodCardTopBar>
       <CardTopBarLeft>
         <img src={foodIcon} />
         <CardTitle>학식</CardTitle>
       </CardTopBarLeft>
-      <img className="icon" src={closeIcon} />
+      <img className="icon" src={closeIcon} onClick={handleClose} />
     </FoodCardTopBar>
   );
 };

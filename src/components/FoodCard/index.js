@@ -225,7 +225,7 @@ const FoodMenuList = [
   }
 ];
 
-const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick, selectedFoodPlace }) => {
+const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick, selectedFoodPlace, handleClose }) => {
   /*
   useEffect(() => {
     let url = 'https://www.iflab.run/api/food';
@@ -241,7 +241,7 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
   return (
     <FoodCardContainer isshow={undefined ? undefined : isShow}>
       <FoodCardHeader>
-        <TopBar />
+        <TopBar handleClose={handleClose} />
         <Wrapper>
           <DateInputBox />
           {FoodTimeList.map((time) => (
