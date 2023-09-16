@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import logo from './images/logo.svg';
 import foodIcon from './images/food-icon.svg';
-import libraryIcon from './images/library-icon.svg';
-import mapIcon from './images/map-icon.svg';
+//import libraryIcon from './images/library-icon.svg';
+//import mapIcon from './images/map-icon.svg';
 import settingIcon from './images/setting-icon.svg';
 import noticeFA1Icon from './images/notice-FA1-icon.svg';
 import noticeFA2Icon from './images/notice-FA2-icon.svg';
@@ -137,8 +137,10 @@ const App = () => {
     setIsOnline(navigator.onLine);
   };
   
-  const handleOpenCard = () => {
-    setIsOpenedFoodCard(!isOpenedFoodCard);
+  const handleOpenCard = (card) => () => {
+    if(card === 'food') {
+      setIsOpenedFoodCard(!isOpenedFoodCard);
+    }
   };
 
   return (
@@ -157,9 +159,7 @@ const App = () => {
             selectedFoodTime = {selectedFoodTime}
             selectedFoodPlace = {selectedFoodPlace}
           />
-          <img className="icon" onClick={handleOpenCard} src={foodIcon} />
-          <img className="icon" src={libraryIcon} />
-          <img className="icon" src={mapIcon} />
+          <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
           <img className="icon" src={settingIcon} />
         </div>
       </div>
