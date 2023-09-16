@@ -148,7 +148,7 @@ const App = () => {
       <div className="App-Topbar">
         <div className="left-wrap">
           <img className="logo" src={logo} alt="logo" />
-          <span className="title">한 눈에 확인하는 서울시립대</span>
+          <span className="title">시대링크</span>
         </div>
         <div className="right-wrap">
           <div>{isOpenedFoodCard}</div>
