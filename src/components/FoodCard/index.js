@@ -14,9 +14,10 @@ import MenuName from './MenuName.js';
 
 const FoodCardContainer = styled('div')`
   transition: all 0.5s;
-  position: fixed;
-  top: 60px;
-  right: 80px;
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  width: max-content;
 
   display: flex;
   flex-direction: column;

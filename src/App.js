@@ -35,6 +35,11 @@ const SelectedSectionName = styled.span`
   letter-spacing: -2px;
 `;
 
+const CardWrapper = styled.div`
+  position: relative;
+  display: flex;
+`
+
 const MoveLink = styled.a`
   color: #a0a0a0;
   font-size: 12px;
@@ -151,15 +156,16 @@ const App = () => {
           <span className="title">시대링크</span>
         </div>
         <div className="right-wrap">
-          <div>{isOpenedFoodCard}</div>
-          <FoodCard
-            isShow={isOpenedFoodCard}
-            onFoodTimeClick = {setSelectedFoodTime}
-            onFoodPlaceClick = {setSelectedFoodPlace}
-            selectedFoodTime = {selectedFoodTime}
-            selectedFoodPlace = {selectedFoodPlace}
-          />
-          <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
+          <CardWrapper>
+            <FoodCard
+              isShow={isOpenedFoodCard}
+              onFoodTimeClick = {setSelectedFoodTime}
+              onFoodPlaceClick = {setSelectedFoodPlace}
+              selectedFoodTime = {selectedFoodTime}
+              selectedFoodPlace = {selectedFoodPlace}
+            />
+            <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
+          </CardWrapper>
           <img className="icon" src={settingIcon} />
         </div>
       </div>
