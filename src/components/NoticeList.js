@@ -32,6 +32,9 @@ const NoticeList = ({selectedSection}) => {
 
 
   useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTop = 0;
+    }
     if(sessionStorage.getItem(selectedSection) != null) {
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
     } else {
@@ -40,10 +43,7 @@ const NoticeList = ({selectedSection}) => {
       axios.get(url)
         .then(response => {
           setItems(response.data);
-          if (listRef.current) {
-            listRef.current.scrollTop = 0;
-            sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
-          }
+          sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
         })
         .catch(error => {
           console.error('API 요청 중 오류 발생:');
