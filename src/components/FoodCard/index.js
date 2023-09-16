@@ -225,6 +225,7 @@ const FoodMenuList = [
 ];
 
 const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick, selectedFoodPlace }) => {
+  /*
   useEffect(() => {
     let url = 'https://www.iflab.run/api/food';
     axios.get(url)
@@ -235,6 +236,7 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
         console.error('API 요청 중 오류 발생:');
       });
   }, []);
+  */
   return (
     <FoodCardContainer isshow={undefined ? undefined : isShow}>
       <FoodCardHeader>
