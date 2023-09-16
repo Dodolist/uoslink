@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled, { css } from 'styled-components';
 import breakfastIcon from '../../images/breakfast-icon.svg';
 import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
+import roadworkIcon from '../../images/roadwork-icon.svg';
+import noMenuIcon from '../../images/no-menu-icon.svg';
 
 import TopBar from './TopBar.js';
 import DateInputBox from './DateInputBox.js';
@@ -70,6 +72,28 @@ const MenuCard = styled.div`
   gap: 24px;
 `
 
+const NoMenuCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 12px;
+  background-color: #f6f7fb;
+  border-radius: 8px;
+`
+
+const NoMenuIcon = styled.img`
+  width: 72px;
+  height: 72px;
+`
+
+const NoMenuText = styled.span`
+  color: #cecece;
+  font-size: ${(props) => (props.size == 'small' ? '14px' : '16px')};
+  font-weight: bold;
+  letter-spacing: -0.5px;
+`
+
 const CornerWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -116,17 +140,17 @@ const TimeIcon = styled.img`
 
 const FoodTimeList = [
   {
-    id: 'breakfast',
+    id: '0',
     icon: breakfastIcon,
     name: '아침'
   },
   {
-    id: 'lunch',
+    id: '1',
     icon: lunchIcon,
     name: '점심'
   },
   {
-    id: 'dinner',
+    id: '2',
     icon: dinnerIcon,
     name: '저녁'
   }
@@ -226,39 +250,76 @@ const FoodMenuList = [
 ];
 
 const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick, selectedFoodPlace, handleClose }) => {
-  /*
+  let renderComponent;
+
+  const [foodInfo, setFoodInfo] = useState([]);
+  var nowMenu;
+  var nowTime;
+  var nowMainMenu;
+  var nowSubMenu;
+  var nowPrice;
+
   useEffect(() => {
-    let url = 'https://www.iflab.run/api/food';
-    axios.get(url)
+    if (selectedFoodPlace == '030') return;
+    axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/20230915')
       .then(response => {
         console.log(response.data);
+        setFoodInfo(response.data);
       })
       .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
-  }, []);
-  */
-  return (
-    <FoodCardContainer isshow={undefined ? undefined : isShow}>
-      <FoodCardHeader>
-        <TopBar handleClose={handleClose} />
-        <Wrapper>
-          <DateInputBox />
-          {FoodTimeList.map((time) => (
-            <TimeIcon
-              key={time.id}
-              className="icon time"
-              src={time.icon}
-              selected={selectedFoodTime === time.id}
-              onClick={() => onFoodTimeClick(time.id)}
-            />
-          ))}
-        </Wrapper>
-        <PlaceList
-          selectedFoodPlace={selectedFoodPlace}
-          onFoodPlaceClick={onFoodPlaceClick}
-        />
-      </FoodCardHeader>
+  }, [isShow, selectedFoodTime, selectedFoodPlace]);
+
+
+  // 양식당 030
+  if (selectedFoodPlace == '030') {
+    renderComponent = (
+      <MenuContainer>
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={roadworkIcon} />
+            <NoMenuText>임시 휴업중입니다</NoMenuText>
+            <NoMenuText size={'small'}>9월 중 재개 예정</NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      </MenuContainer>
+    );
+  }
+  // 자연과학관 040, 본관8층 010
+  else if (selectedFoodPlace == '040' || selectedFoodPlace == '010') {
+    renderComponent = (
+      <MenuContainer>
+        {foodInfo[selectedFoodTime] && foodInfo[selectedFoodTime].wrap && foodInfo[selectedFoodTime].wrap.length > 0 ? (foodInfo[selectedFoodTime].wrap.map((food, index) => (
+        <InfoWrapper key={index}>
+            <OpenTime time={food.time} />
+            <MenuCard>
+              <MenuWrapper>
+                <MenuRow>
+                  <MenuName name={food.main} />
+                  <MenuPrice price={food.price} />
+                </MenuRow>
+                {food.sub.split(" ").map(item => (
+                  <MenuRow key={item}>
+                      <MenuName name={item} type={'sub'} />
+                  </MenuRow>
+                ))}
+              </MenuWrapper>
+            </MenuCard>
+        </InfoWrapper>
+        ))
+      ) : (
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={noMenuIcon} />
+            <NoMenuText> 아침에는 학식을 운영하지 않아요! </NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      )}
+      </MenuContainer>
+    );
+  } else {
+    renderComponent = (
       <MenuContainer>
         <InfoWrapper>
           <OpenTime time={'11:00 ~ 14:00'} />
@@ -338,6 +399,43 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
           </MenuCard>
         </InfoWrapper>
       </MenuContainer>
+    );
+  }
+
+  /*
+  useEffect(() => {
+    let url = 'https://www.iflab.run/api/food';
+    axios.get(url)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('API 요청 중 오류 발생:');
+      });
+  }, []);
+  */
+  return (
+    <FoodCardContainer isshow={undefined ? undefined : isShow}>
+      <FoodCardHeader>
+        <TopBar handleClose={handleClose} />
+        <Wrapper>
+          <DateInputBox />
+          {FoodTimeList.map((time) => (
+            <TimeIcon
+              key={time.id}
+              className="icon time"
+              src={time.icon}
+              selected={selectedFoodTime === time.id}
+              onClick={() => onFoodTimeClick(time.id)}
+            />
+          ))}
+        </Wrapper>
+        <PlaceList
+          selectedFoodPlace={selectedFoodPlace}
+          onFoodPlaceClick={onFoodPlaceClick}
+        />
+      </FoodCardHeader>
+      {renderComponent}
     </FoodCardContainer>
   );
 };

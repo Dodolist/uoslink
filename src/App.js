@@ -107,7 +107,7 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
-  const [selectedFoodTime, setSelectedFoodTime] = useState('breakfast');
+  const [selectedFoodTime, setSelectedFoodTime] = useState('0');
   const [selectedFoodPlace, setSelectedFoodPlace] = useState('020');
 
   const selectSection = (id) => {
