@@ -5,7 +5,7 @@ import logo from './images/logo.svg';
 import foodIcon from './images/food-icon.svg';
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
-import settingIcon from './images/setting-icon.svg';
+//import settingIcon from './images/setting-icon.svg';
 import noticeFA1Icon from './images/notice-FA1-icon.svg';
 import noticeFA2Icon from './images/notice-FA2-icon.svg';
 import noticeFA35Icon from './images/notice-FA35-icon.svg';
@@ -107,8 +107,6 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
-  const [selectedFoodTime, setSelectedFoodTime] = useState('0');
-  const [selectedFoodPlace, setSelectedFoodPlace] = useState('020');
 
   const selectSection = (id) => {
     setSelectedSection(id);
@@ -163,15 +161,10 @@ const App = () => {
           <CardWrapper>
             <FoodCard
               isShow={isOpenedFoodCard}
-              onFoodTimeClick = {setSelectedFoodTime}
-              onFoodPlaceClick = {setSelectedFoodPlace}
-              selectedFoodTime = {selectedFoodTime}
-              selectedFoodPlace = {selectedFoodPlace}
               handleClose = {closeFoodCard}
             />
             <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
           </CardWrapper>
-          <img className="icon" src={settingIcon} />
         </div>
       </div>
       {

@@ -156,13 +156,49 @@ const FoodTimeList = [
   }
 ];
 
-const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick, selectedFoodPlace, handleClose }) => {
+const FoodCard = ({ isShow, handleClose }) => {
+  let date = new Date();
+  let year = (date.getFullYear()).toString();
+  let month = (date.getMonth() + 1).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+  let today = year + month + day;
+
   let renderComponent;
+  const [dayOfWeek, setDayOfWeek] = useState(date.getDay());
   const [foodInfo, setFoodInfo] = useState([]);
+  const [selectedFoodDate, setSelectedFoodDate] = useState(today);
+  const [selectedFoodTime, setSelectedFoodTime] = useState('0');
+  const [selectedFoodPlace, setSelectedFoodPlace] = useState('020');
+
+  const changePrevDate = () => {
+    let date = new Date(selectedFoodDate.substring(0, 4), selectedFoodDate.substring(4, 6) - 1, selectedFoodDate.substring(6, 8));
+    date.setDate(date.getDate() - 1);
+    let year = (date.getFullYear()).toString();
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+    let prevDate = year + month + day;
+    setDayOfWeek(date.getDay());
+    setSelectedFoodDate(prevDate);
+  };
+
+  const changeNextDate = () => {
+    console.log(selectedFoodDate);
+    let date = new Date(selectedFoodDate.substring(0, 4), selectedFoodDate.substring(4, 6) - 1, selectedFoodDate.substring(6, 8));
+    date.setDate(date.getDate() + 1);
+    let year = (date.getFullYear()).toString();
+    let month = (date.getMonth() + 1).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+    let nextDate = year + month + day;
+    setDayOfWeek(date.getDay());
+    setSelectedFoodDate(nextDate);
+  };
 
   useEffect(() => {
-    if (selectedFoodPlace == '030') return;
-    axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/20230918')
+    if (dayOfWeek == 0 || dayOfWeek == 6) {
+      return;
+    }
+    else if (selectedFoodPlace == '030') return;
+    axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/' + selectedFoodDate)
       .then(response => {
         console.log(response.data);
         setFoodInfo(response.data);
@@ -170,10 +206,21 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
       .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
-  }, [isShow, selectedFoodTime, selectedFoodPlace]);
+  }, [isShow, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
-
-  if (selectedFoodPlace == '020') {
+  if (dayOfWeek == 0 || dayOfWeek == 6) {
+    renderComponent = (
+      <MenuContainer>
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={noMenuIcon} />
+            <NoMenuText> 주말에는 학식을 운영하지 않아요! </NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      </MenuContainer>
+    );
+  }
+  else if (selectedFoodPlace == '020') {
     renderComponent = (
       <MenuContainer>
         {foodInfo[selectedFoodTime] && foodInfo[selectedFoodTime].wrap && foodInfo[selectedFoodTime].wrap.map((food, index) => (
@@ -255,20 +302,24 @@ const FoodCard = ({ isShow, onFoodTimeClick, selectedFoodTime, onFoodPlaceClick,
       <FoodCardHeader>
         <TopBar handleClose={handleClose} />
         <Wrapper>
-          <DateInputBox />
+          <DateInputBox
+            selectedFoodDate={selectedFoodDate}
+            changePrevDate={changePrevDate}
+            changeNextDate={changeNextDate}
+          />
           {FoodTimeList.map((time) => (
             <TimeIcon
               key={time.id}
               className="icon time"
               src={time.icon}
               selected={selectedFoodTime === time.id}
-              onClick={() => onFoodTimeClick(time.id)}
+              onClick={() => setSelectedFoodTime(time.id)}
             />
           ))}
         </Wrapper>
         <PlaceList
           selectedFoodPlace={selectedFoodPlace}
-          onFoodPlaceClick={onFoodPlaceClick}
+          onFoodPlaceClick={setSelectedFoodPlace}
         />
       </FoodCardHeader>
       {renderComponent}
