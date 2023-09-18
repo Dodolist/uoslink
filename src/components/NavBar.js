@@ -61,7 +61,7 @@ const NavBarContainer = styled.div`
   padding: 16px 12px;
   border-radius: 8px;
   gap: 16px;
-  background-color: #f0f1f5;
+  background-color: ${props => props.theme.foreground};
   min-width: 160px;
 `;
 
@@ -70,7 +70,6 @@ const Section = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 4px;
-
   cursor: pointer;
 `;
 
@@ -80,8 +79,8 @@ const SectionIcon = styled.img`
 `;
 
 const SectionName = styled.span`
-  transition: all 0.2s ease-in-out;
-  color: #5c5e66;
+  transition: all 0.3s;
+  color: ${props => props.theme.contentText};
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -2px;

@@ -26,14 +26,14 @@ const PlaceWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.mode === 'light' ?  '#ffffff' : '#1d2128' } ;
   border-radius: 8px;
   width: 100%;
 `
 
 const PlaceText = styled.span`
-  transition: 0.2s;
-  color: #606060;
+  transition: all 0.3s;
+  color: ${(props) => props.theme.contentText};
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;

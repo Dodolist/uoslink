@@ -94,7 +94,7 @@ const NoticeListContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 75vh;
-  background-color: #f0f1f5;
+  background-color: ${props => props.theme.foreground};
   border-radius: 8px;
   overflow-y: scroll;
 
@@ -110,11 +110,11 @@ const NoticeItemContainer = styled.a`
   animation: ${showNoticeAnimation} 0.5s ease-in-out forwards;
   opacity: 0;
 
-  transition: all 0.2s;
+  transition: all 0.3s;
   display: flex;
   flex-direction: column;
 
-  background-color: #f0f1f5;
+  background-color: ${props => props.theme.foreground};
   padding: 16px 20px;
   border-bottom: 1px solid #00000010;
   gap: 4px;
@@ -141,7 +141,7 @@ const NoticeItemContainer = styled.a`
 `;
 
 const NoticeTitle = styled.span`
-  color: #5c5e66;
+  color: ${props => props.theme.contentText};
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -2px;
@@ -154,7 +154,7 @@ const NoticeWrapper = styled.div`
 `;
 
 const NoticeInfo = styled.span`
-  color: #5c5e66;
+  color: ${props => props.theme.contentText};
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -1px;

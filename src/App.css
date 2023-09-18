@@ -4,65 +4,7 @@
 
     align-items: stretch;
     height: 100vh;
-    background-color: #e5e6ec;
     overflow: hidden;
-}
-
-.App-Content {
-    display: grid;
-    grid-template-rows: 40px 1fr;
-    grid-template-columns: 160px 1fr;
-
-    width: 100%;
-    max-width: 1080px;
-    margin: 40px auto 0 auto;
-    gap: 16px 24px;
-}
-
-.App-Content-Top {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.App-Topbar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-    max-width: 1080px;
-    padding: 16px;
-    margin: 0 auto;
-    border-radius: 0 0 8px 8px;
-    background-color: #f0f1f5;
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.05);
-}
-
-.left-wrap {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px;
-}
-
-.title {
-    color: #a9adb9;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: -1px;
-}
-
-.right-wrap {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-
-    gap: 12px;
 }
 
 .icon {

@@ -1,47 +1,42 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider, ThemeContext } from 'styled-components';
 import logo from './images/logo.svg';
-import foodIcon from './images/food-icon.svg';
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
-//import settingIcon from './images/setting-icon.svg';
 import noticeFA1Icon from './images/notice-FA1-icon.svg';
 import noticeFA2Icon from './images/notice-FA2-icon.svg';
 import noticeFA35Icon from './images/notice-FA35-icon.svg';
 import noticeSC1Icon from './images/notice-SC1-icon.svg';
 import noticeFA34Icon from './images/notice-FA34-icon.svg';
+import TopBar from './components/TopBar';
 import NavBar from './components/NavBar';
-import FoodCard from './components/FoodCard/index.js';
+import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
+import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-const SelectedSection = styled.div`
+const ContentContainer = styled.div`
+  display: grid;
+  grid-template-rows: 40px 1fr;
+  grid-template-columns: 160px 1fr;
+
+  width: 100%;
+  max-width: 1080px;
+  margin: 40px auto 0 auto;
+  gap: 16px 24px;
+`;
+
+const ContentTop = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 `;
-
-const SelectedSectionIcon = styled.img`
-  width: 40px;
-  height: 40px;
-`;
-
-const SelectedSectionName = styled.span`
-  color: #3c414c;
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: -2px;
-`;
-
-const CardWrapper = styled.div`
-  position: relative;
-  display: flex;
-`
 
 const MoveLink = styled.a`
-  color: #a0a0a0;
+  color: ${(props) => props.theme.subText};
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -1px;
@@ -101,12 +96,36 @@ const SectionList = [
 ];
 
 const App = () => {
+  const [theme, setTheme] = useState('light'); // 초기 테마 설정
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [selectedSection, setSelectedSection] = useState('FA1');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
-  const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
+  const themeObject = {
+    light: {
+      mode: 'light',
+      background: '#e5e6ec',
+      foreground: '#f0f1f5',
+      titleText: '#3c414c',
+      contentText: '#5c5e66',
+      subText: '#a9adb9',
+      primary: '#408cff',
+      secondary: '#98bffa',
+      boxShadow: '0 4px 24px 0 #cecece',
+    },
+    dark: {
+      mode: 'dark',
+      background: '#1d2128',
+      foreground: '#2c3038',
+      titleText: '#a0a4b3',
+      contentText: '#b4b7c4',
+      subText: '#5d616f',
+      primary: '#408cff',
+      secondary: '#98bffa',
+      boxShadow: '0 4px 24px 0 #3c414c',
+    }
+  };
 
   const selectSection = (id) => {
     setSelectedSection(id);
@@ -140,61 +159,48 @@ const App = () => {
     setIsOnline(navigator.onLine);
   };
   
-  const handleOpenCard = (card) => () => {
-    if(card === 'food') {
-      setIsOpenedFoodCard(!isOpenedFoodCard);
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
     }
-  };
-  
-  const closeFoodCard = () => {
-    setIsOpenedFoodCard(false);
   };
 
   return (
-    <div className="App">
-      <div className="App-Topbar">
-        <div className="left-wrap">
-          <img className="logo" src={logo} alt="logo" />
-          <span className="title">시대링크</span>
-        </div>
-        <div className="right-wrap">
-          <CardWrapper>
-            <FoodCard
-              isShow={isOpenedFoodCard}
-              handleClose = {closeFoodCard}
-            />
-            <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
-          </CardWrapper>
-        </div>
-      </div>
-      {
-      isOnline ? (
-        <div className="App-Content">
-          <div className="dummy" />
-          <div className="App-Content-Top">
-            <SelectedSection>
-              <SelectedSectionIcon src={selectedSectionIcon} />
-              <SelectedSectionName>{selectedSectionName}</SelectedSectionName>
-            </SelectedSection>
-            <MoveLink href={selectedSectionLink}>사이트 이동</MoveLink>
-          </div>
-          <div>
-            <NavBar
-              onSectionClick={selectSection}
+    <ThemeProvider theme={themeObject[theme]}>
+      <div className="App">
+        <GroundBackground />
+        <TopBar toggleTheme={toggleTheme} />
+        {
+        isOnline ? (
+          <ContentContainer>
+            <div className="dummy" />
+            <ContentTop>
+              <SelectedSection
+                selectedSectionIcon={selectedSectionIcon}
+                selectedSectionName={selectedSectionName}
+              />
+              <MoveLink href={selectedSectionLink}>사이트 이동</MoveLink>
+            </ContentTop>
+            <div>
+              <NavBar
+                onSectionClick={selectSection}
+                selectedSection={selectedSection}
+              />
+            </div>
+            <NoticeList
               selectedSection={selectedSection}
             />
-          </div>
-          <NoticeList
-            selectedSection={selectedSection}
-          />
-        </div>
-      ) : (
-        <Offline>
-          <FontAwesomeIcon icon={faTriangleExclamation} size="4x" bounce style={{color: "#ffb800",}} />
-          <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
-        </Offline>
-      )}
-    </div>
+          </ContentContainer>
+        ) : (
+          <Offline>
+            <FontAwesomeIcon icon={faTriangleExclamation} size="4x" bounce style={{color: "#ffb800",}} />
+            <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
+          </Offline>
+        )}
+      </div>
+    </ThemeProvider>
   );
 };
 

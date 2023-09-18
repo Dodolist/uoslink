@@ -15,7 +15,7 @@ import MenuPrice from './MenuPrice.js';
 import MenuName from './MenuName.js';
 
 const FoodCardContainer = styled('div')`
-  transition: all 0.5s;
+  transition: all 0.3s;
   position: absolute;
   top: 40px;
   right: 0px;
@@ -23,13 +23,13 @@ const FoodCardContainer = styled('div')`
 
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme.mode === 'light' ?  '#ffffff' : '#1d2128' } ;
 
   z-index: 100;
   
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0px 4px 24px 0px #cecece;
+  box-shadow: ${(props) => props.theme.boxShadow};
 
   transform: ${(props) => (props.isshow ? 'translateY(0)' : 'translateY(-24px)')};
   opacity: ${(props) => (props.isshow ? '1' : '0')};
@@ -67,7 +67,7 @@ const MenuCard = styled.div`
   display: flex;
   flex-direction: column;
   padding: 12px;
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.mode === 'light' ?  '#f6f7fb' : '#292c33' } ;
   border-radius: 8px;
   gap: 24px;
 `
@@ -78,7 +78,7 @@ const NoMenuCard = styled.div`
   align-items: center;
   justify-content: center;
   padding: 32px 12px;
-  background-color: #f6f7fb;
+  background-color: ${(props) => props.theme.mode === 'light' ?  '#f6f7fb' : '#292c33' } ;
   border-radius: 8px;
 `
 
@@ -88,7 +88,7 @@ const NoMenuIcon = styled.img`
 `
 
 const NoMenuText = styled.span`
-  color: #cecece;
+  color: ${(props) => props.theme.mode === 'light' ?  '#cecece' : '#a0a0a0' };
   font-size: ${(props) => (props.size == 'small' ? '14px' : '16px')};
   font-weight: bold;
   letter-spacing: -0.5px;
@@ -121,9 +121,11 @@ const MenuRow = styled.div`
 `
 
 const TimeIcon = styled.img`
-  transition: all 0.2s;
+  transition: all 0.3s;
   cursor: pointer;
-  opacity: 0.25;
+  opacity: ${(props) => (props.selected ? '1' : '0.25')};
+  background-color: ${(props) => props.theme.mode === 'light' ?  '#ffffff' : '#1d2128' } ;
+  border-radius: 8px;
 
   &:hover {
       filter: brightness(0.9);
@@ -131,11 +133,6 @@ const TimeIcon = styled.img`
   &:active {
       filter: brightness(0.8);
   }
-  ${(props) =>
-    props.selected &&
-    css`
-    opacity: 1;
-  `}
 `
 
 const FoodTimeList = [

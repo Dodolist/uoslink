@@ -9,14 +9,14 @@ const DateWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.mode === 'light' ?  '#ffffff' : '#1d2128' } ;
   border-radius: 8px;
   flex-grow: 1;
   gap: 12px;
 `
 
 const DateText = styled.span`
-  color: #a0a0a0;
+  color: ${(props) => props.theme.contentText};
   font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.5px;
