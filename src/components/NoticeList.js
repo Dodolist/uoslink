@@ -38,6 +38,7 @@ const NoticeList = ({selectedSection}) => {
     if(sessionStorage.getItem(selectedSection) != null) {
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
     } else {
+      setItems([]);
       let url = 'https://www.iflab.run/api/notice/' + selectedSection;
 
       axios.get(url)
