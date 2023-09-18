@@ -96,7 +96,7 @@ const SectionList = [
 ];
 
 const App = () => {
-  const [theme, setTheme] = useState('light'); // 초기 테마 설정
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [selectedSection, setSelectedSection] = useState('FA1');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
@@ -162,8 +162,10 @@ const App = () => {
   const toggleTheme = () => {
     if (theme === 'light') {
       setTheme('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       setTheme('light');
+      localStorage.setItem('theme', 'light');
     }
   };
 
