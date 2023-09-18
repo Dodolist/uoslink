@@ -163,11 +163,21 @@ const FoodCard = ({ isShow, handleClose }) => {
   let day = date.getDate().toString().padStart(2, '0');
   let today = year + month + day;
 
+  let hour = date.getHours();
+
+  if( 10 <= hour && hour < 14 ) {
+    hour = '1';
+  } else if( 14 <= hour && hour <= 18 ) {
+    hour = '2';
+  } else {
+    hour = '0';
+  }
+
   let renderComponent;
   const [dayOfWeek, setDayOfWeek] = useState(date.getDay());
   const [foodInfo, setFoodInfo] = useState([]);
   const [selectedFoodDate, setSelectedFoodDate] = useState(today);
-  const [selectedFoodTime, setSelectedFoodTime] = useState('0');
+  const [selectedFoodTime, setSelectedFoodTime] = useState(hour);
   const [selectedFoodPlace, setSelectedFoodPlace] = useState('020');
 
   const changePrevDate = () => {
