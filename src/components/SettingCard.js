@@ -70,6 +70,17 @@ const SettingItemTitle = styled.span`
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -1.5px;
+  user-select: none;
+  ${props => props.caution && css`
+    color: #ff5a5a;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(0.9);
+    }
+    &:active {
+      filter: brightness(0.8);
+    }
+  `}
 `
 
 const ToggleSwitch = styled.label`
@@ -109,6 +120,9 @@ const SettingCard = ({isShow, handleClose, toggleTheme}) => {
           <ToggleSwitch onClick={toggleTheme} >
             <ToggleSwtichButton />
           </ToggleSwitch>
+        </SettingItem>
+        <SettingItem>
+          <SettingItemTitle caution={true}>읽은 공지 초기화</SettingItemTitle>
         </SettingItem>
       </SettingContainer>
     </SettingCardContainer>
