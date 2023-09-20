@@ -14,6 +14,8 @@ import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
+import BlackScreen from './components/BlackScreen';
+import InputModal from './components/InputModal';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -104,6 +106,8 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
+  const [isInputModalOpen, setIsInputModalOpen] = useState(false);
+  
   const themeObject = {
     light: {
       mode: 'light',
@@ -189,6 +193,14 @@ const App = () => {
     console.log(isSideBarOpen);
   };
 
+  const openInputModal = () => {
+    setIsInputModalOpen(true);
+  };
+
+  const closeInputModal = () => {
+    setIsInputModalOpen(false);
+  };
+
   return (
     <ThemeProvider theme={themeObject[theme]}>
       <div className="App">
@@ -226,8 +238,13 @@ const App = () => {
             <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
           </Offline>
         )}
-        <SideBar isSideBarOpen={isSideBarOpen} />
+        <SideBar isSideBarOpen={isSideBarOpen} openInputModal={openInputModal} />
       </div>
+      <BlackScreen isOpen={isInputModalOpen}/>
+      <InputModal
+        isInputModalOpen={isInputModalOpen}
+        closeInputModal={closeInputModal}
+      />
     </ThemeProvider>
   );
 };

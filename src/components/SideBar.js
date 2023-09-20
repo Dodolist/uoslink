@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import addIcon from '../images/add-icon.svg';
-import BlackScreen from './BlackScreen';
-import InputModal from './InputModal';
 
 const SideBarContainer = styled.div`
   z-index: 100;
@@ -78,23 +76,9 @@ const AddButton = styled.img`
   filter: ${(props) => props.theme.mode === 'light' ? '' : 'brightness(0.5)'};
 `
 
-const SideBar = ({ isSideBarOpen }) => {
-  const [isInputModalOpen, setIsInputModalOpen] = useState(false);
-  
-  const openInputModal = () => {
-    setIsInputModalOpen(true);
-  };
-
-  const closeInputModal = () => {
-    setIsInputModalOpen(false);
-  };
+const SideBar = ({ isSideBarOpen, openInputModal }) => {
   return (
     <SideBarContainer isOpen={isSideBarOpen}>
-      <BlackScreen isOpen={isInputModalOpen}/>
-      <InputModal
-        isInputModalOpen={isInputModalOpen}
-        closeInputModal={closeInputModal}
-      />
       <ShortCutList>
         <ShortCutWrap>
           <ShortCutIcon src="https://www.naver.com/favicon.ico" />
