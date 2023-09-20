@@ -91,8 +91,8 @@ const ToggleSwitch = styled.label`
   width: 32px;
   height: 16px;
   border-radius: 12px;
-  background-color: ${props => props.theme.mode === 'light' ? '#E5E6EC' : '#408cff'};
   cursor: pointer;
+  background-color: ${props => props.active ? '#408cff' : props.theme.mode === 'light' ? '#e5e6ec' : '#5d616f' };
 `
 
 const ToggleSwtichButton = styled.div`
@@ -101,9 +101,9 @@ const ToggleSwtichButton = styled.div`
   height: 12px;
   border-radius: 50%;
   background-color: #ffffff;
-  transform: ${props => props.theme.mode === 'light' ? 'translateX(2px)' : 'translateX(18px)'};
+  transform: ${props => props.active ? 'translateX(18px)' : 'translateX(2px)'};
 `
-const SettingCard = ({isShow, handleClose, toggleTheme}) => {
+const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, toggleSideBar }) => {
   return (
     <SettingCardContainer
       isshow={undefined ? undefined : isShow}
@@ -118,8 +118,14 @@ const SettingCard = ({isShow, handleClose, toggleTheme}) => {
       <SettingContainer>
         <SettingItem>
           <SettingItemTitle>다크모드 변경</SettingItemTitle>
-          <ToggleSwitch onClick={toggleTheme} >
-            <ToggleSwtichButton />
+          <ToggleSwitch active={theme === 'dark'} onClick={toggleTheme} >
+            <ToggleSwtichButton active={theme === 'dark'} />
+          </ToggleSwitch>
+        </SettingItem>
+        <SettingItem>
+          <SettingItemTitle>사이드바 표시</SettingItemTitle>
+          <ToggleSwitch active={isSideBarOpen} onClick={toggleSideBar} >
+            <ToggleSwtichButton active={isSideBarOpen} />
           </ToggleSwitch>
         </SettingItem>
         <SettingItem>

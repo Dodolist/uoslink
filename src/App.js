@@ -103,6 +103,7 @@ const App = () => {
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
+  const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const themeObject = {
     light: {
       mode: 'light',
@@ -177,11 +178,27 @@ const App = () => {
     }
   };
 
+  const toggleSideBar = () => {
+    if (isSideBarOpen) {
+      setIsSideBarOpen(false);
+      localStorage.setItem('isSideBarOpen', false);
+    } else {
+      setIsSideBarOpen(true);
+      localStorage.setItem('isSideBarOpen', true);
+    }
+    console.log(isSideBarOpen);
+  };
+
   return (
     <ThemeProvider theme={themeObject[theme]}>
       <div className="App">
         <GroundBackground />
-        <TopBar toggleTheme={toggleTheme} />
+        <TopBar
+          theme={theme}
+          isSideBarOpen={isSideBarOpen}
+          toggleTheme={toggleTheme}
+          toggleSideBar={toggleSideBar}
+          />
         {
         isOnline ? (
           <ContentContainer>
@@ -209,7 +226,7 @@ const App = () => {
             <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
           </Offline>
         )}
-        <SideBar />
+        <SideBar isSideBarOpen={isSideBarOpen} />
       </div>
     </ThemeProvider>
   );

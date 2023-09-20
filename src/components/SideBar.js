@@ -15,6 +15,7 @@ const SideBarContainer = styled.div`
   border-radius: 8px 0 0 8px;
   padding: 8px;
   gap: 40px;
+  transform: ${(props) => (props.isOpen ? 'translateX(0)' : 'translateX(100%)')};
 `
 
 const ShortCutList = styled.div`
@@ -77,7 +78,7 @@ const AddButton = styled.img`
   filter: ${(props) => props.theme.mode === 'light' ? '' : 'brightness(0.5)'};
 `
 
-const SideBar = () => {
+const SideBar = ({ isSideBarOpen }) => {
   const [isInputModalOpen, setIsInputModalOpen] = useState(false);
   
   const openInputModal = () => {
@@ -88,7 +89,7 @@ const SideBar = () => {
     setIsInputModalOpen(false);
   };
   return (
-    <SideBarContainer>
+    <SideBarContainer isOpen={isSideBarOpen}>
       <BlackScreen isOpen={isInputModalOpen}/>
       <InputModal
         isInputModalOpen={isInputModalOpen}
