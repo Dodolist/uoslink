@@ -5,6 +5,7 @@ import BlackScreen from './BlackScreen';
 import InputModal from './InputModal';
 
 const SideBarContainer = styled.div`
+  z-index: 100;
   position: fixed;
   top: 0;
   right: 0;

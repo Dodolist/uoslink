@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import LogoIcon from '../images/logo.svg';
 
 const InputModalWrap = styled.div`
-  z-index: 101;
+  z-index: 300;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -15,7 +15,7 @@ const InputModalWrap = styled.div`
   display: flex;
   flex-direction: column;
 
-  background-color: ${(props) => props.theme.mode === 'light' ? '#ffffff' : '#5d616f'};
+  background-color: ${(props) => props.theme.mode === 'light' ? '#ffffff' : '#1d2128'};
   border-radius: 12px;
   padding: 24px 24px 16px 24px;
 `

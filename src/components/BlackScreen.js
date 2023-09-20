@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const BlackScreenWrap = styled.div`
-  z-index: 100;
+  z-index: 200;
   position: fixed;
   top: 0;
   left: 0;
