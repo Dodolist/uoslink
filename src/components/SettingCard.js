@@ -86,21 +86,22 @@ const SettingItemTitle = styled.span`
 const ToggleSwitch = styled.label`
   transition: all 0.3s;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   width: 32px;
   height: 16px;
   border-radius: 12px;
-  background-color: ${props => props.theme.mode === 'light' ? '#f0f1f5' : '#408cff'};
+  background-color: ${props => props.theme.mode === 'light' ? '#E5E6EC' : '#408cff'};
   cursor: pointer;
 `
 
 const ToggleSwtichButton = styled.div`
   transition: all 0.3s;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background-color: ${props => props.theme.mode === 'light' ? '#408cff' : '#ffffff'};
-  transform: ${props => props.theme.mode === 'light' ? 'translateX(0)' : 'translateX(16px)'};
+  background-color: #ffffff;
+  transform: ${props => props.theme.mode === 'light' ? 'translateX(2px)' : 'translateX(18px)'};
 `
 const SettingCard = ({isShow, handleClose, toggleTheme}) => {
   return (
