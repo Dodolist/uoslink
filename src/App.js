@@ -11,6 +11,7 @@ import noticeSC1Icon from './images/notice-SC1-icon.svg';
 import noticeFA34Icon from './images/notice-FA34-icon.svg';
 import TopBar from './components/TopBar';
 import NavBar from './components/NavBar';
+import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
 import GroundBackground from './components/GroundBackground';
@@ -160,6 +161,13 @@ const App = () => {
   };
   
   const toggleTheme = () => {
+    /*
+    chrome.history.search({text: '', maxResults: 20}, function(data) {
+      for (let i = 0; i < data.length; i++) {
+        console.log(data[i].url);
+      }
+    });
+    */
     if (theme === 'light') {
       setTheme('dark');
       localStorage.setItem('theme', 'dark');
@@ -201,6 +209,7 @@ const App = () => {
             <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
           </Offline>
         )}
+        <SideBar />
       </div>
     </ThemeProvider>
   );
