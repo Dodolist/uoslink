@@ -77,10 +77,22 @@ const AddButton = styled.img`
 `
 
 const SideBar = () => {
+  const [isInputModalOpen, setIsInputModalOpen] = useState(false);
+  
+  const openInputModal = () => {
+    setIsInputModalOpen(true);
+  };
+
+  const closeInputModal = () => {
+    setIsInputModalOpen(false);
+  };
   return (
     <SideBarContainer>
-      <BlackScreen />
-      <InputModal />
+      <BlackScreen isOpen={isInputModalOpen}/>
+      <InputModal
+        isInputModalOpen={isInputModalOpen}
+        closeInputModal={closeInputModal}
+      />
       <ShortCutList>
         <ShortCutWrap>
           <ShortCutIcon src="https://www.naver.com/favicon.ico" />
@@ -95,8 +107,8 @@ const SideBar = () => {
           <ShortCutIcon src="https://www.apple.com/favicon.ico" />
         </ShortCutWrap>
       </ShortCutList>
-      <AddButtonWrap>
-      <AddButton src={addIcon} />
+      <AddButtonWrap onClick={openInputModal}>
+        <AddButton src={addIcon} />
       </AddButtonWrap>
     </SideBarContainer>
   );

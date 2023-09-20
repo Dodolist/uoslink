@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import LogoIcon from '../images/logo.svg';
 
 const InputModalWrap = styled.div`
+  z-index: 101;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: ${(props) => props.isOpen ? 'translate(-50%, -50%)' : 'translate(-50%, -55%)'};
+  opacity: ${(props) => props.isOpen ? '1' : '0'};
+  user-select: ${(props) => props.isOpen ? 'auto' : 'none'};
+  pointer-events: ${(props) => props.isOpen ? 'auto' : 'none'};
 
   display: flex;
   flex-direction: column;
@@ -102,41 +107,110 @@ const Button = styled.button`
     color: #ffffff;
     background-color: #408cff;
   `}
-  ${(props) => props.type === 'disabled' && css`
+  ${(props) => props.type === true && css`
     opacity: 0.5;
     user-select: none;
     pointer-events: none;
   `}
+    
 `
-const SiteLogo = styled.div`
+const SiteLogo = styled.img`
   position: absolute;
   right: 4px;
   width: 32px;
   height: 32px;
   border-radius: 4px;
-  background-color: #000000;
 `
 
-const InputModal = () => {
+const InputModal = ({ isInputModalOpen, closeInputModal }) => {
+  const [name, setName] = React.useState('');
+  const [url, setUrl] = React.useState('');
+  const [urlLogo, setUrlLogo] = React.useState(LogoIcon);
+  const [isDisabled, setIsDisabled] = React.useState(true);
+  const [timer, setTimer] = React.useState(null);
+
+  const addSite = () => {
+    const site = {
+      name,
+      url,
+    };
+
+    const sites = JSON.parse(localStorage.getItem('sites'));
+    if(sites === null) {
+      localStorage.setItem('sites', JSON.stringify([site]));
+    } else {
+      sites.push(site);
+      localStorage.setItem('sites', JSON.stringify(sites));
+    }
+    setName('');
+    setUrl('');
+    closeInputModal();
+  };
+
+  useEffect(() => {
+    if(name.trim() !== '' && url.trim() !== '') {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [name, url]);
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(() => {
+    }, 1500);
+
+    setTimer(newTimer);
+  }, [url]);
+
+
+  const onChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  const onChangeUrl = (e) => {
+    setUrl(e.target.value);
+  }
+
   return (
-    <InputModalWrap>
+    <InputModalWrap isOpen={isInputModalOpen}>
       <ModalTitle>바로가기 추가</ModalTitle>
       <InputWrap>
         <InputLabel>이름</InputLabel>
         <InputBox>
-          <Input />
+          <Input
+            type="text"
+            value={name}
+            onChange={onChangeName}
+            maxLength={10}
+          />
         </InputBox>
       </InputWrap>
       <InputWrap>
         <InputLabel>사이트 주소</InputLabel>
         <InputBox>
-          <Input />
-          <SiteLogo />
+          <Input
+            type="text"
+            value={url}
+            onChange={onChangeUrl}
+          />
+          <SiteLogo
+            src={urlLogo}
+            onerror="this.src='https://www.google.com/s2/favicons?sz=64&domain_url=' + this.src"
+          />
         </InputBox>
       </InputWrap>
       <ButtonWrap>
-        <Button>취소</Button>
-        <Button color={"blue"} type={"disabled"}>추가</Button>
+        <Button onClick={closeInputModal}>취소</Button>
+        <Button
+          color={"blue"}
+          type={isDisabled}
+          onClick={addSite}
+        >
+          추가
+        </Button>
       </ButtonWrap>
     </InputModalWrap>
   );
