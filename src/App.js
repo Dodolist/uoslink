@@ -190,7 +190,6 @@ const App = () => {
       setIsSideBarOpen(true);
       localStorage.setItem('isSideBarOpen', true);
     }
-    console.log(isSideBarOpen);
   };
 
   const openInputModal = () => {

@@ -189,7 +189,6 @@ const FoodCard = ({ isShow, handleClose }) => {
   };
 
   const changeNextDate = () => {
-    console.log(selectedFoodDate);
     let date = new Date(selectedFoodDate.substring(0, 4), selectedFoodDate.substring(4, 6) - 1, selectedFoodDate.substring(6, 8));
     date.setDate(date.getDate() + 1);
     let year = (date.getFullYear()).toString();
@@ -207,7 +206,6 @@ const FoodCard = ({ isShow, handleClose }) => {
     else if (selectedFoodPlace == '030') return;
     axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/' + selectedFoodDate)
       .then(response => {
-        console.log(response.data);
         setFoodInfo(response.data);
       })
       .catch(error => {
