@@ -33,7 +33,7 @@ const SettingCardTopBar = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 12px;
+  padding: 16px 12px 12px 12px;
   background-color: ${props => props.theme.background};
 `
 
