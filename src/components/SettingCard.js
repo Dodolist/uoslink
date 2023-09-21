@@ -103,7 +103,7 @@ const ToggleSwtichButton = styled.div`
   background-color: #ffffff;
   transform: ${props => props.active ? 'translateX(18px)' : 'translateX(2px)'};
 `
-const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, toggleSideBar }) => {
+const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, toggleSideBar, openConfirmModal }) => {
   return (
     <SettingCardContainer
       isshow={undefined ? undefined : isShow}
@@ -129,7 +129,9 @@ const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, to
           </ToggleSwitch>
         </SettingItem>
         <SettingItem>
-          <SettingItemTitle caution={true}>읽은 공지 초기화</SettingItemTitle>
+          <SettingItemTitle caution={true} onClick={openConfirmModal}>
+            읽은 공지 초기화
+          </SettingItemTitle>
         </SettingItem>
       </SettingContainer>
     </SettingCardContainer>

@@ -15,6 +15,7 @@ import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
 import BlackScreen from './components/BlackScreen';
+import ConfirmModal from './components/ConfirmModal';
 import InputModal from './components/InputModal';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -107,6 +108,7 @@ const App = () => {
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const [isInputModalOpen, setIsInputModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   
   const themeObject = {
     light: {
@@ -200,6 +202,14 @@ const App = () => {
     setIsInputModalOpen(false);
   };
 
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  };
+
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+  };
+
   return (
     <ThemeProvider theme={themeObject[theme]}>
       <div className="App">
@@ -209,6 +219,7 @@ const App = () => {
           isSideBarOpen={isSideBarOpen}
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
+          openConfirmModal={openConfirmModal}
           />
         {
         isOnline ? (
@@ -243,10 +254,16 @@ const App = () => {
           closeInputModal={closeInputModal}
         />
       </div>
-      <BlackScreen isOpen={isInputModalOpen}/>
+      <BlackScreen isOpen={isInputModalOpen || isConfirmModalOpen}/>
       <InputModal
         isInputModalOpen={isInputModalOpen}
         closeInputModal={closeInputModal}
+      />
+      <ConfirmModal
+        isConfirmModalOpen={isConfirmModalOpen}
+        title={'읽은 공지 내역을 삭제하실 건가요?'}
+        content={'삭제한 공지 내역은 되돌릴 수 없어요.'}
+        closeConfirmModal={closeConfirmModal}
       />
     </ThemeProvider>
   );
