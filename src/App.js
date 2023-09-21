@@ -237,7 +237,11 @@ const App = () => {
             <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
           </Offline>
         )}
-        <SideBar isSideBarOpen={isSideBarOpen} openInputModal={openInputModal} />
+        <SideBar
+          isSideBarOpen={isSideBarOpen}
+          openInputModal={openInputModal}
+          closeInputModal={closeInputModal}
+        />
       </div>
       <BlackScreen isOpen={isInputModalOpen}/>
       <InputModal

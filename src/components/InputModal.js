@@ -1,6 +1,39 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import LogoIcon from '../images/logo.svg';
+import LoadingIcon from '../images/loading.svg';
+import XIcon from '../images/x-icon.svg';
+
+const rotateAnimation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  } 
+`;
+
+const vibrateAnimation = keyframes`
+  0% {
+    transform: translateX(0px);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-2px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+`;
 
 const InputModalWrap = styled.div`
   z-index: 300;
@@ -116,10 +149,33 @@ const Button = styled.button`
 `
 const SiteLogo = styled.img`
   position: absolute;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  scale: ${(props) => props.loading ? '0' : '1'};
+`
+
+const SiteLogoLoading = styled.img`
+  animation: ${rotateAnimation} 1s linear infinite;
+  position: absolute;
   right: 4px;
   width: 32px;
   height: 32px;
-  border-radius: 4px;
+  scale: ${(props) => props.loading ? '1' : '0'};
+`
+
+const InvalidIcon = styled.img`
+  animation: none;
+  position: absolute;
+  right: 4px;
+  width: 32px;
+  height: 32px;
+  scale: ${(props) => props.loading ? '1' : '0'};
+
+  ${(props) => props.loading && css`
+    animation: ${vibrateAnimation} 0.5s ease-in-out;
+  `}
 `
 
 const InputModal = ({ isInputModalOpen, closeInputModal }) => {
@@ -128,11 +184,23 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
   const [urlLogo, setUrlLogo] = React.useState(LogoIcon);
   const [isDisabled, setIsDisabled] = React.useState(true);
   const [timer, setTimer] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isInvalidIcon, setIsInvalidIcon] = React.useState(false);
 
   const addSite = () => {
+    if (isDisabled) {
+      return;
+    }
+    var link;
+    if (!url.includes('www.')) {
+      link = 'https://www.' + url;
+    }
+    else if (!url.includes('http://') && !url.includes('https://')) {
+      link = 'https://' + url;
+    }
     const site = {
       name,
-      url,
+      link,
     };
 
     const sites = JSON.parse(localStorage.getItem('sites'));
@@ -148,22 +216,52 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
   };
 
   useEffect(() => {
-    if(name.trim() !== '' && url.trim() !== '') {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [name, url]);
-
-  useEffect(() => {
+    setIsLoading(true);
     if (timer) {
       clearTimeout(timer);
     }
     const newTimer = setTimeout(() => {
-    }, 1500);
+      let getUrl = 'https://www.iflab.run/api/check/url/' + url;
+      axios.get(getUrl)
+        .then((response) => {
+          if (url == '') {
+            setUrlLogo(LogoIcon);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 500);
+          } else {
+            if (!url.includes('www.')) {
+              setUrlLogo('https://www.' + url + '/favicon.ico');
+            }
+            else if (!url.includes('http://') && !url.includes('https://')) {
+              setUrlLogo('https://' + url + '/favicon.ico');
+            } else {
+              setUrlLogo(url + '/favicon.ico');
+            }
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 500);
+          }
+          setIsInvalidIcon(false);
+        })
+        .catch((error) => {
+          setIsInvalidIcon(true);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        });
+    }, 1000);
 
     setTimer(newTimer);
   }, [url]);
+
+  useEffect(() => {
+    if(name.trim() !== '' && url.trim() !== '' && !isInvalidIcon && !isLoading) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [name, url, isInvalidIcon, isLoading]);
 
 
   const onChangeName = (e) => {
@@ -198,7 +296,15 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
           />
           <SiteLogo
             src={urlLogo}
-            onerror="this.src='https://www.google.com/s2/favicons?sz=64&domain_url=' + this.src"
+            loading={isLoading || isInvalidIcon}
+          />
+          <SiteLogoLoading
+            src={LoadingIcon}
+            loading={isLoading}
+          />
+          <InvalidIcon
+            src={XIcon}
+            loading={!isLoading && isInvalidIcon}
           />
         </InputBox>
       </InputWrap>
