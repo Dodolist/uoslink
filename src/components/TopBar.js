@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../images/logo.svg';
 import foodIcon from '../images/food-icon.svg';

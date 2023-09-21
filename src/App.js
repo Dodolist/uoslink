@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import styled, { ThemeProvider, ThemeContext } from 'styled-components';
-import logo from './images/logo.svg';
+import styled, { ThemeProvider } from 'styled-components';
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
 import noticeFA1Icon from './images/notice-FA1-icon.svg';
@@ -142,7 +141,7 @@ const App = () => {
       if(SectionList[i].id === id) {
         setSelectedSectionIcon(SectionList[i].icon);
         setSelectedSectionName(SectionList[i].name);
-        if(id == 'SC1') {
+        if(id === 'SC1') {
           setSelectedSectionLink('https://scholarship.uos.ac.kr/scholarship/notice/notice/list.do?brdBbsseq=1');
         } else {
           setSelectedSectionLink('https://www.uos.ac.kr/korNotice/list.do?list_id=' + SectionList[i].id);

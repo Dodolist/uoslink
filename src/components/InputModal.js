@@ -224,7 +224,7 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
       let getUrl = 'https://www.iflab.run/api/check/url/' + url;
       axios.get(getUrl)
         .then((response) => {
-          if (url == '') {
+          if (url === '') {
             setUrlLogo(LogoIcon);
             setTimeout(() => {
               setIsLoading(false);

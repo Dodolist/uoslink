@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import settingIcon from '../images/white-setting-icon.svg';
 import closeIcon from '../images/gray-close-icon.svg';
