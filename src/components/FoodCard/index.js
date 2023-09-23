@@ -6,6 +6,10 @@ import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
 import roadworkIcon from '../../images/roadwork-icon.svg';
 import noMenuIcon from '../../images/no-menu-icon.svg';
+import chuseokIcon from '../../images/chuseok-icon.png';
+import date1003Icon from '../../images/1003-icon.svg';
+import date1009Icon from '../../images/1009-icon.svg';
+import holidayIcon from '../../images/holiday-icon.svg';
 
 import TopBar from './TopBar.js';
 import DateInputBox from './DateInputBox.js';
@@ -83,12 +87,12 @@ const NoMenuCard = styled.div`
 `
 
 const NoMenuIcon = styled.img`
-  width: 72px;
-  height: 72px;
+  width: 128px;
+  height: 128px;
 `
 
 const NoMenuText = styled.span`
-  color: ${(props) => props.theme.mode === 'light' ?  '#cecece' : '#a0a0a0' };
+  color: ${(props) => props.theme.subText};
   font-size: ${(props) => (props.size == 'small' ? '14px' : '16px')};
   font-weight: bold;
   letter-spacing: -0.5px;
@@ -213,7 +217,59 @@ const FoodCard = ({ isShow, handleClose }) => {
       });
   }, [isShow, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
-  if (dayOfWeek == 0 || dayOfWeek == 6) {
+  if (selectedFoodDate == '20230928' || selectedFoodDate == '20230929' || (selectedFoodDate == '20230927' && selectedFoodTime == '2')) {
+    renderComponent = (
+      <MenuContainer>
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={chuseokIcon} />
+            <NoMenuText> 추석 연휴 </NoMenuText>
+            <NoMenuText size={'small'}>09. 28 ~ 09. 30</NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      </MenuContainer>
+    );
+  }
+  else if (selectedFoodDate == '20231002') {
+    renderComponent = (
+      <MenuContainer>
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={holidayIcon} />
+            <NoMenuText> 임시공휴일 </NoMenuText>
+            <NoMenuText size={'small'}>2023. 10. 02</NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      </MenuContainer>
+    );
+  }
+  else if (selectedFoodDate == '20231003') {
+    renderComponent = (
+      <MenuContainer>
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={date1003Icon} />
+            <NoMenuText> 개천절 </NoMenuText>
+            <NoMenuText size={'small'}>2023. 10. 03</NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      </MenuContainer>
+    );
+  }
+  else if (selectedFoodDate == '20231009') {
+    renderComponent = (
+      <MenuContainer>
+        <InfoWrapper>
+          <NoMenuCard>
+            <NoMenuIcon src={date1009Icon} />
+            <NoMenuText> 한글날 </NoMenuText>
+            <NoMenuText size={'small'}>2023. 10. 09</NoMenuText>
+          </NoMenuCard>
+        </InfoWrapper>
+      </MenuContainer>
+    );
+  }
+  else if (dayOfWeek == 0 || dayOfWeek == 6) {
     renderComponent = (
       <MenuContainer>
         <InfoWrapper>
