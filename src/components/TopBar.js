@@ -5,6 +5,7 @@ import foodIcon from '../images/food-icon.svg';
 import settingIcon from '../images/setting-icon.svg';
 import FoodCard from './FoodCard/index.js';
 import SettingCard from './SettingCard';
+import ServiceNotice from './ServiceNotice';
 
 const TopBarContainer = styled('div')`
   display: flex;
@@ -41,6 +42,7 @@ const ServiceName = styled('span')`
   font-weight: bold;
   letter-spacing: -1px;
 `
+
 const CardWrapper = styled.div`
   position: relative;
   display: flex;
@@ -73,6 +75,7 @@ const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar, openConfirmM
       <TopBarLeft>
         <img className="logo" src={logo} alt="logo" />
         <ServiceName>시대링크</ServiceName>
+        <ServiceNotice />
       </TopBarLeft>
       <TopBarRight>
         <CardWrapper>
