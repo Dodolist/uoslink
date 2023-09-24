@@ -111,6 +111,7 @@ const SideBar = ({ isSideBarOpen, openInputModal, closeInputModal }) => {
       <ShortCutList>
         {sites.map((site) => (
           <ShortCutWrap
+            key={site.link}
             href={site.link}
             onMouseEnter={() => setHoveredShortCut(site.name)}
             onMouseLeave={() => setHoveredShortCut(null)}
