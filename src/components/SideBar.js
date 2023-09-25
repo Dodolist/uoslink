@@ -24,7 +24,7 @@ const ShortCutList = styled.div`
   justify-content: center;
 `
 
-const ShortCutWrap = styled.a`
+const ShortCutWrap = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -45,10 +45,16 @@ const ShortCutWrap = styled.a`
   }
 `
 
+const ShortCutIconWrap = styled.a`
+  width: 32px;
+  height: 32px;
+`
+
 const ShortCutIcon = styled.img`
-  width: 24px;
-  height: 24px;
-  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  border-radius: 12px;
   user-select: none;
 `
 
@@ -106,18 +112,25 @@ const SideBar = ({ isSideBarOpen, openInputModal, closeInputModal }) => {
     }
     setSites(sites);
   }, [closeInputModal]);
+
+  const clickShortCutLabel = (e) => {
+    console.log(e.target.innerText);
+  };
   return (
     <SideBarContainer isOpen={isSideBarOpen}>
       <ShortCutList>
         {sites.map((site) => (
           <ShortCutWrap
-            key={site.link}
-            href={site.link}
             onMouseEnter={() => setHoveredShortCut(site.name)}
             onMouseLeave={() => setHoveredShortCut(null)}
           >
-            <ShortCutIcon src={`${site.link}/favicon.ico`} />
-            <ShortCutLabel isHovered={site.name === hoveredShortCut}>
+            <ShortCutIconWrap
+              key={site.link}
+              href={site.link}
+            >
+              <ShortCutIcon src={`${site.link}/favicon.ico`} />
+            </ShortCutIconWrap>
+            <ShortCutLabel onClick={clickShortCutLabel} isHovered={site.name === hoveredShortCut}>
               {site.name}
             </ShortCutLabel>
           </ShortCutWrap>
