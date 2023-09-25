@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import LogoIcon from '../../images/logo.svg';
 import LoadingIcon from '../../images/loading.svg';
 import XIcon from '../../images/x-icon.svg';
-import { InputModalWrap, ModalTitle, InputWrap, InputLabel, InputBox, Input, ButtonWrap, Button, SiteLogo, SiteLogoLoading, InvalidIcon } from './style';
+import { InputModalWrap, ModalTitle, InputWrap, InputLabel, InputBox, Input, ButtonWrap, SiteLogo, SiteLogoLoading, InvalidIcon } from './style';
+import Button from '../Buttons';
 
 const InputModal = ({ isInputModalOpen, closeInputModal }) => {
   const [name, setName] = React.useState('');

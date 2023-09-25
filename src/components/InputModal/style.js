@@ -107,41 +107,6 @@ const ButtonWrap = styled.div`
   gap: 12px;
 `
 
-const Button = styled.button`
-  color: ${(props) => props.theme.titleText};
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: -1px;
-
-  width: 100%;
-  padding: 20px 0;
-  background-color: ${(props) => props.theme.foreground};
-
-  border: none;
-  border-radius: 12px;
-  outline: none;
-
-  cursor: pointer;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
-  &:active {
-    transition: all 0.05s;
-    filter: brightness(0.8);
-  }
-
-  ${(props) => props.color === 'blue' && css`
-    color: #ffffff;
-    background-color: #408cff;
-  `}
-  ${(props) => props.type === true && css`
-    opacity: 0.5;
-    user-select: none;
-    pointer-events: none;
-  `}
-    
-`
 const SiteLogo = styled.img`
   position: absolute;
   right: 8px;
@@ -173,4 +138,4 @@ const InvalidIcon = styled.img`
   `}
 `
 
-export { InputModalWrap, ModalTitle, InputWrap, InputLabel, InputBox, Input, ButtonWrap, Button, SiteLogo, SiteLogoLoading, InvalidIcon };
+export { InputModalWrap, ModalTitle, InputWrap, InputLabel, InputBox, Input, ButtonWrap, SiteLogo, SiteLogoLoading, InvalidIcon };
