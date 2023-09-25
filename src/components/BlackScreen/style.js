@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const BlackScreenWrap = styled.div`
+const BlackScreenContainer = styled.div`
   z-index: 200;
   position: fixed;
   top: 0;
@@ -14,10 +13,4 @@ const BlackScreenWrap = styled.div`
   pointer-events: ${(props) => props.isOpen ? 'auto' : 'none'};
 `
 
-const BlackScreen = ({ isOpen }) => {
-  return (
-    <BlackScreenWrap isOpen={isOpen}/>
-  );
-};
-
-export default BlackScreen;
+export { BlackScreenContainer };
