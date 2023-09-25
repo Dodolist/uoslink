@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const SelectedSectionWrap = styled.div`
@@ -19,13 +18,4 @@ const SelectedSectionName = styled.span`
   letter-spacing: -2px;
 `;
 
-const SelectedSection = ({ selectedSectionIcon, selectedSectionName }) => {
-  return (
-    <SelectedSectionWrap>
-      <SelectedSectionIcon src={selectedSectionIcon} />
-      <SelectedSectionName>{selectedSectionName}</SelectedSectionName>
-    </SelectedSectionWrap>
-  );
-};
-
-export default SelectedSection;
+export { SelectedSectionWrap, SelectedSectionIcon, SelectedSectionName };
