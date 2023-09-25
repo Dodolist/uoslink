@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import leftArrowIcon from '../../images/left-arrow-icon.svg';
 import rightArrowIcon from '../../images/right-arrow-icon.svg';
 

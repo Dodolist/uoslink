@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import clockIcon from '../../images/clock-icon.svg';
 
 const OpenTimeWrapper = styled.div`

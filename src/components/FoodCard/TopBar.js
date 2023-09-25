@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import foodIcon from '../../images/white-food-icon.svg';
 import closeIcon from '../../images/white-close-icon.svg';
 
