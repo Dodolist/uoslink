@@ -15,7 +15,6 @@ import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
 import BlackScreen from './components/BlackScreen';
 import ConfirmModal from './components/ConfirmModal';
-import InputModal from './components/InputModal';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -106,7 +105,6 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
-  const [isInputModalOpen, setIsInputModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   
   const themeObject = {
@@ -193,14 +191,6 @@ const App = () => {
     }
   };
 
-  const openInputModal = () => {
-    setIsInputModalOpen(true);
-  };
-
-  const closeInputModal = () => {
-    setIsInputModalOpen(false);
-  };
-
   const openConfirmModal = () => {
     setIsConfirmModalOpen(true);
   };
@@ -249,15 +239,9 @@ const App = () => {
         )}
         <SideBar
           isSideBarOpen={isSideBarOpen}
-          openInputModal={openInputModal}
-          closeInputModal={closeInputModal}
         />
       </div>
-      <BlackScreen isOpen={isInputModalOpen || isConfirmModalOpen}/>
-      <InputModal
-        isInputModalOpen={isInputModalOpen}
-        closeInputModal={closeInputModal}
-      />
+      <BlackScreen isOpen={isConfirmModalOpen}/>
       <ConfirmModal
         isConfirmModalOpen={isConfirmModalOpen}
         title={'읽은 공지 내역을 삭제하실 건가요?'}

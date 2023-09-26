@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import addIcon from '../images/add-icon.svg';
 
 const SideBarContainer = styled.div`
   z-index: 100;
@@ -59,17 +57,23 @@ const ShortCutIcon = styled.img`
 `
 
 const ShortCutLabel = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: max-content;
   position: absolute;
   top: 50%;
   left: -25%;
   transform: translate(-100%, -50%);
-  padding: 8px 12px;
+  padding: 8px 8px 8px 12px;
   border-radius: 4px;
-  background-color: #373737;
+  background-color: #3c414c;
   color: #ffffff;
   font-size: 12px;
   font-weight: 500;
+
+  gap: 2px;
 
   opacity: ${(props) => props.isHovered ? '1' : '0'};
   scale: ${(props) => props.isHovered ? '1' : '0.8'};
@@ -100,47 +104,4 @@ const AddButton = styled.img`
   filter: ${(props) => props.theme.mode === 'light' ? '' : 'brightness(0.5)'};
 `
 
-const SideBar = ({ isSideBarOpen, openInputModal, closeInputModal }) => {
-  const [sites, setSites] = useState([]);
-  const [hoveredShortCut, setHoveredShortCut] = useState(null);
-
-  useEffect(() => {
-    const sites = JSON.parse(localStorage.getItem('sites'));
-    if (sites === null) {
-      localStorage.setItem('sites', JSON.stringify([]));
-      return;
-    }
-    setSites(sites);
-  }, [closeInputModal]);
-
-  const clickShortCutLabel = (e) => {
-    console.log(e.target.innerText);
-  };
-  return (
-    <SideBarContainer isOpen={isSideBarOpen}>
-      <ShortCutList>
-        {sites.map((site) => (
-          <ShortCutWrap
-            onMouseEnter={() => setHoveredShortCut(site.name)}
-            onMouseLeave={() => setHoveredShortCut(null)}
-          >
-            <ShortCutIconWrap
-              key={site.link}
-              href={site.link}
-            >
-              <ShortCutIcon src={`${site.link}/favicon.ico`} />
-            </ShortCutIconWrap>
-            <ShortCutLabel onClick={clickShortCutLabel} isHovered={site.name === hoveredShortCut}>
-              {site.name}
-            </ShortCutLabel>
-          </ShortCutWrap>
-        ))}
-      </ShortCutList>
-      <AddButtonWrap onClick={openInputModal}>
-        <AddButton src={addIcon} />
-      </AddButtonWrap>
-    </SideBarContainer>
-  );
-};
-
-export default SideBar;
+export { SideBarContainer, ShortCutList, ShortCutWrap, ShortCutIconWrap, ShortCutIcon, ShortCutLabel, AddButtonWrap, AddButton };

@@ -5,8 +5,9 @@ import LoadingIcon from '../../images/loading.svg';
 import XIcon from '../../images/x-icon.svg';
 import { InputModalWrap, ModalTitle, InputWrap, InputLabel, InputBox, Input, ButtonWrap, SiteLogo, SiteLogoLoading, InvalidIcon } from './style';
 import Button from '../Buttons';
+import DeleteButton from '../Buttons/DeleteButton';
 
-const InputModal = ({ isInputModalOpen, closeInputModal }) => {
+const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, modifySite, deleteSite, loadName, loadUrl }) => {
   const [name, setName] = React.useState('');
   const [url, setUrl] = React.useState('');
   const [urlLogo, setUrlLogo] = React.useState(LogoIcon);
@@ -15,7 +16,7 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isInvalidIcon, setIsInvalidIcon] = React.useState(false);
 
-  const addSite = () => {
+  const checkSite = () => {
     if (isDisabled) {
       return;
     }
@@ -30,19 +31,24 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
       name,
       link,
     };
-
-    const sites = JSON.parse(localStorage.getItem('sites'));
-    if(sites === null) {
-      localStorage.setItem('sites', JSON.stringify([site]));
+    
+    if (isModified) {
+      modifySite(site);
     } else {
-      sites.push(site);
-      localStorage.setItem('sites', JSON.stringify(sites));
+      addSite(site);
     }
+
+    setName('');
+    setUrl('');
+  };
+
+  const clickCancelButton = () => {
     setName('');
     setUrl('');
     closeInputModal();
   };
 
+  // url 입력 시 favicon 확인
   useEffect(() => {
     setIsLoading(true);
     if (timer) {
@@ -84,6 +90,15 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
   }, [url]);
 
   useEffect(() => {
+    if (isModified) {
+      setName(loadName);
+      loadUrl = loadUrl.replace('https://www.', '');
+      setUrl(loadUrl);
+    }
+  }, [isModified, loadName, loadUrl]);
+
+  // 확인 Button 활성화 여부
+  useEffect(() => {
     if(name.trim() !== '' && url.trim() !== '' && !isInvalidIcon && !isLoading) {
       setIsDisabled(false);
     } else {
@@ -102,7 +117,9 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
 
   return (
     <InputModalWrap isOpen={isInputModalOpen}>
-      <ModalTitle>바로가기 추가</ModalTitle>
+      <ModalTitle>
+        {isModified ? '바로가기 수정' : '바로가기 추가'}
+      </ModalTitle>
       <InputWrap>
         <InputLabel>이름</InputLabel>
         <InputBox>
@@ -137,15 +154,21 @@ const InputModal = ({ isInputModalOpen, closeInputModal }) => {
         </InputBox>
       </InputWrap>
       <ButtonWrap>
-        <Button onClick={closeInputModal}>취소</Button>
+        <Button onClick={clickCancelButton}>취소</Button>
         <Button
           color={"blue"}
           type={isDisabled}
-          onClick={addSite}
+          onClick={checkSite}
         >
-          추가
+        {isModified ? '수정' : '추가'}
         </Button>
       </ButtonWrap>
+      <DeleteButton
+        isOpen={isModified}
+        onClick={deleteSite}
+      >
+        삭제
+      </DeleteButton>
     </InputModalWrap>
   );
 };
