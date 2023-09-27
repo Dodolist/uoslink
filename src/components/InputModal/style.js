@@ -50,7 +50,7 @@ const InputModalWrap = styled.div`
 
 const ModalTitle = styled.div`
   color: ${(props) => props.theme.titleText};
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 16px;
   letter-spacing: -1px;
