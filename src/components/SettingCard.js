@@ -129,7 +129,7 @@ const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, to
           </ToggleSwitch>
         </SettingItem>
         <SettingItem>
-          <SettingItemTitle caution={true} onClick={openConfirmModal}>
+          <SettingItemTitle caution="true" onClick={openConfirmModal}>
             읽은 공지 초기화
           </SettingItemTitle>
         </SettingItem>
