@@ -40,15 +40,20 @@ const SideBar = ({ isSideBarOpen }) => {
     localStorage.setItem('sites', JSON.stringify(sites));
     setSites(JSON.parse(localStorage.getItem('sites')));
     closeInputModal();
+    setTimeout(() => {
+      setIsModified(false);
+    }, 200);
   };
 
-  const deleteSite = (site) => {
+  const deleteSite = () => {
+    closeInputModal();
+    setIsModified(false);
+
     const sites = JSON.parse(localStorage.getItem('sites'));
     const index = sites.findIndex((site) => site.name === modifiedSite.name);
     sites.splice(index, 1);
     localStorage.setItem('sites', JSON.stringify(sites));
     setSites(JSON.parse(localStorage.getItem('sites')));
-    closeInputModal();
   };
 
   const openInputModal = () => {
@@ -59,15 +64,14 @@ const SideBar = ({ isSideBarOpen }) => {
   const closeInputModal = () => {
     setIsInputModalOpen(false);
     if (isModified) {
-      setIsModified(false);
       setHoveredShortCut(null);
     }
   };
 
-  const clickShortCutLabel = (e) => {
+  const clickShortCutLabel = () => {
     openInputModal();
     setIsModified(true);
-    setModifiedSite(sites.find((site) => site.name === e.target.innerText));
+    setModifiedSite(sites.find((site) => site.name === hoveredShortCut));
   };
 
   const onMouseLeaveShortCut = (e) => {
@@ -86,18 +90,18 @@ const SideBar = ({ isSideBarOpen }) => {
         addSite={addSite}
         modifySite={modifySite}
         deleteSite={deleteSite}
-        loadName={isModified ? hoveredShortCut : ''}
-        loadUrl={isModified ? sites.find((site) => site.name === hoveredShortCut).link : ''}
+        loadName={hoveredShortCut ? hoveredShortCut : ''}
+        loadUrl={hoveredShortCut ? sites.find((site) => site.name === hoveredShortCut).link : ''}
       />
       <SideBarContainer isOpen={isSideBarOpen}>
         <ShortCutList>
           {sites.map((site) => (
             <ShortCutWrap
+              key={site.link}
               onMouseEnter={() => setHoveredShortCut(site.name)}
               onMouseLeave={() => onMouseLeaveShortCut()}
             >
               <ShortCutIconWrap
-                key={site.link}
                 href={site.link}
               >
                 <ShortCutIcon src={`${site.link}/favicon.ico`} />

@@ -37,65 +37,39 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
     } else {
       addSite(site);
     }
+    initInput();
+  };
 
-    setName('');
-    setUrl('');
+  const initInput = () => {
+    setTimeout(() => {
+      setName('');
+      setUrl('');
+      setUrlLogo(LogoIcon);
+      setIsDisabled(true);
+      setIsLoading(false);
+      setIsInvalidIcon(false);
+    }, 200);
   };
 
   const clickCancelButton = () => {
-    setName('');
-    setUrl('');
+    initInput();
     closeInputModal();
   };
 
-  // url 입력 시 favicon 확인
-  useEffect(() => {
-    setIsLoading(true);
-    if (timer) {
-      clearTimeout(timer);
-    }
-    const newTimer = setTimeout(() => {
-      let getUrl = 'https://www.iflab.run/api/check/url/' + url;
-      axios.get(getUrl)
-        .then((response) => {
-          if (url === '') {
-            setUrlLogo(LogoIcon);
-            setTimeout(() => {
-              setIsLoading(false);
-            }, 500);
-          } else {
-            if (!url.includes('www.')) {
-              setUrlLogo('https://www.' + url + '/favicon.ico');
-            }
-            else if (!url.includes('http://') && !url.includes('https://')) {
-              setUrlLogo('https://' + url + '/favicon.ico');
-            } else {
-              setUrlLogo(url + '/favicon.ico');
-            }
-            setTimeout(() => {
-              setIsLoading(false);
-            }, 500);
-          }
-          setIsInvalidIcon(false);
-        })
-        .catch((error) => {
-          setIsInvalidIcon(true);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 500);
-        });
-    }, 1000);
-
-    setTimer(newTimer);
-  }, [url]);
+  const clickDeleteButton = () => {
+    deleteSite();
+    closeInputModal();
+    initInput();
+  };
 
   useEffect(() => {
     if (isModified) {
       setName(loadName);
+      setUrlLogo(loadUrl+'/favicon.ico');
       loadUrl = loadUrl.replace('https://www.', '');
       setUrl(loadUrl);
     }
-  }, [isModified, loadName, loadUrl]);
+  }, [isModified]);
 
   // 확인 Button 활성화 여부
   useEffect(() => {
@@ -111,8 +85,60 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
     setName(e.target.value);
   };
 
+  // url 입력 시 favicon 확인
   const onChangeUrl = (e) => {
-    setUrl(e.target.value);
+    let newUrl = e.target.value;
+    setUrl(newUrl);
+
+    /* url이 비어있을 때에는
+     * 로고를 기본 로고로 변경
+     * isInvalidIcon을 false로 변경
+     * timer 초기화
+    */
+    if (newUrl === '') {
+      setUrlLogo(LogoIcon);
+      setIsLoading(false);
+      setIsInvalidIcon(false);
+      clearTimeout(timer);
+      return;
+    }
+
+    /* timer가 있을 때에는
+     * timer를 초기화
+    */
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    /* timer 생성*/
+    setIsLoading(true);
+
+    const newTimer = setTimeout(() => {
+      let getUrl = 'https://www.iflab.run/api/check/url/' + newUrl;
+      axios.get(getUrl)
+        .then((response) => {
+          if (!newUrl.includes('www.')) {
+            setUrlLogo('https://www.' + newUrl + '/favicon.ico');
+          }
+          else if (!newUrl.includes('http://') && !newUrl.includes('https://')) {
+            setUrlLogo('https://' + newUrl + '/favicon.ico');
+          } else {
+            setUrlLogo(newUrl + '/favicon.ico');
+          }
+          setIsInvalidIcon(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        })
+        .catch((error) => {
+          setIsInvalidIcon(true);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        });
+    }, 1000);
+
+    setTimer(newTimer);
   }
 
   return (
@@ -157,7 +183,7 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
         <Button onClick={clickCancelButton}>취소</Button>
         <Button
           color={"blue"}
-          type={isDisabled}
+          type={isDisabled.toString()}
           onClick={checkSite}
         >
         {isModified ? '수정' : '추가'}
@@ -165,7 +191,7 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
       </ButtonWrap>
       <DeleteButton
         isOpen={isModified}
-        onClick={deleteSite}
+        onClick={clickDeleteButton}
       >
         삭제
       </DeleteButton>
