@@ -8,7 +8,7 @@ const BlackScreenContainer = styled.div`
   right: 0;
   bottom: 0;
   background-color: #000000;
-  opacity: ${(props) => props.isOpen ? '0.5' : '0'};
+  opacity: ${(props) => props.isOpen && props.theme.mode === 'dark' ? '0.7' : (props.isOpen ? '0.5' : '0')};
   user-select: ${(props) => props.isOpen ? 'auto' : 'none'};
   pointer-events: ${(props) => props.isOpen ? 'auto' : 'none'};
 `
