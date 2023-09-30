@@ -280,7 +280,7 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
       .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
-  }, [isNoticeViewerOpen]);
+  }, [isNoticeViewerOpen, selectedSection, selectedNoticeLink]);
 
   const clickOutlink = () => {
     window.open('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedSection + '&seq=' + selectedNoticeLink + '&epTicket=INV', '_blank');
