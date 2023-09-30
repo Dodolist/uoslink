@@ -72,8 +72,9 @@ const NoticeViewerInfoItem = styled.div`
 
 const NoticeViewerDivider = styled.div`
   height: 1px;
-  background-color: #00000018;
+  background-color: ${props => props.theme.mode === 'light' ? '#00000020' : '#ffffff20'};
   margin-bottom: 12px;
+  border-radius: 1px;
 `
 
 const NoticeViewerContentWrapper = styled.div`
@@ -190,7 +191,7 @@ const FloatButtonWrapper = styled.div`
   width: 100%;
   position: absolute;
   top: 0;
-  left: calc(100% + 24px);
+  left: calc(100% + 16px);
 
   display: flex;
   flex-direction: column;
