@@ -76,7 +76,7 @@ const NoticeViewerDivider = styled.div`
   margin-bottom: 12px;
 `
 
-const NoticeViewerContent = styled.div`
+const NoticeViewerContentWrapper = styled.div`
   word-break: break-all;
   display: flex;
   flex-direction: column;
@@ -90,6 +90,13 @@ const NoticeViewerContent = styled.div`
   scrollbar-width: none; /* 파이어폭스 */
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라 브라우저 */
+  }
+`
+
+const NoticeViewerContent = styled.div`
+  filter: ${props => props.theme.mode === 'dark' ? 'invert(1)' : 'invert(0)'};
+  .vw-con img {
+    filter: ${props => props.theme.mode === 'dark' ? 'invert(1)' : 'invert(0)'};
   }
 `
 
@@ -321,7 +328,7 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
           <NoticeViewerInfoItem>{ NoticeItem.writtenAt }</NoticeViewerInfoItem>
         </NoticeViewerInfo>
         <NoticeViewerDivider />
-        <NoticeViewerContent>
+        <NoticeViewerContentWrapper>
           { NoticeItem.attachedFile && NoticeItem.attachedFile.length > 0 && (
             <div>
             <NoticeAttachedFile>
@@ -345,8 +352,10 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
             <NoticeViewerDivider />
           </div>
           )}
-          <div dangerouslySetInnerHTML={{__html: NoticeItem.content}} />
-        </NoticeViewerContent>
+          <NoticeViewerContent
+            dangerouslySetInnerHTML={{__html: NoticeItem.content}}
+          />
+        </NoticeViewerContentWrapper>
         <FloatButtonWrapper>
           <FloatButton src={closeIcon} onClick={closeNoticeViewer} />
           <FloatButton src={outlinkIcon} onClick={clickOutlink}/>
