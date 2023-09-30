@@ -369,7 +369,7 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
       <NoticeViewerContainer isShow={isNoticeViewerOpen} >
         <LoadingWrapper>
           <LoadingIcon src={loadingIcon} />
-          <LoadingText>공지사항을 불러오는 중입니다...</LoadingText>
+          <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>
           <FloatButton src={closeIcon} onClick={closeNoticeViewer} />
