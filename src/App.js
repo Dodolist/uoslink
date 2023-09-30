@@ -19,6 +19,8 @@ import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
+import NoticeViewer from './components/NoticeViewer';
+
 const ContentContainer = styled.div`
   display: grid;
   grid-template-rows: 40px 1fr;
@@ -101,11 +103,13 @@ const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [selectedSection, setSelectedSection] = useState('FA1');
+  const [selectedNoticeLink, setSelectedNoticeLink] = useState('');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isNoticeViewerOpen, setIsNoticeViewerOpen] = useState(false);
   
   const themeObject = {
     light: {
@@ -198,6 +202,16 @@ const App = () => {
   const closeConfirmModal = () => {
     setIsConfirmModalOpen(false);
   };
+  
+  const openNoticeViewer = (link) => {
+    setSelectedNoticeLink(link);
+    setIsNoticeViewerOpen(true);
+  };
+
+  const closeNoticeViewer = () => {
+    setSelectedNoticeLink('');
+    setIsNoticeViewerOpen(false);
+  };
 
   return (
     <ThemeProvider theme={themeObject[theme]}>
@@ -228,6 +242,7 @@ const App = () => {
               />
             </div>
             <NoticeList
+              openNoticeViewer={openNoticeViewer}
               selectedSection={selectedSection}
             />
           </ContentContainer>
@@ -241,12 +256,18 @@ const App = () => {
           isSideBarOpen={isSideBarOpen}
         />
       </div>
-      <BlackScreen isOpen={isConfirmModalOpen}/>
+      <BlackScreen isOpen={isConfirmModalOpen} />
       <ConfirmModal
         isConfirmModalOpen={isConfirmModalOpen}
         title={'읽은 공지 내역을 삭제하실 건가요?'}
         content={'삭제한 공지 내역은 되돌릴 수 없어요.'}
         closeConfirmModal={closeConfirmModal}
+      />
+      <NoticeViewer
+        isNoticeViewerOpen={isNoticeViewerOpen}
+        selectedSection={selectedSection}
+        selectedNoticeLink={selectedNoticeLink}
+        closeNoticeViewer={closeNoticeViewer}
       />
     </ThemeProvider>
   );

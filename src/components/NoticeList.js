@@ -13,7 +13,7 @@ const showNoticeAnimation = keyframes`
   } 
 `;
 
-const NoticeList = ({selectedSection}) => {
+const NoticeList = ({selectedSection, openNoticeViewer}) => {
   const [items, setItems] = useState([]);
   const listRef = useRef(null);
   var noticeIdList;
@@ -29,7 +29,6 @@ const NoticeList = ({selectedSection}) => {
   } else {
     noticeIdList = JSON.parse(localStorage.getItem('noticeId'));
   }
-
 
   useEffect(() => {
     if (listRef.current) {
@@ -60,7 +59,10 @@ const NoticeList = ({selectedSection}) => {
     </NoticeListContainer>
   );
 
-  function clickNoticeItem(id) {
+  function clickNoticeItem(id, link) {
+    if(selectedSection !== 'SC1') {
+      openNoticeViewer(link);
+    }
     if(noticeIdList[selectedSection].includes(id)) {
       return;
     }
@@ -72,7 +74,7 @@ const NoticeList = ({selectedSection}) => {
     if (!data || typeof data !== 'object' || !data.title) {
       return null; // 렌더링하지 않음 또는 오류 처리
     }
-    return (
+    return selectedSection === 'SC1' ? (
       <NoticeItemContainer
         alreadyRead = {noticeIdList[selectedSection].includes(data.id)}
         onClick={() => clickNoticeItem(data.id)}
@@ -84,11 +86,25 @@ const NoticeList = ({selectedSection}) => {
           <NoticeInfo>{data.views}회</NoticeInfo>
         </NoticeWrapper>
       </NoticeItemContainer>
+    ) : (
+      <NoticeItemContainer
+        alreadyRead = {noticeIdList[selectedSection].includes(data.id)}
+        onClick={() => clickNoticeItem(data.id, data.link)}
+      >
+        <NoticeTitle>{data.title}</NoticeTitle>
+        <NoticeWrapper>
+          <NoticeInfo>{data.writtenAt}</NoticeInfo>
+          <NoticeInfo>{data.author}</NoticeInfo>
+          <NoticeInfo>{data.views}회</NoticeInfo>
+        </NoticeWrapper>
+      </NoticeItemContainer>
     );
   }
 };
 
-export default React.memo(NoticeList);
+export default React.memo(NoticeList, (prevProps, nextProps) => {
+    return prevProps.selectedSection === nextProps.selectedSection;
+});
 
 const NoticeListContainer = styled.div`
   display: flex;
