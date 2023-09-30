@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import attachedFileIcon from '../../images/attached-file-icon.svg';
 import closeIcon from '../../images/gray-close-icon.svg';
+import outlinkIcon from '../../images/outlink-icon.svg';
 import loadingIcon from '../../images/loading-icon.svg';
 import BlackScreen from '../BlackScreen';
 
@@ -178,16 +179,25 @@ const NoticeAttachedFileItemViewButton = styled.a`
   `}
 `
 
-const CloseButton = styled.img`
+const FloatButtonWrapper = styled.div`
+  width: 100%;
   position: absolute;
   top: 0;
   left: calc(100% + 24px);
 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
+
+const FloatButton = styled.img`
   background-color: ${props => props.theme.foreground};
   padding: 12px;
   border-radius: 12px;
-
   cursor: pointer;
+
+  width: 48px;
+  height: 48px;
 
   &:hover {
     filter: brightness(0.9);
@@ -264,6 +274,10 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
       });
   }, [isNoticeViewerOpen]);
 
+  const clickOutlink = () => {
+    window.open('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedSection + '&seq=' + selectedNoticeLink + '&epTicket=INV', '_blank');
+  };
+
   /*
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [newPosition, setNewPosition] = useState({ x: 0, y: 0 });
@@ -333,7 +347,10 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
           )}
           <div dangerouslySetInnerHTML={{__html: NoticeItem.content}} />
         </NoticeViewerContent>
-        <CloseButton src={closeIcon} onClick={closeNoticeViewer} />
+        <FloatButtonWrapper>
+          <FloatButton src={closeIcon} onClick={closeNoticeViewer} />
+          <FloatButton src={outlinkIcon} onClick={clickOutlink}/>
+        </FloatButtonWrapper>
       </NoticeViewerContainer>
     </div>
   ) : (
@@ -344,7 +361,10 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
           <LoadingIcon src={loadingIcon} />
           <LoadingText>공지사항을 불러오는 중입니다...</LoadingText>
         </LoadingWrapper>
-        <CloseButton src={closeIcon} onClick={closeNoticeViewer} />
+        <FloatButtonWrapper>
+          <FloatButton src={closeIcon} onClick={closeNoticeViewer} />
+          <FloatButton src={outlinkIcon}/>
+        </FloatButtonWrapper>
       </NoticeViewerContainer>
     </div>
   );
