@@ -305,8 +305,16 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
       bookmarkList = JSON.parse(localStorage.getItem('bookmark'));
     }
     if (isBookmark) {
+      axios.post('https://www.iflab.run/api/notices/bookmark/delete', {
+        id: selectedNoticeId
+      });
+
       bookmarkList = bookmarkList.filter(item => item.id !== selectedNoticeId);
     } else {
+      axios.post('https://www.iflab.run/api/notices/bookmark/add', {
+        id: selectedNoticeId
+      });
+
       let bookmarkObject = {
         id: selectedNoticeId,
         title: NoticeItem.title,
