@@ -445,8 +445,8 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
           <FloatButton onClick={closeNoticeViewer}>
             <FloatButtonIcon src={closeIcon} />
           </FloatButton>
-          <FloatButton>
-            <FloatButtonIcon src={bookmarkIcon} />
+          <FloatButton active={isBookmark}>
+            <FloatButtonIcon active={isBookmark} src={bookmarkIcon} />
           </FloatButton>
           <FloatButton>
             <FloatButtonIcon src={outlinkIcon} />

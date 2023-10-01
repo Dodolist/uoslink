@@ -23,7 +23,7 @@ const showNoticeAnimation = keyframes`
   } 
 `;
 
-const NoticeList = ({selectedSection, openNoticeViewer}) => {
+const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const listRef = useRef(null);
@@ -37,6 +37,7 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
       'FA35': [],
       'SC1': []
     };
+    localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
   } else {
     alreadyReadList = JSON.parse(localStorage.getItem('noticeId'));
   }
@@ -95,7 +96,7 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
     </NoticeListContainer>
   );
 
-  function clickNoticeItem(id, section, link) {
+  function sendNoticeInfo(id, section, link) {
     // 장학공지가 아니면 openNoticeViewer 실행
     if(selectedSection !== 'SC1') {
       openNoticeViewer(id, section, link);
@@ -113,15 +114,25 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
   };
 
   function NoticeItem({ data }) {
+    const [alreadyRead, setAlreadyRead] = useState(false);
+    useEffect(() => {
+      if (selectedSection !== 'BM') {
+        setAlreadyRead(alreadyReadList[selectedSection]?.includes(data.id));
+      }
+    }, [data.id]);
+
     if (!data || typeof data !== 'object' || !data.title) {
       return null; // 렌더링하지 않음 또는 오류 처리
     }
+
+    function clickNoticeItem(id, section, link) {
+      sendNoticeInfo(id, section, link);
+      setAlreadyRead(true);
+    };
+
     return (
       <NoticeItemContainer
-        alreadyRead={
-          selectedSection !== 'BM' &&
-          alreadyReadList[selectedSection]?.includes(data.id)
-        }
+        alreadyRead={alreadyRead}
         href={selectedSection === 'SC1' ? data.link : undefined}
         onClick={() => selectedSection !== 'BM' ? clickNoticeItem(data.id, selectedSection, data.link) : clickNoticeItem(data.id, data.section, data.link)}
       >
