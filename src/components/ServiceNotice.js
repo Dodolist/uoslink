@@ -55,7 +55,7 @@ const ServiceNotice = () => {
   const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
-    let url = 'https://www.iflab.run/api/check/version/0.4.0';
+    let url = 'https://www.iflab.run/api/check/version/0.5.0';
     setTimeout(() => {
       axios.get(url)
         .then((response) => {

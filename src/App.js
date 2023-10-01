@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
+import bookmarkIcon from './images/bookmark-icon.svg';
 import noticeFA1Icon from './images/notice-FA1-icon.svg';
 import noticeFA2Icon from './images/notice-FA2-icon.svg';
 import noticeFA35Icon from './images/notice-FA35-icon.svg';
@@ -24,7 +25,7 @@ import NoticeViewer from './components/NoticeViewer';
 const ContentContainer = styled.div`
   display: grid;
   grid-template-rows: 40px 1fr;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 140px 1fr;
 
   width: 100%;
   max-width: 1080px;
@@ -46,6 +47,9 @@ const MoveLink = styled.a`
   letter-spacing: -1px;
   cursor: pointer;
   text-decoration: underline;
+  opacity: ${(props) => (props.isShow ? 1 : 0)};
+  user-select: ${(props) => (props.isShow ? 'auto' : 'none')};
+  pointer-events: ${(props) => (props.isShow ? 'auto' : 'none')};
 `;
 
 const Offline = styled.div`
@@ -71,6 +75,11 @@ const OfflineText = styled.span`
 `;
 
 const SectionList = [
+  {
+    id: 'BM',
+    icon: bookmarkIcon,
+    name: '내 북마크'
+  },
   {
     id: 'FA1',
     icon: noticeFA1Icon,
@@ -103,6 +112,8 @@ const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [selectedSection, setSelectedSection] = useState('FA1');
+  const [selectedNoticeId, setSelectedNoticeId] = useState('');
+  const [selectedNoticeSection, setSelectedNoticeSection] = useState('');
   const [selectedNoticeLink, setSelectedNoticeLink] = useState('');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
@@ -138,12 +149,15 @@ const App = () => {
 
   const selectSection = (id) => {
     setSelectedSection(id);
-
+    
     for(let i = 0; i < SectionList.length; i++) {
       if(SectionList[i].id === id) {
         setSelectedSectionIcon(SectionList[i].icon);
         setSelectedSectionName(SectionList[i].name);
-        if(id === 'SC1') {
+        if(id === 'BM') {
+          setSelectedSectionLink('');
+        }
+        else if(id === 'SC1') {
           setSelectedSectionLink('https://scholarship.uos.ac.kr/scholarship/notice/notice/list.do?brdBbsseq=1');
         } else {
           setSelectedSectionLink('https://www.uos.ac.kr/korNotice/list.do?list_id=' + SectionList[i].id);
@@ -203,12 +217,16 @@ const App = () => {
     setIsConfirmModalOpen(false);
   };
   
-  const openNoticeViewer = (link) => {
+  const openNoticeViewer = (id, section, link) => {
+    setSelectedNoticeId(id);
+    setSelectedNoticeSection(section);
     setSelectedNoticeLink(link);
     setIsNoticeViewerOpen(true);
   };
 
   const closeNoticeViewer = () => {
+    setSelectedNoticeId('');
+    setSelectedNoticeSection('');
     setSelectedNoticeLink('');
     setIsNoticeViewerOpen(false);
   };
@@ -233,7 +251,12 @@ const App = () => {
                 selectedSectionIcon={selectedSectionIcon}
                 selectedSectionName={selectedSectionName}
               />
-              <MoveLink href={selectedSectionLink}>사이트 이동</MoveLink>
+              <MoveLink
+                isShow={selectedSectionLink !== ''}
+                href={selectedSectionLink}
+              >
+                사이트 이동
+              </MoveLink>
             </ContentTop>
             <div>
               <NavBar
@@ -265,7 +288,8 @@ const App = () => {
       />
       <NoticeViewer
         isNoticeViewerOpen={isNoticeViewerOpen}
-        selectedSection={selectedSection}
+        selectedNoticeId={selectedNoticeId}
+        selectedNoticeSection={selectedNoticeSection}
         selectedNoticeLink={selectedNoticeLink}
         closeNoticeViewer={closeNoticeViewer}
       />

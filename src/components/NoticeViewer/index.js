@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import attachedFileIcon from '../../images/attached-file-icon.svg';
 import closeIcon from '../../images/gray-close-icon.svg';
+import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
 import outlinkIcon from '../../images/outlink-icon.svg';
 import loadingIcon from '../../images/loading-icon.svg';
 import BlackScreen from '../BlackScreen';
@@ -198,11 +199,13 @@ const FloatButtonWrapper = styled.div`
   gap: 16px;
 `
 
-const FloatButton = styled.img`
-  background-color: ${props => props.theme.foreground};
+const FloatButton = styled.div`
+  position: relative;
+  background-color: ${props => props.active ? '#f0f1f500' : props.theme.foreground};
   padding: 12px;
   border-radius: 12px;
   cursor: pointer;
+  overflow: hidden;
 
   width: 48px;
   height: 48px;
@@ -212,7 +215,30 @@ const FloatButton = styled.img`
   }
   &:active {
     filter: brightness(0.8);
+    transform: translateY(2px);
   }
+  &::before {
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    content: '';
+    width: ${props => props.active ? '68px' : '0px'};
+    height: ${props => props.active ? '68px' : '0px'};
+    opacity: ${props => props.active ? '1' : '0'};
+    background-color: #408cff;
+    border-radius: 50%;
+    user-select: none;
+  }
+`
+const FloatButtonIcon = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  filter: ${props => props.active ? 'brightness(2)' : 'brightness(1)'};
 `
 
 const LoadingWrapper = styled.div`
@@ -263,16 +289,29 @@ const NoticeItem = {
 
 */
 
-const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink, closeNoticeViewer }) => {
+const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink, closeNoticeViewer }) => {
   const [NoticeItem, setNoticeItem] = useState(null);
+  const [isBookmark, setIsBookmark] = useState(false);
   useEffect(() => {
+    // 공지사항이 닫히면 0.3초 후에 공지사항 데이터를 초기화한다.
     if (!isNoticeViewerOpen) {
       setTimeout(() => {
         setNoticeItem(null);
       }, 300);
     }
-    if (!isNoticeViewerOpen || !selectedSection || !selectedNoticeLink) return;
-    let url = 'https://www.iflab.run/api/scraping/notice/content/' + selectedSection + '/' + selectedNoticeLink;
+
+    if (localStorage.getItem('bookmark')) {
+      let bookmarkList = JSON.parse(localStorage.getItem('bookmark'));
+      if (bookmarkList.find(item => item.id === selectedNoticeId)) {
+        setIsBookmark(true);
+      } else {
+        setIsBookmark(false);
+      }
+    }
+
+    // 공지사항이 열리면 공지사항 데이터를 가져온다.
+    if (!isNoticeViewerOpen || !selectedNoticeId || !selectedNoticeSection || !selectedNoticeLink) return;
+    let url = 'https://www.iflab.run/api/scraping/notice/content/' + selectedNoticeSection + '/' + selectedNoticeLink;
     axios.get(url)
       .then(response => {
         setNoticeItem(response.data);
@@ -280,10 +319,34 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
       .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
-  }, [isNoticeViewerOpen, selectedSection, selectedNoticeLink]);
+  }, [isNoticeViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink]);
+
+  const clickBookmark = () => {
+    let bookmarkList = [];
+    if (localStorage.getItem('bookmark')) {
+      bookmarkList = JSON.parse(localStorage.getItem('bookmark'));
+    }
+    if (isBookmark) {
+      bookmarkList = bookmarkList.filter(item => item.id !== selectedNoticeId);
+    } else {
+      let bookmarkObject = {
+        id: selectedNoticeId,
+        title: NoticeItem.title,
+        author: NoticeItem.author,
+        writtenAt: NoticeItem.writtenAt,
+        section: selectedNoticeSection,
+        link: selectedNoticeLink
+      };
+      bookmarkList.push(bookmarkObject);
+    }
+    localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
+    setIsBookmark(!isBookmark);
+  };
 
   const clickOutlink = () => {
-    window.open('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedSection + '&seq=' + selectedNoticeLink + '&epTicket=INV', '_blank');
+    setTimeout(() => {
+      window.open('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedNoticeSection + '&seq=' + selectedNoticeLink + '&epTicket=INV', '_blank');
+    }, 100);
   };
 
   /*
@@ -358,8 +421,15 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
           />
         </NoticeViewerContentWrapper>
         <FloatButtonWrapper>
-          <FloatButton src={closeIcon} onClick={closeNoticeViewer} />
-          <FloatButton src={outlinkIcon} onClick={clickOutlink}/>
+          <FloatButton onClick={closeNoticeViewer}>
+            <FloatButtonIcon src={closeIcon} />
+          </FloatButton>
+          <FloatButton active={isBookmark} onClick={clickBookmark}>
+            <FloatButtonIcon active={isBookmark} src={bookmarkIcon} />
+          </FloatButton>
+          <FloatButton onClick={clickOutlink}>
+            <FloatButtonIcon src={outlinkIcon} />
+          </FloatButton>
         </FloatButtonWrapper>
       </NoticeViewerContainer>
     </div>
@@ -372,8 +442,15 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedSection, selectedNoticeLink,
           <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>
-          <FloatButton src={closeIcon} onClick={closeNoticeViewer} />
-          <FloatButton src={outlinkIcon}/>
+          <FloatButton onClick={closeNoticeViewer}>
+            <FloatButtonIcon src={closeIcon} />
+          </FloatButton>
+          <FloatButton>
+            <FloatButtonIcon src={bookmarkIcon} />
+          </FloatButton>
+          <FloatButton>
+            <FloatButtonIcon src={outlinkIcon} />
+          </FloatButton>
         </FloatButtonWrapper>
       </NoticeViewerContainer>
     </div>

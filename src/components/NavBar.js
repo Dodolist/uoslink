@@ -1,4 +1,5 @@
 import styled, { css }from 'styled-components';
+import bookmarkIcon from '../images/bookmark-icon.svg';
 import noticeFA1Icon from '../images/notice-FA1-icon.svg';
 import noticeFA2Icon from '../images/notice-FA2-icon.svg';
 import noticeFA35Icon from '../images/notice-FA35-icon.svg';
@@ -36,13 +37,26 @@ const SectionList = [
 const NavBar = ({onSectionClick, selectedSection}) => {
   return (
     <NavBarContainer>
+      <Section
+        onClick={() => {
+          onSectionClick('BM');
+        }}
+      >
+        <SectionIcon src={bookmarkIcon} />
+        <SectionName
+          selected={'BM' === selectedSection}
+        >
+        내 북마크
+        </SectionName>
+      </Section>
+      <NavBarDivider />
       {SectionList.map((section) => (
-        <Section key={section.id}
-          selected={section.id === selectedSection}
-          className={section.id === selectedSection ? 'selected' : ''}
+        <Section
+          key={section.id}
           onClick={() => {
             onSectionClick(section.id);
-          }}>
+          }}
+        >
           <SectionIcon src={section.icon} />
           <SectionName selected={
             section.id === selectedSection
@@ -62,7 +76,7 @@ const NavBarContainer = styled.div`
   border-radius: 8px;
   gap: 16px;
   background-color: ${props => props.theme.foreground};
-  min-width: 160px;
+  min-width: 140px;
 `;
 
 const Section = styled.div`
@@ -97,3 +111,10 @@ const SectionName = styled.span`
     opacity: 1;
   }
 `;
+
+const NavBarDivider = styled.div`
+  height: 1px;
+  background-color: ${props => props.theme.mode === 'light' ? '#00000020' : '#ffffff20'};
+  margin: -4px 0;
+  border-radius: 1px;
+`

@@ -1,6 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+import loadingIcon from '../images/loading-icon.svg';
+
+const rotateAnimation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1080deg);
+  } 
+`;
 
 const showNoticeAnimation = keyframes`
   from {
@@ -15,11 +25,12 @@ const showNoticeAnimation = keyframes`
 
 const NoticeList = ({selectedSection, openNoticeViewer}) => {
   const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const listRef = useRef(null);
-  var noticeIdList;
+  var alreadyReadList;
 
   if(localStorage.getItem('noticeId') == null) {
-     noticeIdList = {
+     alreadyReadList = {
       'FA1': [],
       'FA2': [],
       'FA34': [],
@@ -27,16 +38,25 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
       'SC1': []
     };
   } else {
-    noticeIdList = JSON.parse(localStorage.getItem('noticeId'));
+    alreadyReadList = JSON.parse(localStorage.getItem('noticeId'));
   }
 
   useEffect(() => {
     if (listRef.current) {
       listRef.current.scrollTop = 0;
     }
-    if(sessionStorage.getItem(selectedSection) != null) {
+    if(selectedSection === 'BM') {
+      if(localStorage.getItem('bookmark') !== null) {
+        setItems(JSON.parse(localStorage.getItem('bookmark')));
+      } else {
+        localStorage.setItem('bookmark', JSON.stringify([]));
+        setItems([]);
+      }
+    }
+    else if(sessionStorage.getItem(selectedSection) != null) {
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
     } else {
+      setIsLoading(true);
       setItems([]);
       let url = 'https://www.iflab.run/api/notices/' + selectedSection;
 
@@ -44,6 +64,7 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
         .then(response => {
           setItems(response.data);
           sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
+          setIsLoading(false);
         })
         .catch(error => {
           console.error('API 요청 중 오류 발생:');
@@ -53,49 +74,57 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
 
   return (
     <NoticeListContainer ref={listRef}>
-      {items.map((item, index) => (
-        <NoticeItem key={index} data={item} />
-      ))}
+
+      {isLoading ? (
+        <LoadingIcon src={loadingIcon} />
+      ) : items.length === 0 ? (
+        <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
+      ) : (
+        items.map((item, index) => (
+          <NoticeItem key={index} data={item} />
+        ))
+      )}
     </NoticeListContainer>
   );
 
-  function clickNoticeItem(id, link) {
+  function clickNoticeItem(id, section, link) {
+    // 장학공지가 아니면 openNoticeViewer 실행
     if(selectedSection !== 'SC1') {
-      openNoticeViewer(link);
+      openNoticeViewer(id, section, link);
     }
-    if(noticeIdList[selectedSection].includes(id)) {
+    // 이미 읽은 공지면 return
+    // 그렇지 않으면 localStorage에 저장
+    if (selectedSection === 'BM') {
       return;
     }
-    noticeIdList[selectedSection].push(id);
-    localStorage.setItem('noticeId', JSON.stringify(noticeIdList));
+    if(alreadyReadList[selectedSection].includes(id)) {
+      return;
+    }
+    alreadyReadList[selectedSection].push(id);
+    localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
   };
 
   function NoticeItem({ data }) {
     if (!data || typeof data !== 'object' || !data.title) {
       return null; // 렌더링하지 않음 또는 오류 처리
     }
-    return selectedSection === 'SC1' ? (
+    return (
       <NoticeItemContainer
-        alreadyRead = {noticeIdList[selectedSection].includes(data.id)}
-        onClick={() => clickNoticeItem(data.id)}
-        href={data.link}>
-        <NoticeTitle>{data.title}</NoticeTitle>
-        <NoticeWrapper>
-          <NoticeInfo>{data.writtenAt}</NoticeInfo>
-          <NoticeInfo>{data.author}</NoticeInfo>
-          <NoticeInfo>{data.views}회</NoticeInfo>
-        </NoticeWrapper>
-      </NoticeItemContainer>
-    ) : (
-      <NoticeItemContainer
-        alreadyRead = {noticeIdList[selectedSection].includes(data.id)}
-        onClick={() => clickNoticeItem(data.id, data.link)}
+        alreadyRead={
+          selectedSection !== 'BM' &&
+          alreadyReadList[selectedSection]?.includes(data.id)
+        }
+        href={selectedSection === 'SC1' ? data.link : undefined}
+        onClick={() => selectedSection !== 'BM' ? clickNoticeItem(data.id, selectedSection, data.link) : clickNoticeItem(data.id, data.section, data.link)}
       >
         <NoticeTitle>{data.title}</NoticeTitle>
         <NoticeWrapper>
-          <NoticeInfo>{data.writtenAt}</NoticeInfo>
           <NoticeInfo>{data.author}</NoticeInfo>
-          <NoticeInfo>{data.views}회</NoticeInfo>
+          <NoticeInfo>{data.writtenAt}</NoticeInfo>
+          {data.views ?
+            <NoticeInfo>{data.views}회</NoticeInfo>
+            : <NoticeInfo />
+          }
         </NoticeWrapper>
       </NoticeItemContainer>
     );
@@ -107,6 +136,7 @@ export default React.memo(NoticeList, (prevProps, nextProps) => {
 });
 
 const NoticeListContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 75vh;
@@ -181,3 +211,25 @@ const NoticeInfo = styled.span`
   }
 `;
 
+const NoItemText = styled.span`
+  animation: ${showNoticeAnimation} 0.5s ease-in-out forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+
+  color: ${props => props.theme.contentText};
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -3px;
+`;
+
+const LoadingIcon = styled.img`
+  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+`
