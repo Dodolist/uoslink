@@ -267,28 +267,6 @@ const LoadingText = styled.div`
   letter-spacing: -2px;
 `
 
-/*
-
-const NoticeItem = {
-  title: "산업통상자원부 R&D 설명회 개최 안내",
-  author: "국제교류과",
-  writtenAt: "2023-09-22",
-  attachedFile: [
-    {
-      name: "산업통상자원부 R&D 설명회 개최 안내",
-      downloadLink: "https://www.uos.ac.kr/common/board-download.do?listId=FA1&seq=26113&fSeq=1",
-      viewLink: "https://file.uos.ac.kr/upload/docconvertor/uos/202309/1696057370879/index.html"
-    },
-    {
-      name: "교원임용규정 신구조문 대비표.hwp",
-      downloadLink: "https://www.uos.ac.kr/common/board-download.do?listId=FA1&seq=26113&fSeq=2",
-      viewLink: "https://file.uos.ac.kr/upload/docconvertor/uos/202309/1696057370879/index.html"
-    }
-  ]
-};
-
-*/
-
 const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink, closeNoticeViewer }) => {
   const [NoticeItem, setNoticeItem] = useState(null);
   const [isBookmark, setIsBookmark] = useState(false);
