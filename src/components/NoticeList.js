@@ -46,12 +46,20 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
       listRef.current.scrollTop = 0;
     }
     if(selectedSection === 'BM') {
+      setIsLoading(true);
       if(localStorage.getItem('bookmark') !== null) {
-        setItems(JSON.parse(localStorage.getItem('bookmark')));
+        let bookmark = JSON.parse(localStorage.getItem('bookmark'));
+        bookmark = bookmark.sort((a, b) => {
+          const aDate = new Date(a.writtenAt);
+          const bDate = new Date(b.writtenAt);
+          return bDate - aDate;
+        });
+        setItems(bookmark);
       } else {
         localStorage.setItem('bookmark', JSON.stringify([]));
         setItems([]);
       }
+      setIsLoading(false);
     }
     else if(sessionStorage.getItem(selectedSection) != null) {
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
@@ -119,16 +127,18 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
       >
         <NoticeTitle>{data.title}</NoticeTitle>
         <NoticeWrapper>
+          {selectedSection === 'BM' ? (
+            <NoticeInfo blue="true">
+              {data.section === 'FA1' ? '일반공지' :
+              data.section === 'FA2' ? '학사공지' :
+              data.section === 'FA35' ? '창업공지' :
+              data.section === 'SC1' ? '장학공지' :
+              data.section === 'FA34' ? '직원채용' :
+              ''}
+            </NoticeInfo>
+          ) : null}
           <NoticeInfo>{data.author}</NoticeInfo>
           <NoticeInfo>{data.writtenAt}</NoticeInfo>
-          <NoticeInfo blue="true">
-            {data.section === 'FA1' ? '일반공지' :
-            data.section === 'FA2' ? '학사공지' :
-            data.section === 'FA35' ? '창업공지' :
-            data.section === 'SC1' ? '장학공지' :
-            data.section === 'FA34' ? '직원채용' :
-            ''}
-          </NoticeInfo>
           <NoticeInfo>{data.views ? `${data.views}회` : null}</NoticeInfo>
         </NoticeWrapper>
       </NoticeItemContainer>
