@@ -6,7 +6,6 @@ import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
 import roadworkIcon from '../../images/roadwork-icon.svg';
 import noMenuIcon from '../../images/no-menu-icon.svg';
-import chuseokIcon from '../../images/chuseok-icon.png';
 import date1003Icon from '../../images/1003-icon.svg';
 import date1009Icon from '../../images/1009-icon.svg';
 import holidayIcon from '../../images/holiday-icon.svg';
@@ -217,20 +216,7 @@ const FoodCard = ({ isShow, handleClose }) => {
       });
   }, [isShow, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
-  if (selectedFoodDate == '20230928' || selectedFoodDate == '20230929' || (selectedFoodDate == '20230927' && selectedFoodTime == '2')) {
-    renderComponent = (
-      <MenuContainer>
-        <InfoWrapper>
-          <NoMenuCard>
-            <NoMenuIcon src={chuseokIcon} />
-            <NoMenuText> 추석 연휴 </NoMenuText>
-            <NoMenuText size={'small'}>09. 28 ~ 09. 30</NoMenuText>
-          </NoMenuCard>
-        </InfoWrapper>
-      </MenuContainer>
-    );
-  }
-  else if (selectedFoodDate == '20231002') {
+  if (selectedFoodDate == '20231002') {
     renderComponent = (
       <MenuContainer>
         <InfoWrapper>
