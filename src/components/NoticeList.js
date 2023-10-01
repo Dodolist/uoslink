@@ -121,10 +121,15 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
         <NoticeWrapper>
           <NoticeInfo>{data.author}</NoticeInfo>
           <NoticeInfo>{data.writtenAt}</NoticeInfo>
-          {data.views ?
-            <NoticeInfo>{data.views}회</NoticeInfo>
-            : <NoticeInfo />
-          }
+          <NoticeInfo blue="true">
+            {data.section === 'FA1' ? '일반공지' :
+            data.section === 'FA2' ? '학사공지' :
+            data.section === 'FA35' ? '창업공지' :
+            data.section === 'SC1' ? '장학공지' :
+            data.section === 'FA34' ? '직원채용' :
+            ''}
+          </NoticeInfo>
+          <NoticeInfo>{data.views ? `${data.views}회` : null}</NoticeInfo>
         </NoticeWrapper>
       </NoticeItemContainer>
     );
@@ -209,6 +214,11 @@ const NoticeInfo = styled.span`
     flex-grow: 1;
     text-align: right;
   }
+
+  ${props => props.blue && css`
+    color: ${props => props.theme.primary};
+  `}
+  
 `;
 
 const NoItemText = styled.span`
