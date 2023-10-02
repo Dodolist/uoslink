@@ -53,6 +53,7 @@ const ServiceNoticeText = styled('span')`
 
 const ServiceNotice = () => {
   const [isShow, setIsShow] = useState(false);
+  const [serviceNotice, setServiceNotice] = useState('');
 
   useEffect(() => {
     let url = 'https://www.iflab.run/api/check/version/0.6.0';
@@ -69,7 +70,13 @@ const ServiceNotice = () => {
           }
         })
         .catch((error) => {
-          if(error.response.status) {
+          if(error.response.status === 300) {
+            setServiceNotice(error.response.data);
+            setIsShow(true);
+            setTimeout(() => {
+              setIsShow(false);
+            }, 10000);
+          } else if(error.response.status) {
             setIsShow(true);
             setTimeout(() => {
               setIsShow(false);
@@ -93,7 +100,7 @@ const ServiceNotice = () => {
         공지
       </ServiceNoticeText>
       <ServiceNoticeText isShow={isShow}>
-        <b>새로운 버전</b>이 업데이트 되었어요! 크롬을 재시작 하면 업데이트 됩니다.
+        { serviceNotice ? serviceNotice : (<div><b>새로운 버전</b>이 업데이트 되었어요! 크롬을 재시작 하면 업데이트 됩니다.</div>)}
       </ServiceNoticeText>
     </ServiceNoticeWrap>
   );
