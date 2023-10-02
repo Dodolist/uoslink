@@ -97,10 +97,7 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
   );
 
   function sendNoticeInfo(id, section, link) {
-    // 장학공지가 아니면 openNoticeViewer 실행
-    if(selectedSection !== 'SC1') {
-      openNoticeViewer(id, section, link);
-    }
+    openNoticeViewer(id, section, link);
     // 이미 읽은 공지면 return
     // 그렇지 않으면 localStorage에 저장
     if (selectedSection === 'BM') {
@@ -133,7 +130,6 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
     return (
       <NoticeItemContainer
         alreadyRead={alreadyRead}
-        href={selectedSection === 'SC1' ? data.link : undefined}
         onClick={() => selectedSection !== 'BM' ? clickNoticeItem(data.id, selectedSection, data.link) : clickNoticeItem(data.id, data.section, data.link)}
       >
         <NoticeTitle>{data.title}</NoticeTitle>

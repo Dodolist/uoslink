@@ -225,9 +225,11 @@ const App = () => {
   };
 
   const closeNoticeViewer = () => {
-    setSelectedNoticeId('');
-    setSelectedNoticeSection('');
-    setSelectedNoticeLink('');
+    setTimeout(() => {
+      setSelectedNoticeId('');
+      setSelectedNoticeSection('');
+      setSelectedNoticeLink('');
+    }, 300);
     setIsNoticeViewerOpen(false);
   };
 

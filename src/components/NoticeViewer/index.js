@@ -289,14 +289,28 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
 
     // 공지사항이 열리면 공지사항 데이터를 가져온다.
     if (!isNoticeViewerOpen || !selectedNoticeId || !selectedNoticeSection || !selectedNoticeLink) return;
-    let url = 'https://www.iflab.run/api/scraping/notice/content/' + selectedNoticeSection + '/' + selectedNoticeLink;
-    axios.get(url)
-      .then(response => {
-        setNoticeItem(response.data);
-      })
-      .catch(error => {
-        console.error('API 요청 중 오류 발생:');
-      });
+    let url;
+    if (selectedNoticeSection === 'SC1') {
+      url = 'https://www.iflab.run/api/scraping/notice/content/scholarship';
+      axios.post(url, { url: selectedNoticeLink })
+        .then(response => {
+          setNoticeItem(response.data);
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('API 요청 중 오류 발생:');
+        });
+    } else {
+      url = 'https://www.iflab.run/api/scraping/notice/content/' + selectedNoticeSection + '/' + selectedNoticeLink;
+      axios.get(url)
+        .then(response => {
+          setNoticeItem(response.data);
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.error('API 요청 중 오류 발생:');
+        });
+    }
   }, [isNoticeViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink]);
 
   const clickBookmark = () => {
@@ -331,7 +345,11 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
 
   const clickOutlink = () => {
     setTimeout(() => {
-      window.open('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedNoticeSection + '&seq=' + selectedNoticeLink + '&epTicket=INV', '_blank');
+      if (selectedNoticeSection === 'SC1') {
+        window.open(selectedNoticeLink, '_blank');
+      } else {
+        window.open('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedNoticeSection + '&seq=' + selectedNoticeLink + '&epTicket=INV', '_blank');
+      }
     }, 100);
   };
 
@@ -390,12 +408,14 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
                       { file.name }
                     </NoticeAttachedFileItemName>
                   </NoticeAttachedFileItemNameWrapper>
-                  <NoticeAttachedFileItemViewButton
-                    href={file.viewLink} target="_blank"
-                    disabled={file.viewLink === ""}
-                  >
-                    바로보기
-                  </NoticeAttachedFileItemViewButton>
+                  { selectedNoticeSection !== 'SC1' && (
+                    <NoticeAttachedFileItemViewButton
+                      href={file.viewLink} target="_blank"
+                      disabled={file.viewLink === ""}
+                    >
+                      바로보기
+                    </NoticeAttachedFileItemViewButton>
+                  )}
                 </NoticeAttachedFileItem>
               ))}
             </NoticeAttachedFile>
