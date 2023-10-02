@@ -229,7 +229,7 @@ const App = () => {
       setSelectedNoticeId('');
       setSelectedNoticeSection('');
       setSelectedNoticeLink('');
-    }, 300);
+    }, 200);
     setIsNoticeViewerOpen(false);
   };
 
