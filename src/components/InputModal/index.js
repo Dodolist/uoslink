@@ -183,7 +183,7 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
         <Button onClick={clickCancelButton}>취소</Button>
         <Button
           color={"blue"}
-          type={isDisabled.toString()}
+          type={isDisabled ? "disabled" : "active"}
           onClick={checkSite}
         >
         {isModified ? '수정' : '추가'}
