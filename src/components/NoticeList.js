@@ -146,7 +146,7 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
           ) : null}
           <NoticeInfo>{data.author}</NoticeInfo>
           <NoticeInfo>{data.writtenAt}</NoticeInfo>
-          <NoticeInfo>{data.views ? `${data.views}회` : null}</NoticeInfo>
+          <NoticeInfo>{selectedSection !== 'BM' ? `${data.views}회` : null}</NoticeInfo>
         </NoticeWrapper>
       </NoticeItemContainer>
     );
