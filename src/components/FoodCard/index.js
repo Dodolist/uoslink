@@ -338,7 +338,6 @@ const FoodCard = ({ isShow, handleClose }) => {
           <NoMenuCard>
             <NoMenuIcon src={roadworkIcon} />
             <NoMenuText>임시 휴업중입니다</NoMenuText>
-            <NoMenuText size={'small'}>9월 중 재개 예정</NoMenuText>
           </NoMenuCard>
         </InfoWrapper>
       </MenuContainer>
