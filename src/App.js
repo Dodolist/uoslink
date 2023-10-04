@@ -118,7 +118,7 @@ const App = () => {
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
-  const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isNoticeViewerOpen, setIsNoticeViewerOpen] = useState(false);
   
@@ -165,6 +165,14 @@ const App = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if(!localStorage.getItem('isSideBarOpen')) {
+      localStorage.setItem('isSideBarOpen', 'true');
+    } else {
+      setIsSideBarOpen(localStorage.getItem('isSideBarOpen') === 'true');
+    }
+  }, []);
 
   useEffect(() => {
     // 온라인 및 오프라인 상태 변경 이벤트 핸들러 등록
