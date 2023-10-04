@@ -118,7 +118,7 @@ const App = () => {
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
-  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isNoticeViewerOpen, setIsNoticeViewerOpen] = useState(false);
   
