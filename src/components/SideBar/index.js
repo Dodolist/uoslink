@@ -64,7 +64,10 @@ const SideBar = ({ isSideBarOpen }) => {
   const closeInputModal = () => {
     setIsInputModalOpen(false);
     if (isModified) {
-      setHoveredShortCut(null);
+      setTimeout(() => {
+        setHoveredShortCut(null);
+        setIsModified(false);
+      }, 200);
     }
   };
 
