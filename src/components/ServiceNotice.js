@@ -1,3 +1,4 @@
+/* global chrome */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
@@ -56,7 +57,7 @@ const ServiceNotice = () => {
   const [serviceNotice, setServiceNotice] = useState('');
 
   useEffect(() => {
-    let url = 'https://www.iflab.run/api/check/version/0.6.0';
+    let url = 'https://www.iflab.run/api/check/version/' + chrome.runtime.getManifest().version;
     setTimeout(() => {
       axios.get(url)
         .then((response) => {
