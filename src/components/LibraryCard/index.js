@@ -56,7 +56,6 @@ const InfoWrapper = styled.div`
 `
 
 const LibaryCard = ({ isShow, handleClose }) => {
-  let renderComponent;
   const [libraryInfo, setLibraryInfo] = useState([]);
   const [selectedLibraryPlace, setSelectedLibraryPlace] = useState('a');
   const initialDashValues = [44, 44, 44, 44];
@@ -97,14 +96,23 @@ const LibaryCard = ({ isShow, handleClose }) => {
     }
   }, [isShow, selectedLibraryPlace, libraryInfo]);
 
-
-    renderComponent = (
+  return (
+    <LibraryCardContainer isshow={undefined ? undefined : isShow}>
+      <LibraryCardHeader>
+        <TopBar handleClose={handleClose} />
+        <PlaceList
+          selectedLibraryPlace={selectedLibraryPlace}
+          onLibraryPlaceClick={setSelectedLibraryPlace}
+        />
+      </LibraryCardHeader>
       <PlaceContainer>
         <InfoWrapper>
           { libraryInfo.slice(0, 2).map((item, index) => (
             <MainInfo
               key={index}
               item={item}
+              isShow={isShow}
+              delay="0.1"
               dashOffset={dashValues[index]}
               dashColor={
                 dashValues[index] <= 11
@@ -122,6 +130,8 @@ const LibaryCard = ({ isShow, handleClose }) => {
               <MainInfo
                 key={index + 2}
                 item={item}
+                isShow={isShow}
+                delay="0.3"
                 dashOffset={dashValues[index + 2]}
                 dashColor={
                   dashValues[index + 2] <= 11
@@ -140,24 +150,14 @@ const LibaryCard = ({ isShow, handleClose }) => {
               <SubInfo
                 key={index + 4}
                 item={item}
+                isShow={isShow}
+                delay="0.5"
                 dashOffset={linearDashValues[index]}
               />
             ))}
           </InfoWrapper>
         }
       </PlaceContainer>
-    );
-
-  return (
-    <LibraryCardContainer isshow={undefined ? undefined : isShow}>
-      <LibraryCardHeader>
-        <TopBar handleClose={handleClose} />
-        <PlaceList
-          selectedLibraryPlace={selectedLibraryPlace}
-          onLibraryPlaceClick={setSelectedLibraryPlace}
-        />
-      </LibraryCardHeader>
-      {renderComponent}
     </LibraryCardContainer>
   )
 };

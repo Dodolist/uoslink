@@ -12,6 +12,14 @@ const MainInfoContainer = styled.div`
   flex-grow: 1;
   flex-basis: 0;
   background-color: ${(props) => props.theme.mode === 'light' ?  '#f6f7fb' : '#292c33' } ;
+
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: ${(props) => props.isShow ? 1 : 0};
+  transform: translateY(${(props) => props.isShow ? 0 : 8}px);
+  ${(props) => props.isShow && css`
+    transition-delay: ${(props) => props.delay}s;
+    transition-duration: 0.5s;
+  `}
 `
 
 const LibraryRoomName = styled.div`
@@ -83,7 +91,7 @@ const LibraryRate = styled.div`
 `
 
 
-const MainInfo = ({ item, dashOffset, dashColor }) => {
+const MainInfo = ({ isShow, delay, item, dashOffset, dashColor }) => {
   const [useRateText, setUseRateText] = useState('여유');
   useEffect(() => {
     switch(dashColor) {
@@ -99,7 +107,11 @@ const MainInfo = ({ item, dashOffset, dashColor }) => {
     }
   }, [dashColor]);
   return(
-    <MainInfoContainer dashoffset={dashOffset}>
+    <MainInfoContainer
+      isShow={isShow}
+      delay={delay}
+      dashoffset={dashOffset}
+    >
       <LibraryRoomName>{ item.room_name }</LibraryRoomName>
       <LibrarySeat>
         { item.use_seat } / { item.total_seat }
