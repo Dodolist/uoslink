@@ -29,6 +29,7 @@ const PlaceWrapper = styled.div`
   background-color: ${(props) => props.theme.mode === 'light' ?  '#ffffff' : '#1d2128' } ;
   border-radius: 8px;
   width: 100%;
+  gap: 8px;
 `
 
 const PlaceText = styled.span`

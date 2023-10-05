@@ -22,10 +22,11 @@ const SettingCardContainer = styled('div')`
   box-shadow: ${(props) => props.theme.boxShadow};
 
   transform: ${(props) => (props.isshow ? 'translateY(0)' : 'translateY(-24px)')};
+  transform-origin: top right;
   opacity: ${(props) => (props.isshow ? '1' : '0')};
   user-select: ${(props) => (props.isshow ? 'auto' : 'none')};
   pointer-events: ${(props) => (props.isshow ? 'auto' : 'none')};
-
+  scale: ${(props) => (props.isshow ? '1' : '0.9')};
 `
 
 const SettingCardTopBar = styled.div`
