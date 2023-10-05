@@ -57,7 +57,12 @@ const ServiceNotice = () => {
   const [serviceNotice, setServiceNotice] = useState('');
 
   useEffect(() => {
-    let url = 'https://www.iflab.run/api/check/version/' + chrome.runtime.getManifest().version;
+    let url;
+    try {
+      url = 'https://www.iflab.run/api/check/version/' + chrome.runtime.getManifest().version;
+    } catch(error) {
+      url = 'https://www.iflab.run/api/check/version/0.7.0';
+    }
     setTimeout(() => {
       axios.get(url)
         .then((response) => {
