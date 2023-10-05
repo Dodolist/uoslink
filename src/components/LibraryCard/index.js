@@ -112,7 +112,7 @@ const LibaryCard = ({ isShow, handleClose }) => {
               key={index}
               item={item}
               isShow={isShow}
-              delay="0.1"
+              delay={0.1}
               dashOffset={dashValues[index]}
               dashColor={
                 dashValues[index] <= 11
@@ -131,7 +131,7 @@ const LibaryCard = ({ isShow, handleClose }) => {
                 key={index + 2}
                 item={item}
                 isShow={isShow}
-                delay="0.3"
+                delay={0.3}
                 dashOffset={dashValues[index + 2]}
                 dashColor={
                   dashValues[index + 2] <= 11
@@ -151,7 +151,7 @@ const LibaryCard = ({ isShow, handleClose }) => {
                 key={index + 4}
                 item={item}
                 isShow={isShow}
-                delay="0.5"
+                delay={0.5}
                 dashOffset={linearDashValues[index]}
               />
             ))}

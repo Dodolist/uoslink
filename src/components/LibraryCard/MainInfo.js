@@ -62,8 +62,9 @@ const Progress = styled.svg`
   bottom: 0;
   fill: transparent;
   stroke-dasharray: 44;
+  stroke-dashoffset: 44;
   stroke-dashoffset: ${(props) => props.dashoffset};
-  transition: all 0.5s linear;
+  transition: stroke-dashoffset 0.5s linear;
   transform: scaleX(-1);
   opacity: ${(props) => props.background ? 0.2 : 1};
 

@@ -47,7 +47,6 @@ const LinearProgressBar = styled.div`
   overflow: hidden;
 
   &::after {
-    transition: all 0.5s linear;
     content: '';
     position: absolute;
     top: 0;
@@ -56,6 +55,10 @@ const LinearProgressBar = styled.div`
     width: ${(props) => props.dashOffset ? props.dashOffset : 0}%;
     border-radius: 2px;
     background-color: ${(props) => props.theme.secondary};
+    ${(props) => props.isShow && css`
+      transition: all 0.5s linear;
+      transition-delay: ${(props) => props.delay}s;
+    `}
   }
 `
 const SubInfo = ({ isShow, delay, item, dashOffset }) => {
@@ -69,7 +72,11 @@ const SubInfo = ({ isShow, delay, item, dashOffset }) => {
       <LibrarySeat>
         { item.use_seat } / { item.total_seat }
       </LibrarySeat>
-      <LinearProgressBar dashOffset={dashOffset} />
+      <LinearProgressBar
+        isShow={isShow}
+        delay={delay + 0.5}
+        dashOffset={dashOffset}
+      />
     </SubInfoContainer>
   );
 }
