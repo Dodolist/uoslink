@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import breakfastIcon from '../../images/breakfast-icon.svg';
 import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
@@ -63,10 +63,19 @@ const MenuContainer = styled.div`
   flex-direction: column;
   padding: 12px;
   gap: 16px;
+  min-height: 140px;
 `
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  opacity: ${(props) => props.isShow ? 1 : 0};
+  transform: translateY(${(props) => props.isShow ? 0 : 8}px);
+  ${(props) => props.isShow && css`
+    transition-delay: ${(props) => props.delay}s;
+    transition-duration: 0.5s;
+  `}
 `
 
 const MenuCard = styled.div`
@@ -222,7 +231,7 @@ const FoodCard = ({ isShow, handleClose }) => {
   if (selectedFoodDate == '20231002') {
     renderComponent = (
       <MenuContainer>
-        <InfoWrapper>
+        <InfoWrapper isShow={isShow} delay={0.1}>
           <NoMenuCard>
             <NoMenuIcon src={holidayIcon} />
             <NoMenuText> 임시공휴일 </NoMenuText>
@@ -235,7 +244,7 @@ const FoodCard = ({ isShow, handleClose }) => {
   else if (selectedFoodDate == '20231003') {
     renderComponent = (
       <MenuContainer>
-        <InfoWrapper>
+        <InfoWrapper isShow={isShow} delay={0.1}>
           <NoMenuCard>
             <NoMenuIcon src={date1003Icon} />
             <NoMenuText> 개천절 </NoMenuText>
@@ -248,7 +257,7 @@ const FoodCard = ({ isShow, handleClose }) => {
   else if (selectedFoodDate == '20231009') {
     renderComponent = (
       <MenuContainer>
-        <InfoWrapper>
+        <InfoWrapper isShow={isShow} delay={0.1}>
           <NoMenuCard>
             <NoMenuIcon src={date1009Icon} />
             <NoMenuText> 한글날 </NoMenuText>
@@ -261,7 +270,7 @@ const FoodCard = ({ isShow, handleClose }) => {
   else if (dayOfWeek == 0 || dayOfWeek == 6) {
     renderComponent = (
       <MenuContainer>
-        <InfoWrapper>
+        <InfoWrapper isShow={isShow} delay={0.1}>
           <NoMenuCard>
             <NoMenuIcon src={noMenuIcon} />
             <NoMenuText> 주말에는 학식을 운영하지 않아요! </NoMenuText>
@@ -274,7 +283,11 @@ const FoodCard = ({ isShow, handleClose }) => {
     renderComponent = (
       <MenuContainer>
         {foodInfo[selectedFoodTime] && foodInfo[selectedFoodTime].wrap && foodInfo[selectedFoodTime].wrap.map((food, index) => (
-          <InfoWrapper key={index}>
+          <InfoWrapper
+            key={index}
+            isShow={isShow}
+            delay={0.1 * (index*2%10 + 1)}
+          >
             <OpenTime time={food.time} />
             <MenuCard>
               {food.corner && food.corner.map((corner, index) => (
@@ -305,25 +318,32 @@ const FoodCard = ({ isShow, handleClose }) => {
     renderComponent = (
       <MenuContainer>
         {foodInfo[selectedFoodTime] && foodInfo[selectedFoodTime].wrap && foodInfo[selectedFoodTime].wrap.length > 0 ? (foodInfo[selectedFoodTime].wrap.map((food, index) => (
-        <InfoWrapper key={index}>
-            <OpenTime time={food.time} />
-            <MenuCard>
-              <MenuWrapper>
-                <MenuRow>
-                  <MenuName name={food.main} />
-                  <MenuPrice price={food.price} />
+        <InfoWrapper
+          key={index}
+          isShow={isShow}
+          delay={0.1}
+        >
+          <OpenTime time={food.time} />
+          <MenuCard>
+            <MenuWrapper>
+              <MenuRow>
+                <MenuName name={food.main} />
+                <MenuPrice price={food.price} />
+              </MenuRow>
+              {food.sub && food.sub.split(" ").map(item => (
+                <MenuRow key={item}>
+                    <MenuName name={item} type={'sub'} />
                 </MenuRow>
-                {food.sub && food.sub.split(" ").map(item => (
-                  <MenuRow key={item}>
-                      <MenuName name={item} type={'sub'} />
-                  </MenuRow>
-                ))}
-              </MenuWrapper>
-            </MenuCard>
+              ))}
+            </MenuWrapper>
+          </MenuCard>
         </InfoWrapper>
         ))
       ) : (
-        <InfoWrapper>
+        <InfoWrapper
+          isShow={isShow}
+          delay={0.1}
+        >
           <NoMenuCard>
             <NoMenuIcon src={noMenuIcon} />
             <NoMenuText> 아침에는 학식을 운영하지 않아요! </NoMenuText>
@@ -337,7 +357,10 @@ const FoodCard = ({ isShow, handleClose }) => {
   else {
     renderComponent = (
       <MenuContainer>
-        <InfoWrapper>
+        <InfoWrapper
+          isShow={isShow}
+          delay={0.1}
+        >
           <NoMenuCard>
             <NoMenuIcon src={roadworkIcon} />
             <NoMenuText>임시 휴업중입니다</NoMenuText>
