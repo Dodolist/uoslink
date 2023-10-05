@@ -170,7 +170,7 @@ const FoodCard = ({ isShow, handleClose }) => {
 
   if( 10 <= hour && hour < 14 ) {
     hour = '1';
-  } else if( 14 <= hour && hour <= 18 ) {
+  } else if( 14 <= hour) {
     hour = '2';
   } else {
     hour = '0';
