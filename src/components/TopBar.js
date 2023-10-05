@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../images/logo.svg';
 import foodIcon from '../images/food-icon.svg';
+import libraryIcon from '../images/library-icon.svg';
 import settingIcon from '../images/setting-icon.svg';
 import FoodCard from './FoodCard/index.js';
 import SettingCard from './SettingCard';
+import LibraryCard from './LibraryCard';
 import ServiceNotice from './ServiceNotice';
 
 const TopBarContainer = styled('div')`
@@ -50,24 +52,33 @@ const CardWrapper = styled.div`
 
 const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar, openConfirmModal }) => {
   const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
+  const [isOpenedLibraryCard, setIsOpenedLibraryCard] = useState(false);
   const [isOpenedSettingCard, setIsOpenedSettingCard] = useState(false);
 
   const handleOpenCard = (card) => () => {
     if(card === 'food') {
       setIsOpenedFoodCard(!isOpenedFoodCard);
+      setIsOpenedLibraryCard(false);
+      setIsOpenedSettingCard(false);
+    } else if(card === 'library') {
+      setIsOpenedLibraryCard(!isOpenedLibraryCard);
+      setIsOpenedFoodCard(false);
       setIsOpenedSettingCard(false);
     } else if(card === 'setting') {
       setIsOpenedSettingCard(!isOpenedSettingCard);
       setIsOpenedFoodCard(false);
+      setIsOpenedLibraryCard(false);
     }
   };
 
   const handleCloseCard = (card) => () => {
     if(card === 'food') {
       setIsOpenedFoodCard(false);
+    } else if(card === 'library') {
+      setIsOpenedLibraryCard(false);
     } else if(card === 'setting') {
       setIsOpenedSettingCard(false);
-    }
+    } 
   };
 
   return (
@@ -84,6 +95,13 @@ const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar, openConfirmM
             handleClose = {handleCloseCard('food')}
           />
           <img className="icon" onClick={handleOpenCard('food')} src={foodIcon} />
+        </CardWrapper>
+        <CardWrapper>
+          <LibraryCard
+            isShow={isOpenedLibraryCard}
+            handleClose = {handleCloseCard('library')}
+          />
+          <img className="icon" onClick={handleOpenCard('library')} src={libraryIcon} />
         </CardWrapper>
         <CardWrapper>
           <SettingCard
