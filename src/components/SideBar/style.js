@@ -74,6 +74,7 @@ const ShortCutLabel = styled.div`
   color: #ffffff;
   font-size: 12px;
   font-weight: 500;
+  letter-spacing: -1px;
 
   gap: 2px;
 

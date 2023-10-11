@@ -2,6 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import loadingIcon from '../images/loading-icon.svg';
+import kebabIcon from '../images/kebab-icon.svg';
+// import bookmarkIcon from '../images/gray-bookmark24-icon.svg';
+import readCheckIcon from '../images/read-check-icon.svg';
+import unreadCheckIcon from '../images/unread-check-icon.svg';
 
 const rotateAnimation = keyframes`
   from {
@@ -83,7 +87,6 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
 
   return (
     <NoticeListContainer ref={listRef}>
-
       {isLoading ? (
         <LoadingIcon src={loadingIcon} />
       ) : (items.length === 0 && selectedSection === 'BM') ? (
@@ -112,6 +115,7 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
 
   function NoticeItem({ data }) {
     const [alreadyRead, setAlreadyRead] = useState(false);
+    const [isClickedOption, setIsClickedOption] = useState(false);
     useEffect(() => {
       if (selectedSection !== 'BM') {
         setAlreadyRead(alreadyReadList[selectedSection]?.includes(data.id));
@@ -127,27 +131,74 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
       setAlreadyRead(true);
     };
 
+    function clickOptionButton(e) {
+      setIsClickedOption(!isClickedOption);
+      e.stopPropagation();
+    };
+
+    // option Item 눌렀을 때
+    function clickOptionItem(e, option, id) {
+      e.stopPropagation();
+      setIsClickedOption(false);
+
+      setTimeout(() => {
+        if (option === 'read') {
+          setAlreadyRead(true);
+          if(alreadyReadList[selectedSection].includes(id)) {
+            return;
+          }
+          alreadyReadList[selectedSection].push(id);
+          localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
+        }
+        else if (option === 'unread') {
+          setAlreadyRead(false);
+          alreadyReadList[selectedSection] = alreadyReadList[selectedSection].filter((item) => item !== id);
+          localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
+        }
+      }, 100);
+    }
+
     return (
       <NoticeItemContainer
-        alreadyRead={alreadyRead}
         onClick={() => selectedSection !== 'BM' ? clickNoticeItem(data.id, selectedSection, data.link) : clickNoticeItem(data.id, data.section, data.link)}
+        showOption={isClickedOption}
+        onMouseLeave={() => setIsClickedOption(false)}
       >
-        <NoticeTitle>{data.title}</NoticeTitle>
-        <NoticeWrapper>
-          {selectedSection === 'BM' ? (
-            <NoticeInfo blue="true">
-              {data.section === 'FA1' ? '일반공지' :
-              data.section === 'FA2' ? '학사공지' :
-              data.section === 'FA35' ? '창업공지' :
-              data.section === 'SC1' ? '장학공지' :
-              data.section === 'FA34' ? '직원채용' :
-              ''}
-            </NoticeInfo>
-          ) : null}
-          <NoticeInfo>{data.author}</NoticeInfo>
-          <NoticeInfo>{data.writtenAt}</NoticeInfo>
-          <NoticeInfo>{selectedSection !== 'BM' ? `${data.views}회` : null}</NoticeInfo>
+        <NoticeWrapper
+          alreadyRead={alreadyRead}
+          showOption={isClickedOption}
+        >
+          <NoticeTitle>{data.title}</NoticeTitle>
+          <NoticeInfoWrapper>
+            {selectedSection === 'BM' ? (
+              <NoticeInfo blue="true">
+                {data.section === 'FA1' ? '일반공지' :
+                data.section === 'FA2' ? '학사공지' :
+                data.section === 'FA35' ? '창업공지' :
+                data.section === 'SC1' ? '장학공지' :
+                data.section === 'FA34' ? '직원채용' :
+                ''}
+              </NoticeInfo>
+            ) : null}
+            <NoticeInfo>{data.author}</NoticeInfo>
+            <NoticeInfo>{data.writtenAt}</NoticeInfo>
+            <NoticeInfo>{selectedSection !== 'BM' ? `${data.views}회` : null}</NoticeInfo>
+          </NoticeInfoWrapper>
         </NoticeWrapper>
+        <NoticeOptionButton onClick={clickOptionButton} src={kebabIcon} />
+        <NoticeOptionWrapper isClicked={isClickedOption}>
+          {alreadyRead ? (
+            <NoticeOptionItem onClick={(event) => clickOptionItem(event, 'unread', data.id)}>
+              <NoticeOptionText>읽지 않음으로 표시</NoticeOptionText>
+              <NoticeOptionIcon src={unreadCheckIcon} />
+            </NoticeOptionItem>
+          ) : (
+            <NoticeOptionItem onClick={(event) => clickOptionItem(event, 'read', data.id)}>
+              <NoticeOptionText>읽음으로 표시</NoticeOptionText>
+              <NoticeOptionIcon src={readCheckIcon} />
+            </NoticeOptionItem>
+          )}
+        </NoticeOptionWrapper>
       </NoticeItemContainer>
     );
   }
@@ -171,31 +222,36 @@ const NoticeListContainer = styled.div`
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라 브라우저 */
   }
-
 `;
 
 const NoticeItemContainer = styled.a`
+  position: relative;
   animation: ${showNoticeAnimation} 0.5s ease-in-out forwards;
   opacity: 0;
 
-  transition: all 0.3s;
   display: flex;
   flex-direction: column;
 
-  background-color: ${props => props.theme.foreground};
   padding: 16px 20px;
   border-bottom: 1px solid #00000010;
-  gap: 4px;
 
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    filter: brightness(0.9);
+    background-color: ${props => props.theme.foreground};
+    filter: ${props => props.showOption ? 'brightness(1)' : 'brightness(0.9)'};
   }
   &:active {
-    filter: brightness(0.8);
+    filter: ${props => props.showOption ? 'brightness(1)' : 'brightness(0.8)'};
   }
+`;
+
+const NoticeWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 
   ${props => props.alreadyRead && css`
     filter: opacity(0.5);
@@ -215,7 +271,7 @@ const NoticeTitle = styled.span`
   letter-spacing: -2px;
 `;
 
-const NoticeWrapper = styled.div`
+const NoticeInfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -259,4 +315,75 @@ const LoadingIcon = styled.img`
   translate: -50% -50%;
   width: 48px;
   height: 48px;
+`
+
+const NoticeOptionButton = styled.img`
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  ${NoticeItemContainer}:hover & {
+    opacity: 1;
+  }
+`
+
+const NoticeOptionWrapper = styled.div`
+  position: absolute;
+  top: 36px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #3c414c;
+  border-radius: 4px;
+
+  overflow: hidden;
+  user-select: none;
+
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  transform-origin: top right;
+  transition-duration: 0.1s;
+
+  ${NoticeItemContainer}:hover & {
+    transition-duration: ${props => props.isClicked ? '0.2s' : '0.1s'};
+    opacity: ${props => props.isClicked ? '1' : '0'};
+    transform: ${props => props.isClicked ? 'scale(1)' : 'scale(0.8)'};
+    pointer-events: ${props => props.isClicked ? 'auto' : 'none'};
+  }
+`
+
+const NoticeOptionItem = styled.div`
+  min-width: 144px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff1a;
+  background-color: #3c414c;
+
+  padding: 8px;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover { filter: brightness(1.1); }
+  &:active {
+    transition-duration: 0.1s;
+    filter: brightness(1.2);
+  }
+`
+
+const NoticeOptionText = styled.span`
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -1px;
+`
+
+const NoticeOptionIcon = styled.img`
+  width: 16px;
+  height: 16px;
 `
