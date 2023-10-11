@@ -86,7 +86,7 @@ const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => 
 
       {isLoading ? (
         <LoadingIcon src={loadingIcon} />
-      ) : items.length === 0 ? (
+      ) : (items.length === 0 && selectedSection === 'BM') ? (
         <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
       ) : (
         items.map((item, index) => (
