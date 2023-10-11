@@ -6,9 +6,8 @@ import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
 import roadworkIcon from '../../images/roadwork-icon.svg';
 import noMenuIcon from '../../images/no-menu-icon.svg';
-import date1003Icon from '../../images/1003-icon.svg';
 import date1009Icon from '../../images/1009-icon.svg';
-import holidayIcon from '../../images/holiday-icon.svg';
+// import holidayIcon from '../../images/holiday-icon.svg';
 
 import TopBar from './TopBar.js';
 import DateInputBox from './DateInputBox.js';
@@ -228,33 +227,7 @@ const FoodCard = ({ isShow, handleClose }) => {
       });
   }, [isShow, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
-  if (selectedFoodDate == '20231002') {
-    renderComponent = (
-      <MenuContainer>
-        <InfoWrapper isShow={isShow} delay={0.1}>
-          <NoMenuCard>
-            <NoMenuIcon src={holidayIcon} />
-            <NoMenuText> 임시공휴일 </NoMenuText>
-            <NoMenuText size={'small'}>2023. 10. 02</NoMenuText>
-          </NoMenuCard>
-        </InfoWrapper>
-      </MenuContainer>
-    );
-  }
-  else if (selectedFoodDate == '20231003') {
-    renderComponent = (
-      <MenuContainer>
-        <InfoWrapper isShow={isShow} delay={0.1}>
-          <NoMenuCard>
-            <NoMenuIcon src={date1003Icon} />
-            <NoMenuText> 개천절 </NoMenuText>
-            <NoMenuText size={'small'}>2023. 10. 03</NoMenuText>
-          </NoMenuCard>
-        </InfoWrapper>
-      </MenuContainer>
-    );
-  }
-  else if (selectedFoodDate == '20231009') {
+  if (selectedFoodDate == '20231009') {
     renderComponent = (
       <MenuContainer>
         <InfoWrapper isShow={isShow} delay={0.1}>
