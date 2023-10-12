@@ -40,20 +40,16 @@ const SideBar = ({ isSideBarOpen }) => {
     localStorage.setItem('sites', JSON.stringify(sites));
     setSites(JSON.parse(localStorage.getItem('sites')));
     closeInputModal();
-    setTimeout(() => {
-      setIsModified(false);
-    }, 200);
   };
 
   const deleteSite = () => {
-    closeInputModal();
-    setIsModified(false);
-
+    setHoveredShortCut(null);
     const sites = JSON.parse(localStorage.getItem('sites'));
     const index = sites.findIndex((site) => site.name === modifiedSite.name);
     sites.splice(index, 1);
     localStorage.setItem('sites', JSON.stringify(sites));
     setSites(JSON.parse(localStorage.getItem('sites')));
+    closeInputModal();
   };
 
   const openInputModal = () => {
@@ -64,8 +60,8 @@ const SideBar = ({ isSideBarOpen }) => {
   const closeInputModal = () => {
     setIsInputModalOpen(false);
     if (isModified) {
+      setHoveredShortCut(null);
       setTimeout(() => {
-        setHoveredShortCut(null);
         setIsModified(false);
       }, 200);
     }
@@ -104,9 +100,7 @@ const SideBar = ({ isSideBarOpen }) => {
               onMouseEnter={() => setHoveredShortCut(site.name)}
               onMouseLeave={() => onMouseLeaveShortCut()}
             >
-              <ShortCutIconWrap
-                href={site.link}
-              >
+              <ShortCutIconWrap href={site.link} >
                 <ShortCutIcon src={`${site.link}/favicon.ico`} />
               </ShortCutIconWrap>
               <ShortCutLabel onClick={clickShortCutLabel} isHovered={site.name === hoveredShortCut}>
