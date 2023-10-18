@@ -6,7 +6,10 @@ import tailIcon from '../images/tail-icon.svg';
 import serviceNoticeIcon from '../images/service-notice-icon.svg';
 
 const ServiceNoticeWrap = styled('div')`
-  position: relative;
+  position: absolute;
+  width: max-content;
+  z-index: 100;
+  left: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

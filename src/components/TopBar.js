@@ -25,11 +25,13 @@ const TopBarContainer = styled('div')`
 `;
 
 const TopBarLeft = styled('div')`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   gap: 4px;
+  flex-shrink: 0;
 `
 const TopBarRight = styled('div')`
   display: flex;
@@ -37,6 +39,7 @@ const TopBarRight = styled('div')`
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
+  flex-shrink: 0;
 `
 const ServiceName = styled('span')`
   color: ${(props) => props.theme.subText};
