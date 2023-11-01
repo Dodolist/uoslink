@@ -1,9 +1,47 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const SelectedSectionDisappearAnimation = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+`
+
+const SelectedSectionAppearAnimation = keyframes`
+  0%{ 
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`
+
+const SelectedSectionContainer = styled.div`
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
+`
 
 const SelectedSectionWrap = styled.div`
+  transition: all 0s;
+  position: absolute;
+  left: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  ${(props) => props.isDisappear && css`
+    animation: ${SelectedSectionDisappearAnimation} 0.3s ease-in-out forwards;
+    &:last-child {
+      animation: ${SelectedSectionAppearAnimation} 0.3s ease-in-out forwards;
+    };
+  `};
 `;
 
 const SelectedSectionIcon = styled.img`
@@ -18,4 +56,4 @@ const SelectedSectionName = styled.span`
   letter-spacing: -2px;
 `;
 
-export { SelectedSectionWrap, SelectedSectionIcon, SelectedSectionName };
+export { SelectedSectionContainer, SelectedSectionWrap, SelectedSectionIcon, SelectedSectionName };

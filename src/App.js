@@ -50,6 +50,7 @@ const MoveLink = styled.a`
   opacity: ${(props) => (props.isShow ? 1 : 0)};
   user-select: ${(props) => (props.isShow ? 'auto' : 'none')};
   pointer-events: ${(props) => (props.isShow ? 'auto' : 'none')};
+  flex-shrink: 0;
 `;
 
 const Offline = styled.div`
