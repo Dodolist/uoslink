@@ -21,7 +21,7 @@ const SelectedSection = ({ selectedSectionIcon, selectedSectionName }) => {
     setTimeout(() => {
       setSelectedSectionInfo([updatedInfo[updatedInfo.length - 1]]);
       setIsDisappear(false);
-    }, 500);
+    }, 400);
   }, [selectedSectionIcon, selectedSectionName]);
 
   return (

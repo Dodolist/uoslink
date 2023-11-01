@@ -7,14 +7,14 @@ const SelectedSectionDisappearAnimation = keyframes`
   }
   100% {
     opacity: 0;
-    transform: translateX(-20%);
+    transform: translateX(-15%);
   }
 `
 
 const SelectedSectionAppearAnimation = keyframes`
   0%{ 
     opacity: 0;
-    transform: translateX(20%);
+    transform: translateX(15%);
   }
   100% {
     opacity: 1;
