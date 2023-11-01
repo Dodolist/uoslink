@@ -6,7 +6,7 @@ import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
 import roadworkIcon from '../../images/roadwork-icon.svg';
 import noMenuIcon from '../../images/no-menu-icon.svg';
-import date1009Icon from '../../images/1009-icon.svg';
+// import date1009Icon from '../../images/1009-icon.svg';
 // import holidayIcon from '../../images/holiday-icon.svg';
 
 import TopBar from './TopBar.js';
@@ -227,20 +227,7 @@ const FoodCard = ({ isShow, handleClose }) => {
       });
   }, [isShow, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
-  if (selectedFoodDate == '20231009') {
-    renderComponent = (
-      <MenuContainer>
-        <InfoWrapper isShow={isShow} delay={0.1}>
-          <NoMenuCard>
-            <NoMenuIcon src={date1009Icon} />
-            <NoMenuText> 한글날 </NoMenuText>
-            <NoMenuText size={'small'}>2023. 10. 09</NoMenuText>
-          </NoMenuCard>
-        </InfoWrapper>
-      </MenuContainer>
-    );
-  }
-  else if (dayOfWeek == 0 || dayOfWeek == 6) {
+  if (dayOfWeek == 0 || dayOfWeek == 6) {
     renderComponent = (
       <MenuContainer>
         <InfoWrapper isShow={isShow} delay={0.1}>
