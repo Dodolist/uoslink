@@ -7,7 +7,6 @@ const PriceText = styled.span`
   letter-spacing: -0.5px;
   ${props => props.type === 'sub' && css`
     color: ${(props) => props.theme.subText};
-    font-size: 10px;
   `}
 `
 
