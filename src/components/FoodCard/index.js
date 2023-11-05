@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 import breakfastIcon from '../../images/breakfast-icon.svg';
 import lunchIcon from '../../images/lunch-icon.svg';
 import dinnerIcon from '../../images/dinner-icon.svg';
-import roadworkIcon from '../../images/roadwork-icon.svg';
 import noMenuIcon from '../../images/no-menu-icon.svg';
 import noMenu0031Icon from '../../images/no-menu-0031-icon.svg';
 import noMenu0032Icon from '../../images/no-menu-0032-icon.svg';
@@ -18,6 +17,7 @@ import PlaceList from './PlaceList.js';
 import OpenTime from './OpenTime.js';
 import MenuPrice from './MenuPrice.js';
 import MenuName from './MenuName.js';
+import MenuIcon from './MenuIcon.js';
 
 const FoodCardContainer = styled('div')`
   transition: all 0.3s;
@@ -137,6 +137,13 @@ const MenuRow = styled.div`
   justify-content: space-between;
 `
 
+const MenuIconName = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+`
+
 const TimeIcon = styled.img`
   transition: all 0.3s;
   cursor: pointer;
@@ -187,7 +194,7 @@ const FoodCard = ({ isShow, handleClose }) => {
     hour = '0';
   }
 
-  let renderComponent;
+  const [renderComponent, setRenderComponent] = useState('');
   const [dayOfWeek, setDayOfWeek] = useState(date.getDay());
   const [foodInfo, setFoodInfo] = useState([]);
   const [selectedFoodDate, setSelectedFoodDate] = useState(today);
@@ -218,6 +225,7 @@ const FoodCard = ({ isShow, handleClose }) => {
 
   useEffect(() => {
     if (dayOfWeek == 0 || dayOfWeek == 6) {
+      changeRenderComponent();
       return;
     }
     axios.get('https://www.iflab.run/api/food/'+ selectedFoodPlace +'/' + selectedFoodDate)
@@ -229,147 +237,155 @@ const FoodCard = ({ isShow, handleClose }) => {
       });
   }, [isShow, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
-  if (dayOfWeek == 0 || dayOfWeek == 6) {
-    renderComponent = (
-      <MenuContainer>
-        <InfoWrapper isShow={isShow} delay={0.1}>
-          <NoMenuCard>
-            <NoMenuIcon src={noMenuIcon} />
-            <NoMenuText> 주말에는 학식을 운영하지 않아요! </NoMenuText>
-          </NoMenuCard>
-        </InfoWrapper>
-      </MenuContainer>
-    );
-  }
-  else if (selectedFoodPlace == '020') {
-    renderComponent = (
-      <MenuContainer>
-        {   foodInfo[selectedFoodTime] &&
-            foodInfo[selectedFoodTime].wrap &&
-            foodInfo[selectedFoodTime].wrap.map((food, index) => (
-              <InfoWrapper
-                key={index}
-                isShow={isShow}
-                delay={0.1 * (index*2%10 + 1)}
-              >
-                <OpenTime time={food.time} />
-                <MenuCard>
-                  {food.corner && food.corner.map((corner, index) => (
-                    <CornerWrapper key={index}>
-                      {corner.id != ' ' && <CornerText>{corner.id}</CornerText>}
-                      <MenuWrapper>
-                        <MenuRow>
-                          <MenuName name={corner.main} />
-                          <MenuPrice price={corner.price} />
-                        </MenuRow>
-                        {corner.sub && corner.sub.split(" ").map(item => (
-                          <MenuRow key={item}>
-                            <MenuName name={item} type={'sub'} />
-                            {corner.subprice ? <MenuPrice price={corner.subprice} type={'sub'} /> : null}
-                          </MenuRow>
-                        ))}
-                      </MenuWrapper>
-                    </CornerWrapper>
-                  ))}
-                </MenuCard>
-              </InfoWrapper>
-            ))
-        }
-      </MenuContainer>
-    );
-  }
-  // 자연과학관 040, 본관8층 010
-  else if (selectedFoodPlace == '040' || selectedFoodPlace == '010') {
-    renderComponent = (
-      <MenuContainer>
-        {   foodInfo[selectedFoodTime] &&
-            foodInfo[selectedFoodTime].wrap &&
-            foodInfo[selectedFoodTime].wrap.length > 0 ?
-            (foodInfo[selectedFoodTime].wrap.map((food, index) => (
-              <InfoWrapper
-                key={index}
-                isShow={isShow}
-                delay={0.1}
-              >
-                <OpenTime time={food.time} />
-                <MenuCard>
-                  <MenuWrapper>
-                    <MenuRow>
-                      <MenuName name={food.main} />
-                      <MenuPrice price={food.price} />
-                    </MenuRow>
-                    {food.sub && food.sub.split(" ").map(item => (
-                      <MenuRow key={item}>
-                        <MenuName name={item} type={'sub'} />
-                      </MenuRow>
-                    ))}
-                  </MenuWrapper>
-                </MenuCard>
-              </InfoWrapper>
-            ))
-            ) : (
-              <InfoWrapper
-                isShow={isShow}
-                delay={0.1}
-              >
-                <NoMenuCard>
-                  <NoMenuIcon src={noMenuIcon} />
-                  <NoMenuText> 아침에는 학식을 운영하지 않아요! </NoMenuText>
-                </NoMenuCard>
-              </InfoWrapper>
-            )
-        }
-      </MenuContainer>
-    );
-  }
-  // 양식당 030
-  else if (selectedFoodPlace == '030') {
-    const icons = [noMenu0031Icon, noMenu0032Icon, noMenu0033Icon];
-    const randomIndex = Math.floor(Math.random() * icons.length);
-    const selectedIcon = icons[randomIndex];
-    renderComponent = (
-      <MenuContainer>
-        {   foodInfo[selectedFoodTime] &&
-            foodInfo[selectedFoodTime].wrap &&
-            foodInfo[selectedFoodTime].wrap.length > 0 ?
-            (foodInfo[selectedFoodTime].wrap.map((food, index) => (
-              <InfoWrapper
-                key={index}
-                isShow={isShow}
-                delay={0.1 * (index*2%10 + 1)}
-              >
-                <OpenTime time={food.time} />
-                <MenuCard>
-                  {food.corner && food.corner.map((corner, index) => (
-                    <CornerWrapper key={index}>
-                      <MenuWrapper>
-                        <MenuRow>
-                          <MenuName name={corner.main} />
-                        </MenuRow>
-                        {corner.sub && corner.sub.split(" ").map((item, index) => (
-                          <MenuRow key={item}>
-                            <MenuName name={item} type={'sub'} />
-                            {corner.subprice ? <MenuPrice price={corner.subprice.split(" ")[index]} type={'sub'} /> : null}
-                          </MenuRow>
-                        ))}
-                      </MenuWrapper>
-                    </CornerWrapper>
-                  ))}
-                </MenuCard>
-              </InfoWrapper>
-            ))
-            ) : (
+  useEffect(() => {
+    changeRenderComponent();
+  }, [foodInfo]);
 
-              <InfoWrapper isShow={isShow} delay={0.1} >
-                <NoMenuCard>
-                  <NoMenuIcon src={selectedIcon} />
-                  <NoMenuText> 아느칸은 점심에만 학식을 운영해요! </NoMenuText>
-                </NoMenuCard>
-              </InfoWrapper>
-            )
-        }
-      </MenuContainer>
-    );
+  function changeRenderComponent() {
+    if (dayOfWeek == 0 || dayOfWeek == 6) {
+      setRenderComponent(
+        <MenuContainer>
+          <InfoWrapper isShow={isShow} delay={0.1}>
+            <NoMenuCard>
+              <NoMenuIcon src={noMenuIcon} />
+              <NoMenuText> 주말에는 학식을 운영하지 않아요! </NoMenuText>
+            </NoMenuCard>
+          </InfoWrapper>
+        </MenuContainer>
+      );
+    }
+    else if (selectedFoodPlace == '020') {
+      setRenderComponent(
+        <MenuContainer>
+          {   foodInfo[selectedFoodTime] &&
+              foodInfo[selectedFoodTime].wrap &&
+              foodInfo[selectedFoodTime].wrap.map((food, index) => (
+                <InfoWrapper
+                  key={index}
+                  isShow={isShow}
+                  delay={0.1 * (index*2%10 + 1)}
+                >
+                  <OpenTime time={food.time} />
+                  <MenuCard>
+                    {food.corner && food.corner.map((corner, index) => (
+                      <CornerWrapper key={index}>
+                        {corner.id != ' ' && <CornerText>{corner.id}</CornerText>}
+                        <MenuWrapper>
+                          <MenuRow>
+                            <MenuName name={corner.main} />
+                            <MenuPrice price={corner.price} />
+                          </MenuRow>
+                          {corner.sub && corner.sub.split(" ").map(item => (
+                            <MenuRow key={item}>
+                              <MenuName name={item} type={'sub'} />
+                              {corner.subprice ? <MenuPrice price={corner.subprice} type={'sub'} /> : null}
+                            </MenuRow>
+                          ))}
+                        </MenuWrapper>
+                      </CornerWrapper>
+                    ))}
+                  </MenuCard>
+                </InfoWrapper>
+              ))
+          }
+        </MenuContainer>
+      );
+    }
+    // 자연과학관 040, 본관8층 010
+    else if (selectedFoodPlace == '040' || selectedFoodPlace == '010') {
+      setRenderComponent(
+        <MenuContainer>
+          {   foodInfo[selectedFoodTime] &&
+              foodInfo[selectedFoodTime].wrap &&
+              foodInfo[selectedFoodTime].wrap.length > 0 ?
+              (foodInfo[selectedFoodTime].wrap.map((food, index) => (
+                <InfoWrapper
+                  key={index}
+                  isShow={isShow}
+                  delay={0.1}
+                >
+                  <OpenTime time={food.time} />
+                  <MenuCard>
+                    <MenuWrapper>
+                      <MenuRow>
+                        <MenuName name={food.main} />
+                        <MenuPrice price={food.price} />
+                      </MenuRow>
+                      {food.sub && food.sub.split(" ").map(item => (
+                        <MenuRow key={item}>
+                          <MenuName name={item} type={'sub'} />
+                        </MenuRow>
+                      ))}
+                    </MenuWrapper>
+                  </MenuCard>
+                </InfoWrapper>
+              ))
+              ) : (
+                <InfoWrapper
+                  isShow={isShow}
+                  delay={0.1}
+                >
+                  <NoMenuCard>
+                    <NoMenuIcon src={noMenuIcon} />
+                    <NoMenuText> 아침에는 학식을 운영하지 않아요! </NoMenuText>
+                  </NoMenuCard>
+                </InfoWrapper>
+              )
+          }
+        </MenuContainer>
+      );
+    }
+    // 양식당 030
+    else if (selectedFoodPlace == '030') {
+      const icons = [noMenu0031Icon, noMenu0032Icon, noMenu0033Icon];
+      const randomIndex = Math.floor(Math.random() * icons.length);
+      const selectedIcon = icons[randomIndex];
+      setRenderComponent(
+        <MenuContainer>
+          {   foodInfo[selectedFoodTime] &&
+              foodInfo[selectedFoodTime].wrap &&
+              foodInfo[selectedFoodTime].wrap.length > 0 ?
+              (foodInfo[selectedFoodTime].wrap.map((food, index) => (
+                <InfoWrapper
+                  key={index}
+                  isShow={isShow}
+                  delay={0.1 * (index*2%10 + 1)}
+                >
+                  <OpenTime time={food.time} />
+                  <MenuCard>
+                    {food.corner && food.corner.map((corner, index) => (
+                      <CornerWrapper key={index}>
+                        <MenuWrapper>
+                          <MenuRow>
+                            <MenuIconName>
+                              <MenuIcon type={corner.id} />
+                              <MenuName name={corner.main} />
+                            </MenuIconName>
+                          </MenuRow>
+                          {corner.sub && corner.sub.split(" ").map((item, index) => (
+                            <MenuRow key={item}>
+                              <MenuName name={item} type={'sub'} />
+                              {corner.subprice ? <MenuPrice price={corner.subprice.split(" ")[index]} type={'sub'} /> : null}
+                            </MenuRow>
+                          ))}
+                        </MenuWrapper>
+                      </CornerWrapper>
+                    ))}
+                  </MenuCard>
+                </InfoWrapper>
+              ))
+              ) : (
+                <InfoWrapper isShow={isShow} delay={0.1} >
+                  <NoMenuCard>
+                    <NoMenuIcon src={selectedIcon} />
+                    <NoMenuText> 아느칸은 점심에만 학식을 운영해요! </NoMenuText>
+                  </NoMenuCard>
+                </InfoWrapper>
+              )
+          }
+        </MenuContainer>
+      );
+    }
   }
   return (
     <FoodCardContainer isshow={undefined ? undefined : isShow}>
