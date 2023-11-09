@@ -7,6 +7,7 @@ import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
 import outlinkIcon from '../../images/outlink-icon.svg';
 import loadingIcon from '../../images/loading-icon.svg';
 import BlackScreen from '../BlackScreen';
+import FloatButton from './FloatButton';
 
 const rotateAnimation = keyframes`
   from {
@@ -199,48 +200,6 @@ const FloatButtonWrapper = styled.div`
   gap: 16px;
 `
 
-const FloatButton = styled.div`
-  position: relative;
-  background-color: ${props => props.active ? '#f0f1f500' : props.theme.foreground};
-  padding: 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  overflow: hidden;
-
-  width: 48px;
-  height: 48px;
-
-  &:hover {
-    filter: brightness(0.9);
-  }
-  &:active {
-    filter: brightness(0.8);
-    transform: translateY(2px);
-  }
-  &::before {
-    transition: all 0.3s ease;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    content: '';
-    width: ${props => props.active ? '68px' : '0px'};
-    height: ${props => props.active ? '68px' : '0px'};
-    opacity: ${props => props.active ? '1' : '0'};
-    background-color: #408cff;
-    border-radius: 50%;
-    user-select: none;
-  }
-`
-const FloatButtonIcon = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  user-select: none;
-  filter: ${props => props.active ? 'brightness(2)' : 'brightness(1)'};
-`
-
 const LoadingWrapper = styled.div`
   position: absolute;
   top: 50%;
@@ -425,15 +384,9 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
           />
         </NoticeViewerContentWrapper>
         <FloatButtonWrapper>
-          <FloatButton onClick={closeNoticeViewer}>
-            <FloatButtonIcon src={closeIcon} />
-          </FloatButton>
-          <FloatButton active={isBookmark} onClick={clickBookmark}>
-            <FloatButtonIcon active={isBookmark} src={bookmarkIcon} />
-          </FloatButton>
-          <FloatButton onClick={clickOutlink}>
-            <FloatButtonIcon src={outlinkIcon} />
-          </FloatButton>
+          <FloatButton onClick={closeNoticeViewer} icon={closeIcon} />
+          <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
+          <FloatButton onClick={clickOutlink} icon={outlinkIcon} />
         </FloatButtonWrapper>
       </NoticeViewerContainer>
     </div>
@@ -446,15 +399,9 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
           <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>
-          <FloatButton onClick={closeNoticeViewer}>
-            <FloatButtonIcon src={closeIcon} />
-          </FloatButton>
-          <FloatButton active={isBookmark}>
-            <FloatButtonIcon active={isBookmark} src={bookmarkIcon} />
-          </FloatButton>
-          <FloatButton>
-            <FloatButtonIcon src={outlinkIcon} />
-          </FloatButton>
+          <FloatButton icon={closeIcon} />
+          <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
+          <FloatButton icon={outlinkIcon} />
         </FloatButtonWrapper>
       </NoticeViewerContainer>
     </div>
