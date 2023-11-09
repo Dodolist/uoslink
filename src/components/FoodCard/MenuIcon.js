@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled from 'styled-components'
 import cutletIcon from '../../images/cutlet-icon.svg';
 import pastaIcon from '../../images/pasta-icon.svg';
 import sideIcon from '../../images/side-icon.svg';
@@ -17,6 +17,8 @@ const MenuIcon = ({ type }) => {
       return <Icon src={pastaIcon} />
     case 'side':
       return <Icon src={sideIcon} />
+    default:
+      return null;
   }
 };
 
