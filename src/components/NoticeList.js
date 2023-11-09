@@ -27,7 +27,7 @@ const showNoticeAnimation = keyframes`
   } 
 `;
 
-const NoticeList = ({isNoticeViewerOpen, selectedSection, openNoticeViewer}) => {
+const NoticeList = ({selectedSection, openNoticeViewer}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const listRef = useRef(null);

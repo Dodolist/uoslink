@@ -276,7 +276,6 @@ const App = () => {
               />
             </div>
             <NoticeList
-              isNoticeViewerOpen={isNoticeViewerOpen}
               openNoticeViewer={openNoticeViewer}
               selectedSection={selectedSection}
             />
