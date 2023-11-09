@@ -5,13 +5,20 @@
 }
 
 body {
-  margin: 0;
-  font-family: 'Noto Sans KR', -apple-system, sans-serif, BlinkMacSystemFont, 'Segoe UI', 'Roboto';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif, BlinkMacSystemFont, 'Segoe UI', 'Roboto';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 img {
     max-width: 100%;
     height: auto;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
 }
