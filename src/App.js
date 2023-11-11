@@ -34,26 +34,6 @@ const ContentContainer = styled.div`
   gap: 16px 24px;
 `;
 
-const ContentTop = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const MoveLink = styled.a`
-  color: ${(props) => props.theme.subText};
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: -1px;
-  cursor: pointer;
-  text-decoration: underline;
-  opacity: ${(props) => (props.isShow ? 1 : 0)};
-  user-select: ${(props) => (props.isShow ? 'auto' : 'none')};
-  pointer-events: ${(props) => (props.isShow ? 'auto' : 'none')};
-  flex-shrink: 0;
-`;
-
 const Offline = styled.div`
   position: fixed;
   top: 50%;
@@ -126,7 +106,6 @@ const App = () => {
   const [selectedNoticeLink, setSelectedNoticeLink] = useState('');
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
-  const [selectedSectionLink, setSelectedSectionLink] = useState('https://www.uos.ac.kr/korNotice/list.do?list_id=FA1');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isNoticeViewerOpen, setIsNoticeViewerOpen] = useState(false);
@@ -163,14 +142,6 @@ const App = () => {
       if(SectionList[i].id === id) {
         setSelectedSectionIcon(SectionList[i].icon);
         setSelectedSectionName(SectionList[i].name);
-        if(id === 'BM') {
-          setSelectedSectionLink('');
-        }
-        else if(id === 'SC1') {
-          setSelectedSectionLink('https://scholarship.uos.ac.kr/scholarship/notice/notice/list.do?brdBbsseq=1');
-        } else {
-          setSelectedSectionLink('https://www.uos.ac.kr/korNotice/list.do?list_id=' + SectionList[i].id);
-        }
       }
     }
   };
@@ -265,18 +236,10 @@ const App = () => {
         isOnline ? (
           <ContentContainer>
             <div className="dummy" />
-            <ContentTop>
-              <SelectedSection
-                selectedSectionIcon={selectedSectionIcon}
-                selectedSectionName={selectedSectionName}
-              />
-              <MoveLink
-                isShow={selectedSectionLink !== ''}
-                href={selectedSectionLink}
-              >
-                사이트 이동
-              </MoveLink>
-            </ContentTop>
+            <SelectedSection
+              selectedSectionIcon={selectedSectionIcon}
+              selectedSectionName={selectedSectionName}
+            />
             <div className="dummy" />
             <div>
               <NavBar
