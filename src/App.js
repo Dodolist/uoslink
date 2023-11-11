@@ -14,6 +14,7 @@ import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
+import ArticleList from './components/ArticleList';
 import BlackScreen from './components/BlackScreen';
 import ConfirmModal from './components/ConfirmModal';
 import GroundBackground from './components/GroundBackground';
@@ -25,7 +26,7 @@ import NoticeViewer from './components/NoticeViewer';
 const ContentContainer = styled.div`
   display: grid;
   grid-template-rows: 40px 1fr;
-  grid-template-columns: 140px 1fr;
+  grid-template-columns: 140px 1fr 280px;
 
   width: 100%;
   max-width: 1080px;
@@ -108,6 +109,13 @@ const SectionList = [
     name: '직원채용',
   },
 ];
+
+const List = styled.div`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 24px;
+`
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -269,6 +277,7 @@ const App = () => {
                 사이트 이동
               </MoveLink>
             </ContentTop>
+            <div className="dummy" />
             <div>
               <NavBar
                 onSectionClick={selectSection}
@@ -279,6 +288,11 @@ const App = () => {
               openNoticeViewer={openNoticeViewer}
               selectedSection={selectedSection}
             />
+            <List>
+              <ArticleList
+                openNoticeViewer={openNoticeViewer}
+              />
+            </List>
           </ContentContainer>
         ) : (
           <Offline>

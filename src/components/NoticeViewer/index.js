@@ -399,7 +399,7 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
           <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>
-          <FloatButton icon={closeIcon} />
+          <FloatButton onClick={closeNoticeViewer} icon={closeIcon} />
           <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
           <FloatButton icon={outlinkIcon} />
         </FloatButtonWrapper>

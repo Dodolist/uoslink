@@ -16,7 +16,7 @@ const rotateAnimation = keyframes`
   } 
 `;
 
-const showNoticeAnimation = keyframes`
+const showListAnimation = keyframes`
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -212,7 +212,7 @@ const NoticeListContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 75vh;
+  height: 70vh;
   background-color: ${props => props.theme.foreground};
   border-radius: 8px;
   overflow-y: scroll;
@@ -224,9 +224,9 @@ const NoticeListContainer = styled.div`
   }
 `;
 
-const NoticeItemContainer = styled.a`
+const NoticeItemContainer = styled.div`
   position: relative;
-  animation: ${showNoticeAnimation} 0.5s ease-in-out forwards;
+  animation: ${showListAnimation} 0.5s ease-in-out forwards;
   opacity: 0;
 
   display: flex;
@@ -295,7 +295,7 @@ const NoticeInfo = styled.span`
 `;
 
 const NoItemText = styled.span`
-  animation: ${showNoticeAnimation} 0.5s ease-in-out forwards;
+  animation: ${showListAnimation} 0.5s ease-in-out forwards;
   position: absolute;
   top: 50%;
   left: 50%;
