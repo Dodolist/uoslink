@@ -28,7 +28,7 @@ const SectionList = [
 
 const ArticleList = ({openViewer}) => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   var alreadyReadList;
 
   if(localStorage.getItem('noticeId') == null) {
@@ -46,10 +46,11 @@ const ArticleList = ({openViewer}) => {
 
   useEffect(() => {
     let url = 'https://www.iflab.run/api/notice/ranking';
+    setIsLoading(true);
     axios.get(url)
       .then((response) => {
-        console.log(response.data);
         setItems(response.data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('API 요청 중 오류 발생:');
@@ -58,13 +59,15 @@ const ArticleList = ({openViewer}) => {
 
   return (
     <ArticleListContainer>
-      <ListName>Top 5 공지사항</ListName>
       {isLoading ? (
         <LoadingIcon src={loadingIcon} />
       ) : (
-        items.map((item, index) => (
-          <ArticleItem key={index} data={item} rank={index+1} />
-        ))
+        <>
+          <ListName>Top 5 공지사항</ListName>
+          {items.map((item, index) => (
+            <ArticleItem key={index} data={item} rank={index+1} />
+          ))}
+        </>
       )}
     </ArticleListContainer>
   );
@@ -231,4 +234,5 @@ const ListName = styled.div`
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 4px;
+  opacity: 0;
 `

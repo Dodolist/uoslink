@@ -29,7 +29,7 @@ const showListAnimation = keyframes`
 
 const NoticeList = ({selectedSection, openViewer}) => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const listRef = useRef(null);
   var alreadyReadList;
 
@@ -68,6 +68,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
     }
     else if(sessionStorage.getItem(selectedSection) != null) {
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
+      setIsLoading(false);
     } else {
       setIsLoading(true);
       setItems([]);
