@@ -93,6 +93,7 @@ const SectionIcon = styled.img`
 `;
 
 const SectionName = styled.span`
+  //position: relative;
   transition: all 0.3s;
   color: ${props => props.theme.contentText};
   font-size: 16px;
@@ -110,6 +111,18 @@ const SectionName = styled.span`
   &:hover {
     opacity: 1;
   }
+  /*
+  &::after {
+    position: absolute;
+    top: 0;
+    right: -8px;
+    content: '';
+    width: 6px;
+    height: 6px;
+    background-color: #408cff;
+    border-radius: 50%;
+  }
+  */
 `;
 
 const NavBarDivider = styled.div`
