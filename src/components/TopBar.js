@@ -16,7 +16,7 @@ const TopBarContainer = styled('div')`
   justify-content: space-between;
 
   width: 100%;
-  max-width: 1080px;
+  max-width: 1280px;
   padding: 16px;
   margin: 0 auto;
   border-radius: 0 0 8px 8px;
