@@ -21,7 +21,7 @@ import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-import NoticeViewer from './components/NoticeViewer';
+import Viewer from './components/Viewer';
 
 const ContentContainer = styled.div`
   display: grid;
@@ -108,7 +108,7 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [isNoticeViewerOpen, setIsNoticeViewerOpen] = useState(false);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
   
   const themeObject = {
     light: {
@@ -205,20 +205,20 @@ const App = () => {
     setIsConfirmModalOpen(false);
   };
   
-  const openNoticeViewer = (id, section, link) => {
+  const openViewer = (id, section, link) => {
     setSelectedNoticeId(id);
     setSelectedNoticeSection(section);
     setSelectedNoticeLink(link);
-    setIsNoticeViewerOpen(true);
+    setIsViewerOpen(true);
   };
 
-  const closeNoticeViewer = () => {
+  const closeViewer = () => {
     setTimeout(() => {
       setSelectedNoticeId('');
       setSelectedNoticeSection('');
       setSelectedNoticeLink('');
     }, 200);
-    setIsNoticeViewerOpen(false);
+    setIsViewerOpen(false);
   };
 
   return (
@@ -248,12 +248,12 @@ const App = () => {
               />
             </div>
             <NoticeList
-              openNoticeViewer={openNoticeViewer}
+              openViewer={openViewer}
               selectedSection={selectedSection}
             />
             <List>
               <ArticleList
-                openNoticeViewer={openNoticeViewer}
+                openViewer={openViewer}
               />
             </List>
           </ContentContainer>
@@ -274,12 +274,12 @@ const App = () => {
         content={'삭제한 공지 내역은 되돌릴 수 없어요.'}
         closeConfirmModal={closeConfirmModal}
       />
-      <NoticeViewer
-        isNoticeViewerOpen={isNoticeViewerOpen}
+      <Viewer
+        isViewerOpen={isViewerOpen}
         selectedNoticeId={selectedNoticeId}
         selectedNoticeSection={selectedNoticeSection}
         selectedNoticeLink={selectedNoticeLink}
-        closeNoticeViewer={closeNoticeViewer}
+        closeViewer={closeViewer}
       />
     </ThemeProvider>
   );

@@ -18,7 +18,7 @@ const rotateAnimation = keyframes`
   } 
 `;
 
-const NoticeViewerContainer = styled.div`
+const ViewerContainer = styled.div`
   z-index: 300;
   position: fixed;
   top: ${props => props.isShow ? '50%' : '70%'};
@@ -45,7 +45,7 @@ const NoticeViewerContainer = styled.div`
 
 `;
 
-const NoticeViewerTitle = styled.div`
+const ViewerTitle = styled.div`
   color: ${props => props.theme.titleText};
   font-size: 20px;
   font-weight: 500;
@@ -57,7 +57,7 @@ const NoticeViewerTitle = styled.div`
   text-overflow: ellipsis;
 `
 
-const NoticeViewerInfo = styled.div`
+const ViewerInfo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -65,21 +65,21 @@ const NoticeViewerInfo = styled.div`
   gap: 8px;
 `
 
-const NoticeViewerInfoItem = styled.div`
+const ViewerInfoItem = styled.div`
   color: ${props => props.theme.subText};
   font-size: 12px;
   font-weight: 500;
   letter-spacing: -0.5px;
 `
 
-const NoticeViewerDivider = styled.div`
+const ViewerDivider = styled.div`
   height: 1px;
   background-color: ${props => props.theme.mode === 'light' ? '#00000020' : '#ffffff20'};
   margin-bottom: 12px;
   border-radius: 1px;
 `
 
-const NoticeViewerContentWrapper = styled.div`
+const ViewerContentWrapper = styled.div`
   word-break: break-all;
   display: flex;
   flex-direction: column;
@@ -96,7 +96,7 @@ const NoticeViewerContentWrapper = styled.div`
   }
 `
 
-const NoticeViewerContent = styled.div`
+const ViewerContent = styled.div`
   filter: ${props => props.theme.mode === 'dark' ? 'invert(1)' : 'invert(0)'};
   .vw-con img {
     filter: ${props => props.theme.mode === 'dark' ? 'invert(1)' : 'invert(0)'};
@@ -226,12 +226,12 @@ const LoadingText = styled.div`
   letter-spacing: -2px;
 `
 
-const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink, closeNoticeViewer }) => {
+const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink, closeViewer }) => {
   const [NoticeItem, setNoticeItem] = useState(null);
   const [isBookmark, setIsBookmark] = useState(false);
   useEffect(() => {
     // 공지사항이 닫히면 0.3초 후에 공지사항 데이터를 초기화한다.
-    if (!isNoticeViewerOpen) {
+    if (!isViewerOpen) {
       setTimeout(() => {
         setNoticeItem(null);
       }, 300);
@@ -247,7 +247,7 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
     }
 
     // 공지사항이 열리면 공지사항 데이터를 가져온다.
-    if (!isNoticeViewerOpen || !selectedNoticeId || !selectedNoticeSection || !selectedNoticeLink) return;
+    if (!isViewerOpen || !selectedNoticeId || !selectedNoticeSection || !selectedNoticeLink) return;
     let url;
     if (selectedNoticeSection === 'SC1') {
       url = 'https://www.iflab.run/api/scraping/notice/content/scholarship';
@@ -268,7 +268,7 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
           console.error('API 요청 중 오류 발생:');
         });
     }
-  }, [isNoticeViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink]);
+  }, [isViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink]);
 
   const clickBookmark = () => {
     let bookmarkList = [];
@@ -343,17 +343,17 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
 
   return NoticeItem ? (
     <div>
-      <BlackScreen isOpen={isNoticeViewerOpen} />
-      <NoticeViewerContainer isShow={isNoticeViewerOpen}>
-        <NoticeViewerTitle>
+      <BlackScreen isOpen={isViewerOpen} />
+      <ViewerContainer isShow={isViewerOpen}>
+        <ViewerTitle>
           { NoticeItem.title }
-        </NoticeViewerTitle>
-        <NoticeViewerInfo>
-          <NoticeViewerInfoItem>{ NoticeItem.author }</NoticeViewerInfoItem>
-          <NoticeViewerInfoItem>{ NoticeItem.writtenAt }</NoticeViewerInfoItem>
-        </NoticeViewerInfo>
-        <NoticeViewerDivider />
-        <NoticeViewerContentWrapper>
+        </ViewerTitle>
+        <ViewerInfo>
+          <ViewerInfoItem>{ NoticeItem.author }</ViewerInfoItem>
+          <ViewerInfoItem>{ NoticeItem.writtenAt }</ViewerInfoItem>
+        </ViewerInfo>
+        <ViewerDivider />
+        <ViewerContentWrapper>
           { NoticeItem.attachedFile && NoticeItem.attachedFile.length > 0 && (
             <div>
             <NoticeAttachedFile>
@@ -376,43 +376,43 @@ const NoticeViewer = ({ isNoticeViewerOpen, selectedNoticeId, selectedNoticeSect
                 </NoticeAttachedFileItem>
               ))}
             </NoticeAttachedFile>
-            <NoticeViewerDivider />
+            <ViewerDivider />
           </div>
           )}
-          <NoticeViewerContent
+          <ViewerContent
             dangerouslySetInnerHTML={{__html: NoticeItem.content}}
           />
-        </NoticeViewerContentWrapper>
+        </ViewerContentWrapper>
         <FloatButtonWrapper>
-          <FloatButton onClick={closeNoticeViewer} icon={closeIcon} />
+          <FloatButton onClick={closeViewer} icon={closeIcon} />
           <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
           <FloatButton onClick={clickOutlink} icon={outlinkIcon} />
         </FloatButtonWrapper>
-      </NoticeViewerContainer>
+      </ViewerContainer>
     </div>
   ) : (
     <div>
-      <BlackScreen isOpen={isNoticeViewerOpen} />
-      <NoticeViewerContainer isShow={isNoticeViewerOpen} >
+      <BlackScreen isOpen={isViewerOpen} />
+      <ViewerContainer isShow={isViewerOpen} >
         <LoadingWrapper>
           <LoadingIcon src={loadingIcon} />
           <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>
-          <FloatButton onClick={closeNoticeViewer} icon={closeIcon} />
+          <FloatButton onClick={closeViewer} icon={closeIcon} />
           <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
           <FloatButton icon={outlinkIcon} />
         </FloatButtonWrapper>
-      </NoticeViewerContainer>
+      </ViewerContainer>
     </div>
   );
 };
 
-export default NoticeViewer;
+export default Viewer;
 
 /*
-      <NoticeViewerContainer
-        isShow={isNoticeViewerOpen}
+      <ViewerContainer
+        isShow={isViewerOpen}
         ref={dragRef}
         style={{
           translate: `${newPosition.x}px ${newPosition.y}px`,

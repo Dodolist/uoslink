@@ -27,7 +27,7 @@ const showListAnimation = keyframes`
   } 
 `;
 
-const NoticeList = ({selectedSection, openNoticeViewer}) => {
+const NoticeList = ({selectedSection, openViewer}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const listRef = useRef(null);
@@ -100,7 +100,7 @@ const NoticeList = ({selectedSection, openNoticeViewer}) => {
   );
 
   function sendNoticeInfo(id, section, link) {
-    openNoticeViewer(id, section, link);
+    openViewer(id, section, link);
     // 이미 읽은 공지면 return
     // 그렇지 않으면 localStorage에 저장
     if (selectedSection === 'BM') {

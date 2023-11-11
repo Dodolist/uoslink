@@ -26,7 +26,7 @@ const SectionList = [
   },
 ];
 
-const ArticleList = ({openNoticeViewer}) => {
+const ArticleList = ({openViewer}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   var alreadyReadList;
@@ -70,7 +70,7 @@ const ArticleList = ({openNoticeViewer}) => {
   );
 
   function sendArticleInfo(id, section, link) {
-    openNoticeViewer(id, section, link);
+    openViewer(id, section, link);
     // 이미 읽은 공지면 return
     // 그렇지 않으면 localStorage에 저장
     if(alreadyReadList[section].includes(id)) {
