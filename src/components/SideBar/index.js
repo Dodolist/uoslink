@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SideBarContainer, ShortCutList, ShortCutWrap, ShortCutIconWrap, ShortCutIcon, ShortCutLabel, AddButtonWrap, AddButton } from './style';
 import addIcon from '../../images/add-icon.svg';
 import modifyIcon from '../../images/modify-icon.svg';
-import InputModal from '../InputModal';
-import BlackScreen from '../BlackScreen';
+import InputModal from '../Modal/InputModal';
 
 const SideBar = ({ isSideBarOpen }) => {
   const [sites, setSites] = useState([]);
@@ -81,7 +80,6 @@ const SideBar = ({ isSideBarOpen }) => {
 
   return (
     <div>
-      <BlackScreen isOpen={isInputModalOpen}/>
       <InputModal
         isModified={isModified}
         isInputModalOpen={isInputModalOpen}

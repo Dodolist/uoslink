@@ -2,10 +2,10 @@ import styled, { css } from 'styled-components'
 
 const Button = styled.button`
   color: ${(props) => props.theme.titleText};
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: -1px;
 
+  min-width: 100px;
   width: 100%;
   padding: 20px 0;
   background-color: ${(props) => props.theme.foreground};

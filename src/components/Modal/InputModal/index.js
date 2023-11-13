@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import LogoIcon from '../../images/logo.svg';
-import LoadingIcon from '../../images/loading.svg';
-import XIcon from '../../images/x-icon.svg';
-import { InputModalWrap, ModalTitle, InputWrap, InputLabel, InputBox, Input, ButtonWrap, SiteLogo, SiteLogoLoading, InvalidIcon } from './style';
-import Button from '../Buttons';
-import DeleteButton from '../Buttons/DeleteButton';
+import LogoIcon from '../../../images/logo.svg';
+import LoadingIcon from '../../../images/loading.svg';
+import XIcon from '../../../images/x-icon.svg';
+import { InputBox, Input, SiteLogo, SiteLogoLoading, InvalidIcon } from './style';
+import InputWrap from '../../Input';
+import Modal from '../../Modal';
+import { ButtonWrap } from '../style';
+import Button from '../../Buttons';
+import DeleteButton from '../../Buttons/DeleteButton';
 
 const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, modifySite, deleteSite, loadName, loadUrl }) => {
   const [name, setName] = React.useState('');
@@ -142,12 +145,11 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
   }
 
   return (
-    <InputModalWrap isOpen={isInputModalOpen}>
-      <ModalTitle>
-        {isModified ? '바로가기 수정' : '바로가기 추가'}
-      </ModalTitle>
-      <InputWrap>
-        <InputLabel>이름</InputLabel>
+    <Modal
+      isOpen={isInputModalOpen}
+      title={isModified ? '바로가기 수정' : '바로가기 추가'}
+    >
+      <InputWrap label={'이름'}>
         <InputBox>
           <Input
             type="text"
@@ -157,8 +159,7 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
           />
         </InputBox>
       </InputWrap>
-      <InputWrap>
-        <InputLabel>사이트 주소</InputLabel>
+      <InputWrap label={'사이트 주소'}>
         <InputBox>
           <Input
             type="text"
@@ -195,7 +196,7 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
       >
         삭제
       </DeleteButton>
-    </InputModalWrap>
+    </Modal>
   );
 };
 

@@ -16,8 +16,7 @@ import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
 import ArticleList from './components/ArticleList';
-import BlackScreen from './components/BlackScreen';
-import ConfirmModal from './components/ConfirmModal';
+import ConfirmModal from './components/Modal/ConfirmModal';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -273,11 +272,10 @@ const App = () => {
           isSideBarOpen={isSideBarOpen}
         />
       </div>
-      <BlackScreen isOpen={isConfirmModalOpen} />
       <ConfirmModal
         isConfirmModalOpen={isConfirmModalOpen}
         title={'읽은 공지 내역을 삭제하실 건가요?'}
-        content={'삭제한 공지 내역은 되돌릴 수 없어요.'}
+        subtitle={'삭제한 공지 내역은 되돌릴 수 없어요.'}
         closeConfirmModal={closeConfirmModal}
       />
       <Viewer

@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const ConfirmModalWrap = styled.div`
+const ModalContainer = styled.div`
   z-index: 300;
   min-width: 340px;
   position: fixed;
@@ -19,19 +19,22 @@ const ConfirmModalWrap = styled.div`
   padding: 24px 24px 16px 24px;
 `
 
-const ModalTitle = styled.div`
-  color: ${(props) => props.theme.titleText};
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 4px;
-  letter-spacing: -1px;
+const TextWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `
 
-const ModalContent = styled.div`
-  color: ${(props) => props.theme.subText};
+const Text = styled.div`
+  color: ${(props) => props.theme.titleText};
   font-size: 18px;
-  margin-bottom: 16px;
-  letter-spacing: -1.5px;
+  font-weight: bold;
+
+  ${(props) => props.sub && css`
+    color: ${(props) => props.theme.subText};
+    font-size: 16px;
+    font-weight: 400;
+  `}
 `
 
 const ButtonWrap = styled.div`
@@ -39,8 +42,8 @@ const ButtonWrap = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: 16px;
+  margin-top: 40px;
   gap: 12px;
 `
 
-export { ConfirmModalWrap, ModalTitle, ModalContent, ButtonWrap };
+export { ModalContainer, TextWrap, Text, ButtonWrap };
