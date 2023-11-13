@@ -53,7 +53,7 @@ const CardWrapper = styled.div`
   display: flex;
 `
 
-const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar, openConfirmModal }) => {
+const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar }) => {
   const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
   const [isOpenedLibraryCard, setIsOpenedLibraryCard] = useState(false);
   const [isOpenedSettingCard, setIsOpenedSettingCard] = useState(false);
@@ -114,7 +114,6 @@ const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar, openConfirmM
             handleClose = {handleCloseCard('setting')}
             toggleTheme={toggleTheme}
             toggleSideBar={toggleSideBar}
-            openConfirmModal={openConfirmModal}
           />
           <img className="icon" onClick={handleOpenCard('setting')} src={settingIcon} />
         </CardWrapper>

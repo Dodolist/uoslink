@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import LogoIcon from '../../../images/logo.svg';
 import LoadingIcon from '../../../images/loading.svg';
 import XIcon from '../../../images/x-icon.svg';

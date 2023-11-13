@@ -16,7 +16,6 @@ import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
 import ArticleList from './components/ArticleList';
-import ConfirmModal from './components/Modal/ConfirmModal';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -112,7 +111,6 @@ const App = () => {
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   
   const themeObject = {
@@ -202,14 +200,6 @@ const App = () => {
     }
   };
 
-  const openConfirmModal = () => {
-    setIsConfirmModalOpen(true);
-  };
-
-  const closeConfirmModal = () => {
-    setIsConfirmModalOpen(false);
-  };
-  
   const openViewer = (id, section, link) => {
     setSelectedNoticeId(id);
     setSelectedNoticeSection(section);
@@ -235,8 +225,7 @@ const App = () => {
           isSideBarOpen={isSideBarOpen}
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
-          openConfirmModal={openConfirmModal}
-          />
+        />
         {
         isOnline ? (
           <ContentContainer>
@@ -272,12 +261,6 @@ const App = () => {
           isSideBarOpen={isSideBarOpen}
         />
       </div>
-      <ConfirmModal
-        isConfirmModalOpen={isConfirmModalOpen}
-        title={'읽은 공지 내역을 삭제하실 건가요?'}
-        subtitle={'삭제한 공지 내역은 되돌릴 수 없어요.'}
-        closeConfirmModal={closeConfirmModal}
-      />
       <Viewer
         isViewerOpen={isViewerOpen}
         selectedNoticeId={selectedNoticeId}
