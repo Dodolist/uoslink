@@ -3,6 +3,7 @@ import bookmarkIcon from '../images/bookmark-icon.svg';
 import noticeFA1Icon from '../images/notice-FA1-icon.svg';
 import noticeFA2Icon from '../images/notice-FA2-icon.svg';
 import noticeFA35Icon from '../images/notice-FA35-icon.svg';
+import noticeDA1Icon from '../images/notice-DA1-icon.svg';
 import noticeSC1Icon from '../images/notice-SC1-icon.svg';
 import noticeFA34Icon from '../images/notice-FA34-icon.svg';
 
@@ -21,6 +22,11 @@ const SectionList = [
     id: 'FA35',
     icon: noticeFA35Icon,
     name: '창업공지',
+  },
+  {
+    id: 'DA1',
+    icon: noticeDA1Icon,
+    name: '학과공지',
   },
   {
     id: 'SC1',

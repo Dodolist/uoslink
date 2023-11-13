@@ -6,6 +6,7 @@ import kebabIcon from '../images/kebab-icon.svg';
 // import bookmarkIcon from '../images/gray-bookmark24-icon.svg';
 import readCheckIcon from '../images/read-check-icon.svg';
 import unreadCheckIcon from '../images/unread-check-icon.svg';
+import Button from './Buttons';
 
 const rotateAnimation = keyframes`
   from {
@@ -38,6 +39,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
       'FA1': [],
       'FA2': [],
       'FA34': [],
+      'DA1': [],
       'FA35': [],
       'SC1': []
     };
@@ -50,7 +52,42 @@ const NoticeList = ({selectedSection, openViewer}) => {
     if (listRef.current) {
       listRef.current.scrollTop = 0;
     }
-    if(selectedSection === 'BM') {
+    if(selectedSection === 'DA1') {
+      // 학과공지가 선택된 경우
+      // localStorage에 유저의 학과 정보가 있는지 확인 후
+      // 학과 정보가 있으면 api실행하여 공지를 불러옴
+      setIsLoading(true);
+      if(localStorage.getItem('major') !== null) {
+        if (sessionStorage.getItem(selectedSection) != null) {
+          // sessionStorage에 선택된 섹션의 공지가 있는 경우
+          setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
+          setIsLoading(false);
+        } else {
+          // sessionStorage에 선택된 섹션의 공지가 없는 경우
+          setIsLoading(true);
+          setItems([]);
+          let url = 'https://www.iflab.run/api/notices/' + selectedSection;
+          axios.get(url)
+            .then(response => {
+              setItems(response.data);
+              sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
+            })
+            .catch(error => {
+              console.error('API 요청 중 오류 발생:');
+            });
+          
+        }
+      } else {
+        setItems([]);
+      }
+      setIsLoading(false);
+    }
+
+    else if(selectedSection === 'BM') {
+      // 북마크가 선택된 경우
+      // localStorage에 북마크가 있는지 확인 후
+      // 북마크가 있으면 불러옴
+      // 없으면 빈 배열을 불러오고 localStorage에 빈 배열을 저장
       setIsLoading(true);
       if(localStorage.getItem('bookmark') !== null) {
         let bookmark = JSON.parse(localStorage.getItem('bookmark'));
@@ -66,10 +103,13 @@ const NoticeList = ({selectedSection, openViewer}) => {
       }
       setIsLoading(false);
     }
+
     else if(sessionStorage.getItem(selectedSection) != null) {
+      // sessionStorage에 선택된 섹션의 공지가 있는 경우
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
       setIsLoading(false);
     } else {
+      // sessionStorage에 선택된 섹션의 공지가 없는 경우
       setIsLoading(true);
       setItems([]);
       let url = 'https://www.iflab.run/api/notices/' + selectedSection;
@@ -91,7 +131,16 @@ const NoticeList = ({selectedSection, openViewer}) => {
       {isLoading ? (
         <LoadingIcon src={loadingIcon} />
       ) : (items.length === 0 && selectedSection === 'BM') ? (
-        <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
+        <NoItemContainer key={selectedSection}>
+          <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
+          </NoItemContainer>
+      ) : (items.length === 0 && selectedSection === 'DA1') ? (
+        <NoItemContainer key={selectedSection}>
+          <NoItemText>학과를 선택하고 공지사항을 받아보세요!</NoItemText>
+          <Button color={"blue"} size={"small"}>
+            학과 선택하기
+          </Button>
+        </NoItemContainer>
       ) : (
         items.map((item, index) => (
           <NoticeItem key={index} data={item} />
@@ -176,6 +225,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
                 {data.section === 'FA1' ? '일반공지' :
                 data.section === 'FA2' ? '학사공지' :
                 data.section === 'FA35' ? '창업공지' :
+                data.section === 'DA1' ? '학과공지' :
                 data.section === 'SC1' ? '장학공지' :
                 data.section === 'FA34' ? '직원채용' :
                 ''}
@@ -295,17 +345,28 @@ const NoticeInfo = styled.span`
   
 `;
 
-const NoItemText = styled.span`
+const NoItemContainer = styled.div`
   animation: ${showListAnimation} 0.5s ease-in-out forwards;
   position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+`
+
+const NoItemText = styled.span`
+  width: max-content;
+
   color: ${props => props.theme.contentText};
   font-size: 20px;
   font-weight: 500;
   letter-spacing: -3px;
+  text-align: center;
 `;
 
 const LoadingIcon = styled.img`

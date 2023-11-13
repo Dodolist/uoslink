@@ -37,6 +37,12 @@ const Button = styled.button`
     user-select: none;
     pointer-events: none;
   `}
+  ${(props) => props.size === 'small' && css`
+    width: fit-content;
+    font-size: 14px;
+    padding: 12px 16px;
+    min-width: 74px;
+  `}
 `
 
 export { Button }
