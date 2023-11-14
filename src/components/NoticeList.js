@@ -67,7 +67,8 @@ const NoticeList = ({selectedSection, openViewer}) => {
       // localStorage에 유저의 학과 정보가 있는지 확인 후
       // 학과 정보가 있으면 api실행하여 공지를 불러옴
       setIsLoading(true);
-      if(localStorage.getItem('major') !== null) {
+      if(localStorage.getItem('academicInfo') !== null) {
+        let academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
         if (sessionStorage.getItem(selectedSection) != null) {
           // sessionStorage에 선택된 섹션의 공지가 있는 경우
           setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
@@ -76,7 +77,9 @@ const NoticeList = ({selectedSection, openViewer}) => {
           // sessionStorage에 선택된 섹션의 공지가 없는 경우
           setIsLoading(true);
           setItems([]);
-          let url = 'https://www.iflab.run/api/notices/' + selectedSection;
+
+          // 학과 공지사항 불러오는 API
+          let url = 'https://www.iflab.run/api/notice/major/' + academicInfo.major_id;
           axios.get(url)
             .then(response => {
               setItems(response.data);
@@ -122,6 +125,8 @@ const NoticeList = ({selectedSection, openViewer}) => {
       // sessionStorage에 선택된 섹션의 공지가 없는 경우
       setIsLoading(true);
       setItems([]);
+
+      // 공지사항 불러오는 API
       let url = 'https://www.iflab.run/api/notices/' + selectedSection;
 
       axios.get(url)
@@ -163,12 +168,18 @@ const NoticeList = ({selectedSection, openViewer}) => {
   );
 
   function sendNoticeInfo(id, section, link) {
-    openViewer(id, section, link);
-    // 이미 읽은 공지면 return
-    // 그렇지 않으면 localStorage에 저장
+    if(selectedSection == 'DA1') {
+      const academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
+      openViewer(id, academicInfo.major_id, link);
+    } else {
+      openViewer(id, section, link);
+    }
+    // 북마크는 예외
     if (selectedSection === 'BM') {
       return;
     }
+    // 이미 읽은 공지면 return
+    // 그렇지 않으면 localStorage에 저장
     if(alreadyReadList[selectedSection].includes(id)) {
       return;
     }
