@@ -268,10 +268,9 @@ const NoticeList = ({selectedSection, openViewer}) => {
                 {data.section === 'FA1' ? '일반공지' :
                 data.section === 'FA2' ? '학사공지' :
                 data.section === 'FA35' ? '창업공지' :
-                data.section === 'DA1' ? '학과공지' :
                 data.section === 'SC1' ? '장학공지' :
                 data.section === 'FA34' ? '직원채용' :
-                ''}
+                '힉과공지'}
               </NoticeInfo>
             ) : null}
             <NoticeInfo>{data.author}</NoticeInfo>
