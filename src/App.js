@@ -73,14 +73,14 @@ const SectionList = [
     name: '학사공지',
   },
   {
-    id: 'FA35',
-    icon: noticeFA35Icon,
-    name: '창업공지',
-  },
-  {
     id: 'DA1',
     icon: noticeDA1Icon,
     name: '학과공지',
+  },
+  {
+    id: 'FA35',
+    icon: noticeFA35Icon,
+    name: '창업공지',
   },
   {
     id: 'SC1',
