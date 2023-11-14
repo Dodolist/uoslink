@@ -51,9 +51,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
 
     // 학과 공지사항 불러오는 API
     let academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
-    console.log(academicInfo);
     let url = 'https://www.iflab.run/api/notice/major/' + academicInfo.major_id;
-    console.log(url);
     axios.get(url)
       .then(response => {
         setItems(response.data);
@@ -191,7 +189,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
   function sendNoticeInfo(id, section, link) {
     if(selectedSection === 'DA1') {
       const academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
-      openViewer(id, academicInfo.major_id, link);
+      openViewer(id, academicInfo.college_id, link);
     } else {
       openViewer(id, section, link);
     }
