@@ -21,9 +21,11 @@ const InputBox = styled.div`
   padding: 4px 4px 4px 8px;
   border-radius: 8px;
   cursor: pointer;
+  
+  opacity: ${(props) => props.disabled ? '0.5' : '1'};
 
   &:hover {
-    border: 1px solid #00000040;
+    border: ${(props) => props.disabled ? '1px solid #00000000' : '1px solid #00000040'};
   }
 `
 

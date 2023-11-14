@@ -5,6 +5,7 @@ import InputWrap from '../../Input';
 import Modal from '../../Modal';
 import { ButtonWrap } from '../style';
 import Button from '../../Buttons';
+import InputArrowIcon from '../../../images/input-arrow-icon.svg';
 
 const collegeList = [
   {
@@ -65,6 +66,10 @@ const collegeList = [
       },
       {
         cate_id: '000010382',
+        major_name: '토목공학과',
+      },
+      {
+        cate_id: '000010383',
         major_name: '컴퓨터과학부',
       },
       {
@@ -265,6 +270,7 @@ const MajorInputModal = ({ isModalOpen, title, subtitle, closeModal }) => {
         <InputWrap label={'대학'}>
           <InputBox onClick={() => openList('college')}>
             <SelectedText>{college}</SelectedText>
+            <ArrowIcon src={InputArrowIcon} selected={isOpenList === 'college'} />
           </InputBox>
           <InputList
             isOpen={isOpenList === 'college'}
@@ -282,8 +288,9 @@ const MajorInputModal = ({ isModalOpen, title, subtitle, closeModal }) => {
           </InputList>
         </InputWrap>
         <InputWrap label={'학과'}>
-          <InputBox onClick={() => openList('major')}>
+          <InputBox onClick={() => openList('major')} disabled={college === ''}>
             <SelectedText>{major}</SelectedText>
+            <ArrowIcon src={InputArrowIcon} selected={isOpenList === 'major'} />
           </InputBox>
           <InputList
             isOpen={isOpenList === 'major'}
@@ -370,4 +377,13 @@ const SelectedText = styled.div`
   color: ${(props) => props.theme.contentText};
   font-size: 14px;
   user-select: none;
+`
+
+const ArrowIcon = styled.img`
+  position: absolute;
+  right: 8px;
+
+  width: 16px;
+  height: 16px;
+  transform: ${(props) => (props.selected ? 'rotateX(180deg)' : 'rotateX(0deg)')};
 `
