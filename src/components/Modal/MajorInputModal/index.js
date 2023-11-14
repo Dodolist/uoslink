@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { InputBox, RowInputWrap } from './style';
+import { InputBox, RowInputWrap, InputList, InputItem, SelectedText, ArrowIcon } from './style';
 import InputWrap from '../../Input';
 import Modal from '../../Modal';
 import { ButtonWrap } from '../style';
@@ -330,61 +329,3 @@ const MajorInputModal = ({ isModalOpen, title, subtitle, closeModal, handleConfi
   );
 };
 export default MajorInputModal;
-
-const InputList = styled.div`
-  z-index: 400;
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 0;
-  right: 0;
-  width: 100%;
-
-  border-radius: 8px;
-  overflow: auto;
-
-  outline: ${(props) => (props.isOpen ? '1px solid #D8D9DD' : '1px solid #D8D9DD00')};
-  height: ${(props) => (props.ItemNumber && props.isOpen ? `${props.ItemNumber * 37}px` : '0')};
-`
-
-const InputItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 8px 16px 8px 8px;
-  background-color: ${(props) => props.theme.foreground};
-
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  &:hover {
-    filter: brightness(0.9);
-  }
-  &:active {
-    transition: all 0.05s;
-    filter: brightness(0.8);
-  }
-
-  cursor: pointer;
-  user-select: none;
-  color: ${(props) => props.theme.contentText};
-  font-size: 14px;
-
-  ${(props) => props.selected && `
-    cursor: default;
-    pointer-events: none;
-    color: ${props.theme.subText}
-  `}
-`
-
-const SelectedText = styled.div`
-  color: ${(props) => props.theme.contentText};
-  font-size: 14px;
-  user-select: none;
-`
-
-const ArrowIcon = styled.img`
-  position: absolute;
-  right: 8px;
-
-  width: 16px;
-  height: 16px;
-  transform: ${(props) => (props.selected ? 'rotateX(180deg)' : 'rotateX(0deg)')};
-`
