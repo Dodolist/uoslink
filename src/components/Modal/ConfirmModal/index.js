@@ -3,24 +3,18 @@ import Modal from '../../Modal';
 import { ButtonWrap } from '../style';
 import Button from '../../Buttons';
 
-const ConfirmModal = ({ isConfirmModalOpen, title, subtitle, closeConfirmModal }) => {
+const ConfirmModal = ({ isModalOpen, title, subtitle, closeModal, handleConfirm }) => {
 
-  const deleteAllNotices = () => {
-    // 읽은 모든 공지사항 삭제
-    localStorage.removeItem('noticeId');
-    closeConfirmModal();
-    window.location.reload(); // 새로고침
-  };
 
   return (
     <Modal
-      isOpen={isConfirmModalOpen}
+      isOpen={isModalOpen}
       title={title}
       subtitle={subtitle}
     >
       <ButtonWrap>
-        <Button onClick={closeConfirmModal}>취소</Button>
-        <Button color={"red"} onClick={deleteAllNotices}>
+        <Button onClick={closeModal}>취소</Button>
+        <Button color={"red"} onClick={handleConfirm}>
           삭제
         </Button>
       </ButtonWrap>

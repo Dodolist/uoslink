@@ -44,6 +44,27 @@ const NoticeList = ({selectedSection, openViewer}) => {
     setIsModalOpen(false);
   }
 
+  const loadMajorNoticeList = () => {
+    // 학과공지 불러오기
+    setIsLoading(true);
+    setItems([]);
+
+    // 학과 공지사항 불러오는 API
+    let academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
+    console.log(academicInfo);
+    let url = 'https://www.iflab.run/api/notice/major/' + academicInfo.major_id;
+    console.log(url);
+    axios.get(url)
+      .then(response => {
+        setItems(response.data);
+        sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('API 요청 중 오류 발생:');
+      });
+  };
+
   if(localStorage.getItem('noticeId') == null) {
      alreadyReadList = {
       'FA1': [],
@@ -163,12 +184,12 @@ const NoticeList = ({selectedSection, openViewer}) => {
           ))
         )}
       </NoticeListContainer>
-      <MajorInputModal isModalOpen={isModalOpen} closeModal={closeModal} />
+      <MajorInputModal isModalOpen={isModalOpen} closeModal={closeModal} handleConfirm={loadMajorNoticeList}/>
     </>
   );
 
   function sendNoticeInfo(id, section, link) {
-    if(selectedSection == 'DA1') {
+    if(selectedSection === 'DA1') {
       const academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
       openViewer(id, academicInfo.major_id, link);
     } else {

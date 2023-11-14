@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { InputBox, RowInputWrap } from './style';
 import InputWrap from '../../Input';
 import Modal from '../../Modal';
@@ -202,7 +202,7 @@ const collegeList = [
   },
 ];
 
-const MajorInputModal = ({ isModalOpen, title, subtitle, closeModal }) => {
+const MajorInputModal = ({ isModalOpen, title, subtitle, closeModal, handleConfirm }) => {
   const [isDisabled, setIsDisabled] = React.useState(true);
   const [college, setCollege] = React.useState('');
   const [major, setMajor] = React.useState('');
@@ -241,6 +241,7 @@ const MajorInputModal = ({ isModalOpen, title, subtitle, closeModal }) => {
     };
     localStorage.setItem('academicInfo', JSON.stringify(academicInfo));
     handleCloseModal();
+    handleConfirm();
   }
 
   const handleCloseModal = () => {
