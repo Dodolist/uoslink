@@ -6,6 +6,7 @@ import kebabIcon from '../images/kebab-icon.svg';
 // import bookmarkIcon from '../images/gray-bookmark24-icon.svg';
 import readCheckIcon from '../images/read-check-icon.svg';
 import unreadCheckIcon from '../images/unread-check-icon.svg';
+import MajorInputModal from './Modal/MajorInputModal';
 import Button from './Buttons';
 
 const rotateAnimation = keyframes`
@@ -31,8 +32,17 @@ const showListAnimation = keyframes`
 const NoticeList = ({selectedSection, openViewer}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const listRef = useRef(null);
   var alreadyReadList;
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
 
   if(localStorage.getItem('noticeId') == null) {
      alreadyReadList = {
@@ -127,26 +137,29 @@ const NoticeList = ({selectedSection, openViewer}) => {
   }, [selectedSection]);
 
   return (
-    <NoticeListContainer ref={listRef}>
-      {isLoading ? (
-        <LoadingIcon src={loadingIcon} />
-      ) : (items.length === 0 && selectedSection === 'BM') ? (
-        <NoItemContainer key={selectedSection}>
-          <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
+    <>
+      <NoticeListContainer ref={listRef}>
+        {isLoading ? (
+          <LoadingIcon src={loadingIcon} />
+        ) : (items.length === 0 && selectedSection === 'BM') ? (
+          <NoItemContainer key={selectedSection}>
+            <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
+            </NoItemContainer>
+        ) : (items.length === 0 && selectedSection === 'DA1') ? (
+          <NoItemContainer key={selectedSection}>
+            <NoItemText>학과를 선택하고 공지사항을 받아보세요!</NoItemText>
+            <Button color={"blue"} size={"small"} onClick={openModal}>
+              학과 선택하기
+            </Button>
           </NoItemContainer>
-      ) : (items.length === 0 && selectedSection === 'DA1') ? (
-        <NoItemContainer key={selectedSection}>
-          <NoItemText>학과를 선택하고 공지사항을 받아보세요!</NoItemText>
-          <Button color={"blue"} size={"small"}>
-            학과 선택하기
-          </Button>
-        </NoItemContainer>
-      ) : (
-        items.map((item, index) => (
-          <NoticeItem key={index} data={item} />
-        ))
-      )}
-    </NoticeListContainer>
+        ) : (
+          items.map((item, index) => (
+            <NoticeItem key={index} data={item} />
+          ))
+        )}
+      </NoticeListContainer>
+      <MajorInputModal isModalOpen={isModalOpen} closeModal={closeModal} />
+    </>
   );
 
   function sendNoticeInfo(id, section, link) {
