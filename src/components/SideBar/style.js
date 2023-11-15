@@ -67,7 +67,6 @@ const ShortCutLabel = styled.div`
   position: absolute;
   top: 50%;
   left: -25%;
-  transform: translate(-100%, -50%);
   padding: 8px 8px 8px 12px;
   border-radius: 4px;
   background-color: #3c414c;
@@ -78,8 +77,9 @@ const ShortCutLabel = styled.div`
 
   gap: 2px;
 
+  transform: ${(props) => props.isHovered ? 'translate(-100%, -50%) scale(1)' : 'translate(0%, -50%) scale(0.8)'};
+  transform-orgin: ${(props) => props.isHovered ? 'right top' : 'left top'};
   opacity: ${(props) => props.isHovered ? '1' : '0'};
-  scale: ${(props) => props.isHovered ? '1' : '0.8'};
 `
 
 const AddButtonWrap = styled.div`

@@ -10,6 +10,7 @@ const SideBar = ({ isSideBarOpen }) => {
   const [isInputModalOpen, setIsInputModalOpen] = useState(false);
   const [isModified, setIsModified] = useState(false);
   const [modifiedSite, setModifiedSite] = useState(null);
+  const [timer, setTimer] = useState(null);
 
   useEffect(() => {
     const siteArray = JSON.parse(localStorage.getItem('sites'));
@@ -72,9 +73,24 @@ const SideBar = ({ isSideBarOpen }) => {
     setModifiedSite(sites.find((site) => site.name === hoveredShortCut));
   };
 
+  const onMouseEnterShortCut = (site) => {
+    if (!isModified) {
+      if(timer) {
+        clearTimeout(timer);
+      }
+      setHoveredShortCut(site.name);
+    }
+  };
+
   const onMouseLeaveShortCut = (e) => {
     if (!isModified) {
-      setHoveredShortCut(null);
+
+      if(timer) {
+        clearTimeout(timer);
+      }
+      setTimer(setTimeout(() => {
+        setHoveredShortCut(null);
+      }, 300));
     }
   };
 
@@ -95,7 +111,7 @@ const SideBar = ({ isSideBarOpen }) => {
           {sites.map((site) => (
             <ShortCutWrap
               key={site.link}
-              onMouseEnter={() => setHoveredShortCut(site.name)}
+              onMouseEnter={() => onMouseEnterShortCut(site)}
               onMouseLeave={() => onMouseLeaveShortCut()}
             >
               <ShortCutIconWrap href={site.link} >
