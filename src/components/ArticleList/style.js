@@ -24,6 +24,8 @@ const ArticleListContainer = styled.div`
   display: flex;
   flex-direction: column;
   // height: 50%;
+  overflow: hidden;
+  min-height: 50%;
   background-color: ${props => props.theme.foreground};
   border-radius: 8px;
   padding: 8px;
