@@ -82,6 +82,12 @@ const NoticeList = ({selectedSection, openViewer}) => {
       listRef.current.scrollTop = 0;
     }
     if(selectedSection === 'DA1') {
+      const noticeId = JSON.parse(localStorage.getItem('noticeId'));
+      if(noticeId['DA1'] === undefined) {
+        noticeId['DA1'] = [];
+        localStorage.setItem('noticeId', JSON.stringify(noticeId));
+      }
+
       // 학과공지가 선택된 경우
       // localStorage에 유저의 학과 정보가 있는지 확인 후
       // 학과 정보가 있으면 api실행하여 공지를 불러옴
