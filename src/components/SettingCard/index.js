@@ -38,6 +38,11 @@ const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, to
       localStorage.removeItem('noticeId');
     } else if(modalType === 'major') {
       localStorage.removeItem('academicInfo');
+
+      const noticeId = JSON.parse(localStorage.getItem('noticeId'));
+      noticeId.DA1 = [];
+      localStorage.setItem('noticeId', JSON.stringify(noticeId));
+
       sessionStorage.removeItem('DA1');
     }
     closeModal();
