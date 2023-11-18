@@ -235,6 +235,8 @@ const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selecte
       setTimeout(() => {
         setNoticeItem(null);
       }, 300);
+    } else {
+      window.addEventListener('keydown', handleKeyDown);
     }
 
     if (localStorage.getItem('bookmark')) {
@@ -269,6 +271,15 @@ const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selecte
         });
     }
   }, [isViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink]);
+
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      closeViewer();
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }
+
 
   const clickBookmark = () => {
     let bookmarkList = [];
