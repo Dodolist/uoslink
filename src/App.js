@@ -19,6 +19,7 @@ import ArticleList from './components/ArticleList';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import SnowPage from './components/SnowPage';
 
 import Viewer from './components/Viewer';
 
@@ -111,6 +112,7 @@ const App = () => {
   const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
+  const [activeSnow, setActiveSnow] = useState(localStorage.getItem('activeSnow') === 'true' ? true : false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   
   const themeObject = {
@@ -158,6 +160,14 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if(!localStorage.getItem('activeSnow')) {
+      localStorage.setItem('activeSnow', 'true');
+    } else {
+      setActiveSnow(localStorage.getItem('activeSnow') === 'true');
+    }
+  }, []);
+
+  useEffect(() => {
     // 온라인 및 오프라인 상태 변경 이벤트 핸들러 등록
     window.addEventListener('online', handleOnlineStatusChange);
     window.addEventListener('offline', handleOnlineStatusChange);
@@ -200,6 +210,16 @@ const App = () => {
     }
   };
 
+  const toggleSnow = () => {
+    if (activeSnow) {
+      setActiveSnow(false);
+      localStorage.setItem('activeSnow', false);
+    } else {
+      setActiveSnow(true);
+      localStorage.setItem('activeSnow', true);
+    }
+  };
+
   const openViewer = (id, section, link) => {
     setSelectedNoticeId(id);
     setSelectedNoticeSection(section);
@@ -223,8 +243,10 @@ const App = () => {
         <TopBar
           theme={theme}
           isSideBarOpen={isSideBarOpen}
+          activeSnow={activeSnow}
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
+          toggleSnow={toggleSnow}
         />
         {
         isOnline ? (
@@ -267,6 +289,9 @@ const App = () => {
         selectedNoticeSection={selectedNoticeSection}
         selectedNoticeLink={selectedNoticeLink}
         closeViewer={closeViewer}
+      />
+      <SnowPage
+        activeSnow={activeSnow}
       />
     </ThemeProvider>
   );

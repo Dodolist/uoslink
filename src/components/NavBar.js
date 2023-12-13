@@ -81,7 +81,7 @@ const NavBarContainer = styled.div`
   padding: 16px 12px;
   border-radius: 8px;
   gap: 16px;
-  background-color: ${props => props.theme.foreground};
+  background-color: ${props => props.theme.foreground}f4;
   min-width: 140px;
 `;
 
