@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import logo from '../images/logo.svg';
-import santaHat from '../images/santa-hat.svg';
 import foodIcon from '../images/food-icon.svg';
 import libraryIcon from '../images/library-icon.svg';
 import settingIcon from '../images/setting-icon.svg';
@@ -53,15 +52,6 @@ const ImgWrap = styled('div')`
   display: flex;
 `
 
-const SantaHat = styled('img')`
-  position: absolute;
-  top: -8px;
-  left: -2px;
-  width: 16px;
-  height: 16px;
-  transform: rotate(-32deg);
-`
-
 const TopBarRight = styled('div')`
   display: flex;
   flex-direction: row;
@@ -98,7 +88,7 @@ const CardWrapper = styled.div`
   display: flex;
 `
 
-const TopBar = ({ theme, isSideBarOpen, activeSnow, toggleTheme, toggleSideBar, toggleSnow }) => {
+const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar }) => {
   const [isOpenedFoodCard, setIsOpenedFoodCard] = useState(false);
   const [isOpenedLibraryCard, setIsOpenedLibraryCard] = useState(false);
   const [isOpenedSettingCard, setIsOpenedSettingCard] = useState(false);
@@ -134,7 +124,6 @@ const TopBar = ({ theme, isSideBarOpen, activeSnow, toggleTheme, toggleSideBar, 
       <TopBarLeft>
         <ImgWrap>
           <img className="logo" src={logo} alt="logo" />
-          <SantaHat src={santaHat} alt="santaHat" />
         </ImgWrap>
         <ServiceName>시대링크</ServiceName>
         <ServiceNotice />
@@ -159,11 +148,9 @@ const TopBar = ({ theme, isSideBarOpen, activeSnow, toggleTheme, toggleSideBar, 
             isShow={isOpenedSettingCard}
             theme={theme}
             isSideBarOpen={isSideBarOpen}
-            activeSnow={activeSnow}
             handleClose = {handleCloseCard('setting')}
             toggleTheme={toggleTheme}
             toggleSideBar={toggleSideBar}
-            toggleSnow={toggleSnow}
           />
           <img className="icon" onClick={handleOpenCard('setting')} src={settingIcon} />
         </CardWrapper>

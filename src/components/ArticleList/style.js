@@ -26,7 +26,7 @@ const ArticleListContainer = styled.div`
   // height: 50%;
   overflow: hidden;
   min-height: 50%;
-  background-color: ${props => props.theme.foreground}f4;
+  background-color: ${props => props.theme.foreground};
   border-radius: 8px;
   padding: 8px;
 

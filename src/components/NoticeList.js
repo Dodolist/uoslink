@@ -312,7 +312,7 @@ const NoticeListContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 70vh;
-  background-color: ${props => props.theme.foreground}f4;
+  background-color: ${props => props.theme.foreground};
   border-radius: 8px;
   overflow-y: scroll;
 

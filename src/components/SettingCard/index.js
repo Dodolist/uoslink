@@ -6,7 +6,7 @@ import closeIcon from '../../images/gray-close-icon.svg';
 import SettingItem from './SettingItem';
 import ConfirmModal from '../Modal/ConfirmModal';
 
-const SettingCard = ({isShow, theme, isSideBarOpen, activeSnow, handleClose, toggleTheme, toggleSideBar, toggleSnow }) => {
+const SettingCard = ({isShow, theme, isSideBarOpen, handleClose, toggleTheme, toggleSideBar }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
   const [modalTitle, setModalTitle] = useState('');
@@ -74,9 +74,6 @@ const SettingCard = ({isShow, theme, isSideBarOpen, activeSnow, handleClose, tog
           </SettingItem>
           <SettingItem title="사이드바 표시">
             <Toggle active={isSideBarOpen} handleClick={toggleSideBar} />
-          </SettingItem>
-          <SettingItem title="행복한 눈 내리기">
-            <Toggle active={activeSnow} handleClick={toggleSnow} />
           </SettingItem>
           <SettingItem title="읽은 공지 초기화" caution="true" handleClick={openModal('notice')} />
           <SettingItem title="학과 공지 초기화" caution="true" handleClick={openModal('major')} />
