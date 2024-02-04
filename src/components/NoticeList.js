@@ -29,7 +29,7 @@ const showListAnimation = keyframes`
   } 
 `;
 
-const NoticeList = ({selectedSection, openViewer}) => {
+const NoticeList = ({selectedSection, searchText, openViewer}) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -81,7 +81,19 @@ const NoticeList = ({selectedSection, openViewer}) => {
     if (listRef.current) {
       listRef.current.scrollTop = 0;
     }
-    if(selectedSection === 'DA1') {
+    if(selectedSection === 'SEARCH') {
+      setIsLoading(true);
+      let url = 'https://www.iflab.run/api/search/notice/' + searchText;
+      axios.get(url)
+        .then((response) => {
+          setItems(response.data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error('API 요청 중 오류 발생:');
+        });
+    }
+    else if(selectedSection === 'DA1') {
       const noticeId = JSON.parse(localStorage.getItem('noticeId'));
       if(noticeId['DA1'] === undefined) {
         noticeId['DA1'] = [];
@@ -164,7 +176,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
           console.error('API 요청 중 오류 발생:');
         });
     }
-  }, [selectedSection]);
+  }, [selectedSection, searchText]);
 
   return (
     <>
@@ -182,8 +194,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
               학과 선택하기
             </Button>
           </NoItemContainer>
-        ) : (
-          items.map((item, index) => (
+        ) : (items.map((item, index) => (
             <NoticeItem key={index} data={item} />
           ))
         )}
@@ -200,7 +211,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
       openViewer(id, section, link);
     }
     // 북마크는 예외
-    if (selectedSection === 'BM') {
+    if (selectedSection === 'BM' || selectedSection === 'SEARCH') {
       return;
     }
     // 이미 읽은 공지면 return
@@ -216,7 +227,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
     const [alreadyRead, setAlreadyRead] = useState(false);
     const [isClickedOption, setIsClickedOption] = useState(false);
     useEffect(() => {
-      if (selectedSection !== 'BM') {
+      if (selectedSection !== 'BM' && selectedSection !== 'SEARCH') {
         setAlreadyRead(alreadyReadList[selectedSection]?.includes(data.id));
       }
     }, [data.id]);
@@ -259,7 +270,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
 
     return (
       <NoticeItemContainer
-        onClick={() => selectedSection !== 'BM' ? clickNoticeItem(data.id, selectedSection, data.link) : clickNoticeItem(data.id, data.section, data.link)}
+        onClick={() => selectedSection === 'BM' ? clickNoticeItem(data.id, data.section, data.link) : selectedSection === 'SEARCH' ? clickNoticeItem('SEARCH', data.section, data.link) : clickNoticeItem(data.id, selectedSection, data.link)}
         showOption={isClickedOption}
         onMouseLeave={() => setIsClickedOption(false)}
       >
@@ -269,7 +280,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
         >
           <NoticeTitle>{data.title}</NoticeTitle>
           <NoticeInfoWrapper>
-            {selectedSection === 'BM' ? (
+            {selectedSection === 'BM' || selectedSection === 'SEARCH' ? (
               <NoticeInfo blue="true">
                 {data.section === 'FA1' ? '일반공지' :
                 data.section === 'FA2' ? '학사공지' :
@@ -281,7 +292,7 @@ const NoticeList = ({selectedSection, openViewer}) => {
             ) : null}
             <NoticeInfo>{data.author}</NoticeInfo>
             <NoticeInfo>{data.writtenAt}</NoticeInfo>
-            <NoticeInfo>{selectedSection !== 'BM' ? `${data.views}회` : null}</NoticeInfo>
+            <NoticeInfo>{(selectedSection !== 'BM' && selectedSection !== 'SEARCH') ? `${data.views}회` : null}</NoticeInfo>
           </NoticeInfoWrapper>
         </NoticeWrapper>
         <NoticeOptionButton onClick={clickOptionButton} src={kebabIcon} />
@@ -304,7 +315,8 @@ const NoticeList = ({selectedSection, openViewer}) => {
 };
 
 export default React.memo(NoticeList, (prevProps, nextProps) => {
-    return prevProps.selectedSection === nextProps.selectedSection;
+    return prevProps.selectedSection === nextProps.selectedSection
+          && prevProps.searchText === nextProps.searchText;
 });
 
 const NoticeListContainer = styled.div`

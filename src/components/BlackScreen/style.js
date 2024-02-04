@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const BlackScreenContainer = styled.div`
   z-index: 200;
@@ -11,6 +11,10 @@ const BlackScreenContainer = styled.div`
   opacity: ${(props) => props.isOpen && props.theme.mode === 'dark' ? '0.7' : (props.isOpen ? '0.5' : '0')};
   user-select: ${(props) => props.isOpen ? 'auto' : 'none'};
   pointer-events: ${(props) => props.isOpen ? 'auto' : 'none'};
+  
+  ${(props) => props.touchable && css`
+    cursor: pointer;
+  `}
 `
 
 export { BlackScreenContainer };

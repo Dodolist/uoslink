@@ -1,4 +1,5 @@
-import styled, { css }from 'styled-components';
+import React from 'react';
+import styled, { css } from 'styled-components';
 import bookmarkIcon from '../images/bookmark-icon.svg';
 import noticeFA1Icon from '../images/notice-FA1-icon.svg';
 import noticeFA2Icon from '../images/notice-FA2-icon.svg';
@@ -6,6 +7,7 @@ import noticeFA35Icon from '../images/notice-FA35-icon.svg';
 import noticeDA1Icon from '../images/notice-DA1-icon.svg';
 import noticeSC1Icon from '../images/notice-SC1-icon.svg';
 import noticeFA34Icon from '../images/notice-FA34-icon.svg';
+import searchIcon from '../images/search-icon.svg';
 
 const SectionList = [
   {
@@ -40,7 +42,8 @@ const SectionList = [
   },
 ];
 
-const NavBar = ({onSectionClick, selectedSection}) => {
+const NavBar = ({onSectionClick, selectedSection, openSearchPage}) => {
+
   return (
     <NavBarContainer>
       <Section
@@ -69,6 +72,10 @@ const NavBar = ({onSectionClick, selectedSection}) => {
             }>{section.name}</SectionName>
         </Section>
       ))}
+      <SearchButton onClick={openSearchPage}>
+        <ButtonIcon src={searchIcon} />
+        <ButtonName> 공지 검색 </ButtonName>
+      </SearchButton>
     </NavBarContainer>
   );
 };
@@ -76,6 +83,7 @@ const NavBar = ({onSectionClick, selectedSection}) => {
 export default NavBar;
 
 const NavBarContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
@@ -136,4 +144,43 @@ const NavBarDivider = styled.div`
   background-color: ${props => props.theme.mode === 'light' ? '#00000020' : '#ffffff20'};
   margin: -4px 0;
   border-radius: 1px;
+`
+
+const SearchButton = styled.div`
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 12px;
+  border-radius: 8px;
+  background-color: ${props => props.theme.foreground};
+  min-width: 140px;
+
+  cursor: pointer;
+
+  &:hover {
+    filter: ${props => props.showOption ? 'brightness(1)' : 'brightness(0.9)'};
+  }
+  &:active {
+    filter: ${props => props.showOption ? 'brightness(1)' : 'brightness(0.8)'};
+  }
+`
+
+const ButtonIcon = styled.img`
+  width: 20px;
+  height: 20px;
+`
+
+const ButtonName = styled.span`
+  transition: all 0.3s;
+  color: ${props => props.theme.primary};
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -2px;
+  user-select: none;
 `

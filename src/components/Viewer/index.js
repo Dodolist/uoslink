@@ -280,22 +280,24 @@ const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selecte
     }
   }
 
-
   const clickBookmark = () => {
     let bookmarkList = [];
     if (localStorage.getItem('bookmark')) {
       bookmarkList = JSON.parse(localStorage.getItem('bookmark'));
     }
     if (isBookmark) {
-      axios.post('https://www.iflab.run/api/notices/bookmark/delete', {
-        id: selectedNoticeId
-      });
-
+      if (selectedNoticeId !== 'SEARCH') {
+        axios.post('https://www.iflab.run/api/notices/bookmark/delete', {
+          id: selectedNoticeId
+        });
+      }
       bookmarkList = bookmarkList.filter(item => item.id !== selectedNoticeId);
     } else {
-      axios.post('https://www.iflab.run/api/notices/bookmark/add', {
-        id: selectedNoticeId
-      });
+      if (selectedNoticeId !== 'SEARCH') {
+        axios.post('https://www.iflab.run/api/notices/bookmark/add', {
+          id: selectedNoticeId
+        });
+      }
 
       let bookmarkObject = {
         id: selectedNoticeId,

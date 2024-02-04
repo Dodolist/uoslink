@@ -10,12 +10,14 @@ import noticeFA35Icon from './images/notice-FA35-icon.svg';
 import noticeDA1Icon from './images/notice-DA1-icon.svg';
 import noticeSC1Icon from './images/notice-SC1-icon.svg';
 import noticeFA34Icon from './images/notice-FA34-icon.svg';
+import searchIcon from './images/search-icon.svg';
 import TopBar from './components/TopBar';
 import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import SelectedSection from './components/SelectedSection';
 import NoticeList from './components/NoticeList';
 import ArticleList from './components/ArticleList';
+import SearchPage from './components/SearchPage';
 import GroundBackground from './components/GroundBackground';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -112,6 +114,8 @@ const App = () => {
   const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
   const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [isSearchPageOpen, setIsSearchPageOpen] = useState(false);
+  const [searchText, setSearchText] = useState('');
   
   const themeObject = {
     light: {
@@ -222,6 +226,21 @@ const App = () => {
     setIsViewerOpen(false);
   };
 
+  const openSearchPage = () => {
+    setIsSearchPageOpen(true);
+  };
+
+  const closeSearchPage = () => {
+    setIsSearchPageOpen(false);
+  };
+
+  const searchNotice = (searchText) => {
+    setSelectedSection('SEARCH');
+    setSelectedSectionIcon(searchIcon);
+    setSelectedSectionName(searchText);
+    setSearchText(searchText);
+  };
+
   return (
     <ThemeProvider theme={themeObject[theme]}>
       <div className="App">
@@ -245,11 +264,13 @@ const App = () => {
               <NavBar
                 onSectionClick={selectSection}
                 selectedSection={selectedSection}
+                openSearchPage={openSearchPage}
               />
             </div>
             <NoticeList
               openViewer={openViewer}
               selectedSection={selectedSection}
+              searchText={searchText}
             />
             <List>
               <ArticleList
@@ -273,6 +294,11 @@ const App = () => {
         selectedNoticeSection={selectedNoticeSection}
         selectedNoticeLink={selectedNoticeLink}
         closeViewer={closeViewer}
+      />
+      <SearchPage
+        isSearchPageOpen={isSearchPageOpen}
+        closeSearchPage={closeSearchPage}
+        searchNotice={searchNotice}
       />
     </ThemeProvider>
   );
