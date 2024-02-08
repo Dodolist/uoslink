@@ -5,6 +5,7 @@ import attachedFileIcon from '../../images/attached-file-icon.svg';
 import closeIcon from '../../images/gray-close-icon.svg';
 import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
 import outlinkIcon from '../../images/outlink-icon.svg';
+import copyIcon from '../../images/copy-icon.svg';
 import loadingIcon from '../../images/loading-icon.svg';
 import BlackScreen from '../BlackScreen';
 import FloatButton from './FloatButton';
@@ -229,11 +230,13 @@ const LoadingText = styled.div`
 const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selectedNoticeLink, closeViewer }) => {
   const [NoticeItem, setNoticeItem] = useState(null);
   const [isBookmark, setIsBookmark] = useState(false);
+  const [isCopy, setIsCopy] = useState(false);
   useEffect(() => {
     // 공지사항이 닫히면 0.3초 후에 공지사항 데이터를 초기화한다.
     if (!isViewerOpen) {
       setTimeout(() => {
         setNoticeItem(null);
+        setIsCopy(false);
       }, 300);
     } else {
       window.addEventListener('keydown', handleKeyDown);
@@ -323,6 +326,19 @@ const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selecte
     }, 100);
   };
 
+  const clickCopy = () => {
+    if (selectedNoticeSection === 'SC1') {
+      navigator.clipboard.writeText(selectedNoticeLink);
+    } else {
+      navigator.clipboard.writeText('https://uos.ac.kr/korNotice/view.do?list_id=' + selectedNoticeSection + '&seq=' + selectedNoticeLink + '&epTicket=INV');
+    }
+
+    setIsCopy(true);
+    setTimeout(() => {
+      setIsCopy(false);
+    }, 3000);
+  };
+
   /*
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [newPosition, setNewPosition] = useState({ x: 0, y: 0 });
@@ -400,6 +416,7 @@ const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selecte
           <FloatButton onClick={closeViewer} icon={closeIcon} />
           <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
           <FloatButton onClick={clickOutlink} icon={outlinkIcon} />
+          <FloatButton onClick={clickCopy} icon={copyIcon} active={isCopy} />
         </FloatButtonWrapper>
       </ViewerContainer>
     </div>
@@ -413,8 +430,9 @@ const Viewer = ({ isViewerOpen, selectedNoticeId, selectedNoticeSection, selecte
         </LoadingWrapper>
         <FloatButtonWrapper>
           <FloatButton onClick={closeViewer} icon={closeIcon} />
-          <FloatButton onClick={clickBookmark} icon={bookmarkIcon} active={isBookmark} />
-          <FloatButton icon={outlinkIcon} />
+          <FloatButton icon={bookmarkIcon} active={isBookmark} disabled={true} />
+          <FloatButton onClick={clickOutlink} icon={outlinkIcon} />
+          <FloatButton onClick={clickCopy} icon={copyIcon} active={isCopy} />
         </FloatButtonWrapper>
       </ViewerContainer>
     </div>

@@ -3,14 +3,17 @@ import styled from 'styled-components'
 
 const FloatButtonWrapper = styled.div`
   position: relative;
-  background-color: ${props => props.active ? '#f0f1f500' : props.theme.foreground};
+  background-color: ${props => props.theme.foreground};
   padding: 12px;
   border-radius: 12px;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'default' : 'pointer'};
+  pointer-events: ${props => props.disabled ? 'none' : 'auto'};
   overflow: hidden;
 
   width: 48px;
   height: 48px;
+
+  filter: ${props => props.disabled ? 'brightness(0.7)' : 'brightness(1)'};
 
   &:hover {
     filter: brightness(0.9);
@@ -42,9 +45,9 @@ const FloatButtonIcon = styled.img`
   filter: ${props => props.active ? 'brightness(2)' : 'brightness(1)'};
 `
 
-const FloatButton = ({ icon, active, onClick }) => {
+const FloatButton = ({ icon, active, disabled, onClick }) => {
   return (
-    <FloatButtonWrapper active={active} onClick={onClick}>
+    <FloatButtonWrapper active={active} disabled={disabled} onClick={onClick}>
       <FloatButtonIcon src={icon} active={active} />
     </FloatButtonWrapper>
   )
