@@ -28,6 +28,7 @@ const ContentContainer = styled.div`
   display: grid;
   grid-template-rows: 40px 1fr;
   grid-template-columns: 140px 1fr 280px;
+  overflow-x: scroll;
 
   width: 100%;
   max-width: 1280px;

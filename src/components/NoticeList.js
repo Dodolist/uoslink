@@ -327,6 +327,7 @@ const NoticeListContainer = styled.div`
   background-color: ${props => props.theme.foreground};
   border-radius: 8px;
   overflow-y: scroll;
+  min-width: 400px;
 
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
