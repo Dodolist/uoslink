@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import styled, { keyframes, ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import Banner1Image from '../images/banner1.png';
 import Banner2Image from '../images/banner2.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,7 +19,7 @@ const BannerImage = styled.img`
   }
 `
 
-const Banner = () => {
+const Slider = () => {
   const clickBanner = (bannerId) => {
     // 새 창으로 링크 열기
     var link;
@@ -55,4 +55,4 @@ const Banner = () => {
   );
 }
 
-export default Banner;
+export default Slider;

@@ -19,7 +19,7 @@ import NoticeList from './components/NoticeList';
 import ArticleList from './components/ArticleList';
 import SearchPage from './components/SearchPage';
 import GroundBackground from './components/GroundBackground';
-import Banner from './components/Banner';
+import Slider from './components/Slider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -282,7 +282,7 @@ const App = () => {
               <ArticleList
                 openViewer={openViewer}
               />
-              <Banner />
+              <Slider />
             </List>
           </ContentContainer>
         ) : (
