@@ -1,3 +1,4 @@
+import axios from 'axios';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
@@ -19,6 +20,7 @@ import NoticeList from './components/NoticeList';
 import ArticleList from './components/ArticleList';
 import SearchPage from './components/SearchPage';
 import GroundBackground from './components/GroundBackground';
+import Banner1Image from './images/banner.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
@@ -99,9 +101,19 @@ const SectionList = [
 
 const List = styled.div`
   display: flex;
-  height: 100%;
+  height: calc(100% - 24px);
   flex-direction: column;
   gap: 24px;
+`
+
+const Banner = styled.div`
+  width: 100%;
+  &:hover {
+    filter: brightness(0.9);
+  }
+  &:active {
+    filter: brightness(0.8);
+  }
 `
 
 const App = () => {
@@ -242,6 +254,16 @@ const App = () => {
     setSearchText(searchText);
   };
 
+  const clickBanner = () => {
+    // 새 창으로 링크 열기
+    window.open('https://uoslink.com', '_blank');
+    let url = 'https://www.iflab.run/api/click/banner';
+    
+    axios.post(url, {
+      banner_id: '1'
+    });
+  };
+
   return (
     <ThemeProvider theme={themeObject[theme]}>
       <div className="App">
@@ -277,6 +299,9 @@ const App = () => {
               <ArticleList
                 openViewer={openViewer}
               />
+              <Banner onClick={clickBanner}>
+                <img src={Banner1Image} />
+              </Banner>
             </List>
           </ContentContainer>
         ) : (
