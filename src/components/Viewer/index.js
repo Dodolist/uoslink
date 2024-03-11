@@ -418,7 +418,7 @@ const Viewer = ({
     }
     const newTimer = setTimeout(() => {
       setIsCopyToast(false);
-    }, 10000);
+    }, 2000);
     setTimer(newTimer);
   };
   /*
