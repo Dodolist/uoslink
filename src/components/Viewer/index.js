@@ -410,6 +410,17 @@ const Viewer = ({
   };
 
   const clickCopy = () => {
+    if (selectedNoticeSection === 'SC1') {
+      navigator.clipboard.writeText(selectedNoticeLink);
+    } else {
+      navigator.clipboard.writeText(
+        'https://uos.ac.kr/korNotice/view.do?list_id=' +
+          selectedNoticeSection +
+          '&seq=' +
+          selectedNoticeLink +
+          '&epTicket=INV'
+      );
+    }
     setOtherToast('copy', toastObject);
     setIsCopyClick((prev) => prev + 1);
     setIsCopyToast(true);
