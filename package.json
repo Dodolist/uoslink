@@ -1,6 +1,6 @@
 {
-  "name": "uos-notice",
-  "version": "0.1.0",
+  "name": "uoslink",
+  "version": "0.9.9",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
