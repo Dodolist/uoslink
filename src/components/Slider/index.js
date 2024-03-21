@@ -1,23 +1,12 @@
 import axios from 'axios';
 import React from 'react';
-import styled from 'styled-components';
-import Banner1Image from '../images/banner1.png';
-import Banner2Image from '../images/banner2.png';
+import { BannerImage } from './style';
+import Banner1Image from '../../images/banner1.png';
+import Banner2Image from '../../images/banner2.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-
 import 'swiper/css';
 import 'swiper/css/autoplay';
-
-const BannerImage = styled.img`
-  &:last-child {
-  &:hover {
-    filter: brightness(0.9);
-  }
-  &:active {
-    filter: brightness(0.8);
-  }
-`
 
 const Slider = () => {
   const clickBanner = (bannerId) => {
