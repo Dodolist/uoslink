@@ -1,16 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
-import attachedFileIcon from '../../images/attached-file-icon.svg';
-import closeIcon from '../../images/gray-close-icon.svg';
-import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
-import outlinkIcon from '../../images/outlink-icon.svg';
-import copyIcon from '../../images/copy-icon.svg';
-import loadingIcon from '../../images/loading-icon.svg';
-import checkIcon from '../../images/check-icon.svg';
-import BlackScreen from '../BlackScreen';
-import FloatButton from './FloatButton';
-import Toast from '../Toast';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import styled, { css, keyframes } from "styled-components";
+import attachedFileIcon from "../../images/attached-file-icon.svg";
+import closeIcon from "../../images/gray-close-icon.svg";
+import bookmarkIcon from "../../images/gray-bookmark24-icon.svg";
+import outlinkIcon from "../../images/outlink-icon.svg";
+import copyIcon from "../../images/copy-icon.svg";
+import loadingIcon from "../../images/loading-icon.svg";
+import checkIcon from "../../images/check-icon.svg";
+import BlackScreen from "../BlackScreen";
+import FloatButton from "./FloatButton";
+import Toast from "../Toast";
 
 const rotateAnimation = keyframes`
   from {
@@ -24,12 +24,12 @@ const rotateAnimation = keyframes`
 const ViewerContainer = styled.div`
   z-index: 300;
   position: fixed;
-  top: ${(props) => (props.isShow ? '50%' : '70%')};
+  top: ${(props) => (props.isShow ? "50%" : "70%")};
   left: 50%;
   transform: translate(-50%, -50%);
   transform-origin: center left;
-  scale: ${(props) => (props.isShow ? '1' : '0.7')};
-  opacity: ${(props) => (props.isShow ? '1' : '0')};
+  scale: ${(props) => (props.isShow ? "1" : "0.7")};
+  opacity: ${(props) => (props.isShow ? "1" : "0")};
 
   display: flex;
   flex-direction: column;
@@ -41,10 +41,10 @@ const ViewerContainer = styled.div`
   width: 60%;
   height: 90%;
 
-  user-select: ${(props) => (props.isShow ? 'auto' : 'none')};
-  pointer-events: ${(props) => (props.isShow ? 'auto' : 'none')};
+  user-select: ${(props) => (props.isShow ? "auto" : "none")};
+  pointer-events: ${(props) => (props.isShow ? "auto" : "none")};
 
-  transition: ${(props) => (props.dragging ? 'none' : 'all 0.3s ease')};
+  transition: ${(props) => (props.dragging ? "none" : "all 0.3s ease")};
 `;
 
 const ViewerTitle = styled.div`
@@ -77,7 +77,7 @@ const ViewerInfoItem = styled.div`
 const ViewerDivider = styled.div`
   height: 1px;
   background-color: ${(props) =>
-    props.theme.mode === 'light' ? '#00000020' : '#ffffff20'};
+    props.theme.mode === "light" ? "#00000020" : "#ffffff20"};
   margin-bottom: 12px;
   border-radius: 1px;
 `;
@@ -101,10 +101,10 @@ const ViewerContentWrapper = styled.div`
 
 const ViewerContent = styled.div`
   filter: ${(props) =>
-    props.theme.mode === 'dark' ? 'invert(1)' : 'invert(0)'};
+    props.theme.mode === "dark" ? "invert(1)" : "invert(0)"};
   .vw-con img {
     filter: ${(props) =>
-      props.theme.mode === 'dark' ? 'invert(1)' : 'invert(0)'};
+      props.theme.mode === "dark" ? "invert(1)" : "invert(0)"};
   }
 `;
 
@@ -137,7 +137,7 @@ const NoticeAttachedFileItemNameWrapper = styled.a`
   &:hover {
     filter: brightness(0.9);
     background-color: ${(props) =>
-      props.theme.mode === 'light' ? '#98bffa80' : '#00000040'};
+      props.theme.mode === "light" ? "#98bffa80" : "#00000040"};
   }
 
   &:active {
@@ -234,6 +234,9 @@ const LoadingText = styled.div`
 `;
 
 const ToastContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -285,11 +288,11 @@ const Viewer = ({
         setNoticeItem(null);
       }, 300);
     } else {
-      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener("keydown", handleKeyDown);
     }
 
-    if (localStorage.getItem('bookmark')) {
-      let bookmarkList = JSON.parse(localStorage.getItem('bookmark'));
+    if (localStorage.getItem("bookmark")) {
+      let bookmarkList = JSON.parse(localStorage.getItem("bookmark"));
       if (bookmarkList.find((item) => item.id === selectedNoticeId)) {
         setIsBookmark(true);
       } else {
@@ -306,21 +309,21 @@ const Viewer = ({
     )
       return;
     let url;
-    if (selectedNoticeSection === 'SC1') {
-      url = 'https://www.iflab.run/api/scraping/notice/content/scholarship';
+    if (selectedNoticeSection === "SC1") {
+      url = "https://www.iflab.run/api/scraping/notice/content/scholarship";
       axios
         .post(url, { url: selectedNoticeLink })
         .then((response) => {
           setNoticeItem(response.data);
         })
         .catch((error) => {
-          console.error('API 요청 중 오류 발생:');
+          console.error("API 요청 중 오류 발생:");
         });
     } else {
       url =
-        'https://www.iflab.run/api/scraping/notice/content/' +
+        "https://www.iflab.run/api/scraping/notice/content/" +
         selectedNoticeSection +
-        '/' +
+        "/" +
         selectedNoticeLink;
       axios
         .get(url)
@@ -328,7 +331,7 @@ const Viewer = ({
           setNoticeItem(response.data);
         })
         .catch((error) => {
-          console.error('API 요청 중 오류 발생:');
+          console.error("API 요청 중 오류 발생:");
         });
     }
     //toast 메시지 삭제
@@ -341,20 +344,20 @@ const Viewer = ({
   ]);
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       closeViewer();
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     }
   };
 
   const clickBookmark = () => {
     let bookmarkList = [];
-    if (localStorage.getItem('bookmark')) {
-      bookmarkList = JSON.parse(localStorage.getItem('bookmark'));
+    if (localStorage.getItem("bookmark")) {
+      bookmarkList = JSON.parse(localStorage.getItem("bookmark"));
     }
     if (isBookmark) {
-      if (selectedNoticeId !== 'SEARCH') {
-        axios.post('https://www.iflab.run/api/notices/bookmark/delete', {
+      if (selectedNoticeId !== "SEARCH") {
+        axios.post("https://www.iflab.run/api/notices/bookmark/delete", {
           id: selectedNoticeId,
         });
       }
@@ -362,8 +365,8 @@ const Viewer = ({
         (item) => item.id !== selectedNoticeId
       );
     } else {
-      if (selectedNoticeId !== 'SEARCH') {
-        axios.post('https://www.iflab.run/api/notices/bookmark/add', {
+      if (selectedNoticeId !== "SEARCH") {
+        axios.post("https://www.iflab.run/api/notices/bookmark/add", {
           id: selectedNoticeId,
         });
       }
@@ -378,11 +381,11 @@ const Viewer = ({
       };
       bookmarkList.push(bookmarkObject);
     }
-    localStorage.setItem('bookmark', JSON.stringify(bookmarkList));
+    localStorage.setItem("bookmark", JSON.stringify(bookmarkList));
     setIsBookmark(!isBookmark);
 
     //북마크 토스트 메시지
-    setOtherToast('bookmark', toastObject);
+    setOtherToast("bookmark", toastObject);
     setIsBookmarkToast(true);
     if (timer) {
       clearTimeout(timer);
@@ -394,34 +397,34 @@ const Viewer = ({
   };
   const clickOutlink = () => {
     setTimeout(() => {
-      if (selectedNoticeSection === 'SC1') {
-        window.open(selectedNoticeLink, '_blank');
+      if (selectedNoticeSection === "SC1") {
+        window.open(selectedNoticeLink, "_blank");
       } else {
         window.open(
-          'https://uos.ac.kr/korNotice/view.do?list_id=' +
+          "https://uos.ac.kr/korNotice/view.do?list_id=" +
             selectedNoticeSection +
-            '&seq=' +
+            "&seq=" +
             selectedNoticeLink +
-            '&epTicket=INV',
-          '_blank'
+            "&epTicket=INV",
+          "_blank"
         );
       }
     }, 100);
   };
 
   const clickCopy = () => {
-    if (selectedNoticeSection === 'SC1') {
+    if (selectedNoticeSection === "SC1") {
       navigator.clipboard.writeText(selectedNoticeLink);
     } else {
       navigator.clipboard.writeText(
-        'https://uos.ac.kr/korNotice/view.do?list_id=' +
+        "https://uos.ac.kr/korNotice/view.do?list_id=" +
           selectedNoticeSection +
-          '&seq=' +
+          "&seq=" +
           selectedNoticeLink +
-          '&epTicket=INV'
+          "&epTicket=INV"
       );
     }
-    setOtherToast('copy', toastObject);
+    setOtherToast("copy", toastObject);
     setIsCopyClick((prev) => prev + 1);
     setIsCopyToast(true);
     if (timer) {
@@ -485,11 +488,11 @@ const Viewer = ({
                         {file.name}
                       </NoticeAttachedFileItemName>
                     </NoticeAttachedFileItemNameWrapper>
-                    {selectedNoticeSection !== 'SC1' && (
+                    {selectedNoticeSection !== "SC1" && (
                       <NoticeAttachedFileItemViewButton
                         href={file.viewLink}
                         target="_blank"
-                        disabled={file.viewLink === ''}
+                        disabled={file.viewLink === ""}
                       >
                         바로보기
                       </NoticeAttachedFileItemViewButton>
@@ -512,7 +515,11 @@ const Viewer = ({
             active={isBookmark}
           />
           <FloatButton onClick={clickOutlink} icon={outlinkIcon} />
-          <FloatButton onClick={clickCopy} icon={copyIcon} />
+          <FloatButton
+            onClick={clickCopy}
+            icon={copyIcon}
+            active={isCopyToast}
+          />
         </FloatButtonWrapper>
         <ToastContainer>
           <Toast
@@ -558,6 +565,14 @@ const Viewer = ({
             active={isCopyToast}
           />
         </FloatButtonWrapper>
+        <ToastContainer>
+          <Toast
+            icon={checkIcon}
+            type="copy"
+            toastState={isCopyToast}
+            copyClick={isCopyClick}
+          ></Toast>
+        </ToastContainer>
       </ViewerContainer>
     </div>
   );

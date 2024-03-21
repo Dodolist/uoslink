@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from "styled-components";
 const ToastContainer = styled.div`
   position: fixed;
   opacity: 0;
@@ -12,14 +12,14 @@ const ToastContainer = styled.div`
   overflow: hidden;
   ${(props) =>
     props.$toastState &&
-    props.type === 'copy' &&
+    props.type === "copy" &&
     css`
       opacity: 1;
       transform: translateY(-90%);
     `}
   ${(props) =>
     props.$toastState &&
-    props.type === 'bookmarkup' &&
+    props.type === "bookmarkup" &&
     props.$toastOption &&
     css`
       opacity: 1;
@@ -27,7 +27,7 @@ const ToastContainer = styled.div`
     `}
     ${(props) =>
     props.$toastState &&
-    props.type === 'bookmarkdown' &&
+    props.type === "bookmarkdown" &&
     !props.$toastOption &&
     css`
       opacity: 1;
@@ -72,7 +72,7 @@ const Progress = styled.div`
       ? css`
           ${progressbar} 1.8s linear forwards
         `
-      : 'none'};
+      : "none"};
 `;
 
 export {
