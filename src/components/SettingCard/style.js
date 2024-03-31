@@ -34,7 +34,7 @@ const SettingCardTopBar = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 16px 12px 12px 12px;
-  background-color: ${(props) => props.theme.background};
+  background-color: ${(props) => props.theme.foreground};
 `;
 
 const CardTopBarLeft = styled.div`
