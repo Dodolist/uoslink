@@ -194,6 +194,11 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.style.backgroundColor = "#1d2128";
+    } else {
+      document.body.style.backgroundColor = "#e5e6ec";
+    }
     if (!localStorage.getItem("isSideBarOpen")) {
       localStorage.setItem("isSideBarOpen", "true");
     } else {
