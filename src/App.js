@@ -234,9 +234,11 @@ const App = () => {
     if (theme === "light") {
       setTheme("dark");
       localStorage.setItem("theme", "dark");
+      document.body.style.backgroundColor = "#1d2128";
     } else {
       setTheme("light");
       localStorage.setItem("theme", "light");
+      document.body.style.backgroundColor = "#e5e6ec";
     }
   };
   const toggleCustom = () => {
