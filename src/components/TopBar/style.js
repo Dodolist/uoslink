@@ -31,6 +31,8 @@ const TopBarContainer = styled("div")`
       ? props.theme.foreground + "f4"
       : props.theme.foreground};
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 `;
 
 const TopBarLeft = styled("div")`
