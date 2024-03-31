@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
-import bookmarkIcon from "./images/bookmark-icon.svg";
-import noticeFA1Icon from "./images/notice-FA1-icon.svg";
-import noticeFA2Icon from "./images/notice-FA2-icon.svg";
-import noticeFA35Icon from "./images/notice-FA35-icon.svg";
-import noticeDA1Icon from "./images/notice-DA1-icon.svg";
-import noticeSC1Icon from "./images/notice-SC1-icon.svg";
-import noticeFA34Icon from "./images/notice-FA34-icon.svg";
-import searchIcon from "./images/search-icon.svg";
+import {ReactComponent as BookmarkIconSVG} from "./images/bookmark-icon.svg";
+import {ReactComponent as NoticeFA1IconSVG} from "./images/notice-FA1-icon.svg";
+import {ReactComponent as NoticeFA2IconSVG} from "./images/notice-FA2-icon.svg";
+import {ReactComponent as NoticeFA35IconSVG} from "./images/notice-FA35-icon.svg";
+import {ReactComponent as NoticeDA1IconSVG} from "./images/notice-DA1-icon.svg";
+import {ReactComponent as NoticeSC1IconSVG} from "./images/notice-SC1-icon.svg";
+import {ReactComponent as NoticeFA34IconSVG} from "./images/notice-FA34-icon.svg";
+import {ReactComponent as SearchIconSVG} from "./images/search-icon.svg";
 import TopBar from "./components/TopBar";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -64,41 +64,126 @@ const OfflineText = styled.span`
   letter-spacing: -2px;
 `;
 
+const BookmarkIcon = styled(BookmarkIconSVG)`
+  width: 100%;
+  height: 100%;
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`
+
+const NoticeFA1Icon = styled(NoticeFA1IconSVG)`
+  width: 100%;
+  height: 100%;
+  path:nth-child(1), path:nth-child(2) {
+    fill: ${(props) => props.theme.primary};
+  }
+  path:last-child {
+    fill: ${(props) => props.theme.secondary};
+  }
+`
+
+const NoticeFA2Icon = styled(NoticeFA2IconSVG)`
+  width: 100%;
+  height: 100%;
+  path:first-child {
+    fill: ${(props) => props.theme.primary};
+  }
+  path:last-child {
+    fill: ${(props) => props.theme.secondary};
+  }
+`
+
+const NoticeFA35Icon = styled(NoticeFA35IconSVG)`
+  width: 100%;
+  height: 100%;
+  path {
+    fill: ${(props) => props.theme.primary};
+  }
+  path:nth-child(2) {
+    fill: ${(props) => props.theme.secondary};
+  }
+`
+
+const NoticeDA1Icon = styled(NoticeDA1IconSVG)`
+  width: 100%;
+  height: 100%;
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`
+
+const NoticeSC1Icon = styled(NoticeSC1IconSVG)`
+  width: 100%;
+  height: 100%;
+  circle {
+    fill: ${(props) => props.theme.secondary};
+  }
+  path {
+    fill: ${(props) => props.theme.primary};
+  }
+`
+
+const NoticeFA34Icon = styled(NoticeFA34IconSVG)`
+  width: 100%;
+  height: 100%;
+  circle {
+    fill: ${(props) => props.theme.primary};
+  }
+  circle:first-child {
+    fill: ${(props) => props.theme.secondary};
+  }
+  path {
+    fill: ${(props) => props.theme.secondary};
+  }
+  path:last-child {
+    fill: ${(props) => props.theme.primary};
+  }
+`
+
+const SearchIcon = styled(SearchIconSVG)`
+  width: 100%;
+  height: 100%;
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`
+
 const SectionList = [
   {
     id: "BM",
-    icon: bookmarkIcon,
+    icon: <BookmarkIcon />,
     name: "내 북마크",
   },
   {
     id: "FA1",
-    icon: noticeFA1Icon,
+    icon: <NoticeFA1Icon />,
     name: "일반공지",
     link: "https://www.uos.ac.kr/korNotice/list.do?list_id=FA1",
   },
   {
     id: "FA2",
-    icon: noticeFA2Icon,
+    icon: <NoticeFA2Icon />,
     name: "학사공지",
   },
   {
     id: "DA1",
-    icon: noticeDA1Icon,
+    icon: <NoticeDA1Icon />,
     name: "학과공지",
   },
   {
     id: "FA35",
-    icon: noticeFA35Icon,
+    icon: <NoticeFA35Icon />,
     name: "창업공지",
   },
   {
     id: "SC1",
-    icon: noticeSC1Icon,
+    icon: <NoticeSC1Icon />,
     name: "장학공지",
   },
   {
     id: "FA34",
-    icon: noticeFA34Icon,
+    icon: <NoticeFA34Icon />,
     name: "직원채용",
   },
 ];
@@ -117,7 +202,7 @@ const App = () => {
   const [selectedNoticeId, setSelectedNoticeId] = useState("");
   const [selectedNoticeSection, setSelectedNoticeSection] = useState("");
   const [selectedNoticeLink, setSelectedNoticeLink] = useState("");
-  const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
+  const [selectedSectionIcon, setSelectedSectionIcon] = useState(<NoticeFA1Icon />);
   const [selectedSectionName, setSelectedSectionName] = useState("일반공지");
   const [isSideBarOpen, setIsSideBarOpen] = useState(
     localStorage.getItem("isSideBarOpen") === "true" ? true : false
@@ -150,7 +235,7 @@ const App = () => {
       titleText: "#a0a4b3",
       contentText: "#b4b7c4",
       subText: "#5d616f",
-      primary: "#ff99be",
+      primary: "#408cff",
       secondary: "#98bffa",
       boxShadow: "0 4px 24px 0 #3c414c",
     },
@@ -167,7 +252,7 @@ const App = () => {
       subText: "#a9adb9",
       primary: "#ff99be",
       secondary: "#FFC8DC",
-      boxShadow: "0 4px 24px 0 #cecece",
+      boxShadow: "0 4px 24px 0 #E0C9C9",
     },
     dark: {
       custom: "custom",
@@ -178,8 +263,8 @@ const App = () => {
       contentText: "#b4b7c4",
       subText: "#5d616f",
       primary: "#ff99be",
-      secondary: "#98bffa",
-      boxShadow: "0 4px 24px 0 #3c414c",
+      secondary: "#FFC8DC",
+      boxShadow: "0 4px 24px 0 #4C3C40",
     },
   };
   const selectSection = (id) => {
@@ -292,7 +377,7 @@ const App = () => {
 
   const searchNotice = (searchText) => {
     setSelectedSection("SEARCH");
-    setSelectedSectionIcon(searchIcon);
+    setSelectedSectionIcon(<SearchIcon />);
     setSelectedSectionName(searchText);
     setSearchText(searchText);
   };

@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
-import attachedFileIcon from "../../images/attached-file-icon.svg";
+import { ReactComponent as AttachedFileIconSVG } from "../../images/attached-file-icon.svg";
+import { ReactComponent as LoadingIconSVG } from "../../images/loading-icon.svg";
 import closeIcon from "../../images/gray-close-icon.svg";
 import bookmarkIcon from "../../images/gray-bookmark24-icon.svg";
 import outlinkIcon from "../../images/outlink-icon.svg";
 import copyIcon from "../../images/copy-icon.svg";
-import loadingIcon from "../../images/loading-icon.svg";
 import checkIcon from "../../images/check-icon.svg";
 import BlackScreen from "../BlackScreen";
 import FloatButton from "./FloatButton";
@@ -19,6 +19,22 @@ const rotateAnimation = keyframes`
   to {
     transform: rotate(1080deg);
   } 
+`;
+
+const AttachedFileIcon = styled(AttachedFileIconSVG)`
+  rect, path {
+    fill: ${(props) => props.theme.primary};
+    stroke: ${(props) => props.theme.primary};
+  }
+`;
+
+const LoadingIcon = styled(LoadingIconSVG)`
+  animation: ${rotateAnimation} 4s cubic-bezier(0.25, 0.51, 0.43, 0.7) infinite;
+  width: 48px;
+  height: 48px;
+  path {
+    stroke: ${(props) => props.theme.primary};
+  }
 `;
 
 const ViewerContainer = styled.div`
@@ -135,7 +151,6 @@ const NoticeAttachedFileItemNameWrapper = styled.a`
   text-decoration: none;
 
   &:hover {
-    filter: brightness(0.9);
     background-color: ${(props) =>
       props.theme.mode === "light"
         ? props.theme.secondary + "80"
@@ -220,12 +235,6 @@ const LoadingWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
-`;
-
-const LoadingIcon = styled.img`
-  animation: ${rotateAnimation} 4s cubic-bezier(0.25, 0.51, 0.43, 0.7) infinite;
-  width: 48px;
-  height: 48px;
 `;
 
 const LoadingText = styled.div`
@@ -485,7 +494,7 @@ const Viewer = ({
                 {NoticeItem.attachedFile.map((file, index) => (
                   <NoticeAttachedFileItem key={index}>
                     <NoticeAttachedFileItemNameWrapper href={file.downloadLink}>
-                      <img src={attachedFileIcon} />
+                      <AttachedFileIcon />
                       <NoticeAttachedFileItemName>
                         {file.name}
                       </NoticeAttachedFileItemName>
@@ -550,7 +559,7 @@ const Viewer = ({
       <BlackScreen isOpen={isViewerOpen} />
       <ViewerContainer isShow={isViewerOpen}>
         <LoadingWrapper>
-          <LoadingIcon src={loadingIcon} />
+          <LoadingIcon />
           <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>

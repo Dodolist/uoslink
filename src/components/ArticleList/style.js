@@ -1,4 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
+import { ReactComponent as LoadingIconSVG } from "../../images/loading-icon.svg";
+
 const rotateAnimation = keyframes`
   from {
     transform: rotate(0deg);
@@ -37,7 +39,10 @@ const ArticleListContainer = styled.div`
   }
 `
 
-const LoadingIcon = styled.img`
+const LoadingIcon = styled(LoadingIconSVG)`
+  path {
+    stroke: ${(props) => props.theme.primary};
+  }
   animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
   position: absolute;
   top: 50%;

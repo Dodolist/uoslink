@@ -44,7 +44,10 @@ const SelectedSectionWrap = styled.div`
   `};
 `;
 
-const SelectedSectionIcon = styled.img`
+const SelectedSectionIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
 `;

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FoodCardContainer, FoodCardHeader, Wrapper, MenuContainer, InfoWrapper, MenuCard, NoMenuCard, NoMenuIcon, NoMenuText, CornerWrapper, CornerText, MenuWrapper, MenuRow, MenuIconName, TimeIcon } from "./style";
+import { FoodCardContainer, FoodCardHeader, Wrapper, MenuContainer, InfoWrapper, MenuCard, NoMenuCard, NoMenuIcon, NoMenuText, CornerWrapper, CornerText, MenuWrapper, MenuRow, MenuIconName, TimeIcon, BreakfastIcon, LunchIcon, DinnerIcon } from "./style";
 import axios from "axios";
-import breakfastIcon from "../../images/breakfast-icon.svg";
-import lunchIcon from "../../images/lunch-icon.svg";
-import dinnerIcon from "../../images/dinner-icon.svg";
 import noMenuIcon from "../../images/no-menu-icon.svg";
 import noMenu0031Icon from "../../images/no-menu-0031-icon.svg";
 import noMenu0032Icon from "../../images/no-menu-0032-icon.svg";
@@ -22,17 +19,17 @@ import MenuIcon from "./MenuIcon.js";
 const FoodTimeList = [
   {
     id: "0",
-    icon: breakfastIcon,
+    icon: <BreakfastIcon />,
     name: "아침",
   },
   {
     id: "1",
-    icon: lunchIcon,
+    icon: <LunchIcon />,
     name: "점심",
   },
   {
     id: "2",
-    icon: dinnerIcon,
+    icon: <DinnerIcon />,
     name: "저녁",
   },
 ];
@@ -285,10 +282,11 @@ const FoodCard = ({ openedCardName, handleClose }) => {
             <TimeIcon
               key={time.id}
               className="icon time"
-              src={time.icon}
               selected={selectedFoodTime === time.id}
               onClick={() => setSelectedFoodTime(time.id)}
-            />
+            >
+              {time.icon}
+            </TimeIcon>
           ))}
         </Wrapper>
         <PlaceList

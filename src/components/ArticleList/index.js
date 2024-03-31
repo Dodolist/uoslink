@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import loadingIcon from '../../images/loading-icon.svg';
 import { ArticleListContainer, LoadingIcon, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName } from './style';
 
 const SectionList = [
@@ -60,7 +59,7 @@ const ArticleList = ({openViewer}) => {
   return (
     <ArticleListContainer>
       {isLoading ? (
-        <LoadingIcon src={loadingIcon} />
+        <LoadingIcon />
       ) : (
         <>
           <ListName>Top 5 공지사항</ListName>

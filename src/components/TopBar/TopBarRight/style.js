@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { ReactComponent as FoodCardSVG } from "../../../images/food-icon.svg";
+import { ReactComponent as LibraryCardSVG } from "../../../images/library-icon.svg";
+import { ReactComponent as SettingCardSVG } from "../../../images/setting-icon.svg";
 
 const TopBarRightContainer = styled("div")`
   display: flex;
@@ -14,4 +17,19 @@ const CardWrapper = styled.div`
   display: flex;
 `;
 
-export { TopBarRightContainer, CardWrapper };
+const FoodIcon = styled(FoodCardSVG)`
+  rect {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+const LibraryIcon = styled(LibraryCardSVG)`
+  rect {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+const SettingIcon = styled(SettingCardSVG)`
+`;
+
+export { TopBarRightContainer, CardWrapper, FoodIcon, LibraryIcon, SettingIcon };

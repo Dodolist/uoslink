@@ -28,7 +28,9 @@ const SelectedSection = ({ selectedSectionIcon, selectedSectionName }) => {
     <SelectedSectionContainer>
       { selectedSectionInfo.map((section, index) => (
         <SelectedSectionWrap key={index} isDisappear={isDisappear}>
-          <SelectedSectionIcon src={section.icon} />
+          <SelectedSectionIcon>
+            {section.icon}
+          </SelectedSectionIcon>
           <SelectedSectionName>{section.name}</SelectedSectionName>
         </SelectedSectionWrap>
       ))}

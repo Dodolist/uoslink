@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { TopBarRightContainer, CardWrapper } from "./style";
-import foodIcon from "../../../images/food-icon.svg";
-import libraryIcon from "../../../images/library-icon.svg";
-import settingIcon from "../../../images/setting-icon.svg";
+import { TopBarRightContainer, CardWrapper, FoodIcon, LibraryIcon, SettingIcon } from "./style";
 import FoodCard from "../../FoodCard/index.js";
 import SettingCard from "../../SettingCard";
 import LibraryCard from "../../LibraryCard";
@@ -32,10 +29,9 @@ const TopBarRight = ({
           openedCardName={openedCardName}
           handleClose={handleCloseCard}
         />
-        <img
+        <FoodIcon
           className="icon"
           onClick={() => handleToggleCard("food")}
-          src={foodIcon}
         />
       </CardWrapper>
       <CardWrapper>
@@ -43,10 +39,9 @@ const TopBarRight = ({
           openedCardName={openedCardName}
           handleClose={handleCloseCard}
         />
-        <img
+        <LibraryIcon
           className="icon"
           onClick={() => handleToggleCard("library")}
-          src={libraryIcon}
         />
       </CardWrapper>
       <CardWrapper>
@@ -60,10 +55,9 @@ const TopBarRight = ({
           toggleSideBar={toggleSideBar}
           toggleCustom={toggleCustom}
         />
-        <img
+        <SettingIcon
           className="icon"
           onClick={() => handleToggleCard("setting")}
-          src={settingIcon}
         />
       </CardWrapper>
     </TopBarRightContainer>

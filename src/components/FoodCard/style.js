@@ -1,4 +1,7 @@
 import styled, { css } from "styled-components";
+import { ReactComponent as BreakfastIconSVG } from "../../images/breakfast-icon.svg";
+import { ReactComponent as LunchIconSVG } from "../../images/lunch-icon.svg";
+import { ReactComponent as DinnerIconSVG } from "../../images/dinner-icon.svg";
 
 const FoodCardContainer = styled("div")`
   transition: all 0.3s;
@@ -131,8 +134,13 @@ const MenuIconName = styled.div`
   gap: 2px;
 `;
 
-const TimeIcon = styled.img`
+const TimeIcon = styled.div`
   transition: all 0.3s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   opacity: ${(props) => (props.selected ? "1" : "0.25")};
   background-color: ${(props) =>
@@ -144,6 +152,24 @@ const TimeIcon = styled.img`
   }
   &:active {
     filter: brightness(0.8);
+  }
+`;
+
+const BreakfastIcon = styled(BreakfastIconSVG)`
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+const LunchIcon = styled(LunchIconSVG)`
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+const DinnerIcon = styled(DinnerIconSVG)`
+  * {
+    fill: ${(props) => props.theme.primary};
   }
 `;
 
@@ -163,4 +189,7 @@ export {
   MenuRow,
   MenuIconName,
   TimeIcon,
+  BreakfastIcon,
+  LunchIcon,
+  DinnerIcon,
 };

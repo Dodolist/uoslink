@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
+import { ReactComponent as LoadingIconSVG } from "../../../images/loading-icon.svg";
 
 const rotateAnimation = keyframes`
   from {
@@ -68,7 +69,10 @@ const SiteLogo = styled.img`
   scale: ${(props) => props.loading ? '0' : '1'};
 `
 
-const SiteLogoLoading = styled.img`
+const SiteLogoLoading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: ${rotateAnimation} 1s linear infinite;
   position: absolute;
   right: 4px;
@@ -90,4 +94,10 @@ const InvalidIcon = styled.img`
   `}
 `
 
-export { InputBox, Input, SiteLogo, SiteLogoLoading, InvalidIcon };
+const LoadingIcon = styled(LoadingIconSVG)`
+  path {
+    stroke: ${(props) => props.theme.primary};
+  }
+`
+
+export { InputBox, Input, SiteLogo, SiteLogoLoading, InvalidIcon, LoadingIcon };

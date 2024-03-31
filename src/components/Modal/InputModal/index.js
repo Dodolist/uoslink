@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import LogoIcon from '../../../images/logo.svg';
-import LoadingIcon from '../../../images/loading.svg';
 import XIcon from '../../../images/x-icon.svg';
-import { InputBox, Input, SiteLogo, SiteLogoLoading, InvalidIcon } from './style';
+import { InputBox, Input, SiteLogo, SiteLogoLoading, InvalidIcon, LoadingIcon } from './style';
 import InputWrap from '../../Input';
 import Modal from '../../Modal';
 import { ButtonWrap } from '../style';
@@ -170,10 +169,9 @@ const InputModal = ({ isModified, isInputModalOpen, closeInputModal, addSite, mo
             src={urlLogo}
             loading={isLoading || isInvalidIcon}
           />
-          <SiteLogoLoading
-            src={LoadingIcon}
-            loading={isLoading}
-          />
+          <SiteLogoLoading loading={isLoading}>
+            <LoadingIcon />
+          </SiteLogoLoading>
           <InvalidIcon
             src={XIcon}
             loading={!isLoading && isInvalidIcon}
