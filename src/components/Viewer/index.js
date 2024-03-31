@@ -59,6 +59,8 @@ const ViewerContainer = styled.div`
 
   user-select: ${(props) => (props.isShow ? "auto" : "none")};
   pointer-events: ${(props) => (props.isShow ? "auto" : "none")};
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 
   transition: ${(props) => (props.dragging ? "none" : "all 0.3s ease")};
 `;

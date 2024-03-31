@@ -52,7 +52,7 @@ const SearchPageContainer = styled.div`
   display: flex;
   flex-direction: row;
 
-  background-color: ${props => props.theme.foreground};
+  background-color: ${(props) => props.theme.mode === 'light' ? '#f0f1f5' : '#2c3038'};
   padding: 16px;
   border-radius: 24px;
 

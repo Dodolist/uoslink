@@ -27,6 +27,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Viewer from "./components/Viewer";
+import CherryBlossomPage from "./components/CherryBlossomPage";
 
 const ContentContainer = styled.div`
   display: grid;
@@ -448,6 +449,11 @@ const App = () => {
         closeSearchPage={closeSearchPage}
         searchNotice={searchNotice}
       />
+      <CherryBlossomPage
+        theme={theme}
+        custom={custom}
+      />
+
     </ThemeProvider>
   );
 };

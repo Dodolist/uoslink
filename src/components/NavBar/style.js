@@ -17,6 +17,8 @@ const NavBarContainer = styled.div`
   gap: 16px;
   background-color: ${(props) => props.theme.foreground};
   min-width: 140px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 `;
 
 const Section = styled.div`
@@ -92,6 +94,8 @@ const SearchButton = styled.div`
   min-width: 140px;
 
   cursor: pointer;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 
   &:hover {
     filter: ${(props) =>
