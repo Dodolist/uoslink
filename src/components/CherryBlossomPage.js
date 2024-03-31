@@ -4,6 +4,10 @@ import lightCherryBlossomTree1 from '../images/light-CherryBlossom-tree-1.png';
 import lightCherryBlossomTree2 from '../images/light-CherryBlossom-tree-2.png';
 import darkCherryBlossomTree1 from '../images/dark-CherryBlossom-tree-1.png';
 import darkCherryBlossomTree2 from '../images/dark-CherryBlossom-tree-2.png';
+import flower1 from '../images/flower1.svg';
+import flower2 from '../images/flower2.svg';
+import flower3 from '../images/flower3.svg';
+import flower4 from '../images/flower4.svg';
 
 const CherryBlossomPageContainer = styled.div`
   position: fixed;
@@ -23,6 +27,33 @@ const CherryBlossomPageContainer = styled.div`
     }
   }
 `
+
+const flowerXYMoveAnimation = keyframes`
+  0% {
+    margin-left: 0;
+    rotate: 0;
+  }
+  20% {
+    margin-left: 80px;
+    rotate: 30deg;
+  }
+  40% {
+    margin-left: -120px;
+    rotate: -30deg;
+  }
+  60% {
+    margin-left: 120px;
+    rotate: 30deg;
+  }
+  80% {
+    margin-left: -80px;
+    rotate: -10deg;
+  }
+  100% {
+    margin-left: 0;
+    rotate: 0;
+  }
+`;
 
 const CherryBlossomLeft = styled.img`
   position: fixed;
@@ -44,28 +75,27 @@ const CherryBlossomRight = styled.img`
   opacity: ${(props) => (props.isActive ? '1' : '0')}
 `;
 
-const snowflakeAnimation = keyframes`
+const flowerFlakeAnimation = keyframes`
   from {
-    top: -24px;
+    top: -40%;
   }
   to {
-    top: calc(100% + 24px);
+    top: calc(100% + 100px);
   }
 `;
 
-const SnowflakeImg = styled.img`
+const FlowerFlaskImg = styled.img`
   position: absolute;
-  top: -24px;
-  animation: ${snowflakeAnimation} linear infinite;
+  top: -40%;
+  animation: ${flowerFlakeAnimation} linear infinite, ${flowerXYMoveAnimation} 4s ease-in-out infinite;
   ${(props) => props.theme.mode === 'dark' && `
     opacity: 0.5;
   `}
 `;
 
-/*
-const Snowflake = ({ delay, imgNumber }) => {
+const Flowerflake = ({ delay, imgNumber }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [size, setSize] = useState(Math.random() * 0.4 + 0.8);
+  const [size, setSize] = useState(Math.random() / 3 + 0.1);
 
   useEffect(() => {
     const x = Math.random() * 100;
@@ -77,7 +107,7 @@ const Snowflake = ({ delay, imgNumber }) => {
 
   const blur = Math.random() * 2 * size;
 
-  const SnowflakeStyle = {
+  const FlowerflakeStyle = {
     animationDelay: `${delay}s`,
     animationDuration: `${animationSpeed}s`,
     left: `${position.x}vw`,
@@ -85,24 +115,27 @@ const Snowflake = ({ delay, imgNumber }) => {
     filter: `blur(${blur}px)`,
   };
 
-  // snow1, snow2, snow3 중 랜덤으로 선택
+  // flower1, flower2, flower3 중 랜덤으로 선택
   switch (imgNumber) {
     case 1:
       return (
-        <SnowflakeImg src={snow1} style={SnowflakeStyle} />
+        <FlowerFlaskImg src={flower1} style={FlowerflakeStyle} />
       );
     case 2:
       return (
-        <SnowflakeImg src={snow2} style={SnowflakeStyle} />
+        <FlowerFlaskImg src={flower2} style={FlowerflakeStyle} />
       );
     case 3:
       return (
-        <SnowflakeImg src={snow3} style={SnowflakeStyle} />
+        <FlowerFlaskImg src={flower3} style={FlowerflakeStyle} />
+      );
+    case 4:
+      return (
+        <FlowerFlaskImg src={flower4} style={FlowerflakeStyle} />
       );
   }
 
 };
-*/
 
 const CherryBlossomPage = ({ theme, custom }) => {
   const [cherryBlossomTree1, setCherryBlossomTree1] = useState(lightCherryBlossomTree1);
@@ -117,17 +150,15 @@ const CherryBlossomPage = ({ theme, custom }) => {
       setCherryBlossomTree2(lightCherryBlossomTree2);
     }
   }, [theme]);
-  /*
-  const snowflakes = [];
+  const flowerflakes = [];
   for (let i = 0; i < 32; i++) {
     const delay = Math.random() * 12 + 4;
-    const imgNumber = Math.floor(Math.random() * 3) + 1;
-    snowflakes.push(<Snowflake key={i} delay={delay} imgNumber={imgNumber} />);
-      {snowflakes && custom && snowflakes}
+    const imgNumber = Math.floor(Math.random() * 4) + 1;
+    flowerflakes.push(<Flowerflake key={i} delay={delay} imgNumber={imgNumber} />);
   }
-  */
   return (
     <CherryBlossomPageContainer isActive={custom === 'custom'}>
+      {flowerflakes && custom && flowerflakes}
       <CherryBlossomLeft src={cherryBlossomTree1} isActive={custom === 'custom'} />
       <CherryBlossomRight src={cherryBlossomTree2} isActive={custom === 'custom'} />
     </CherryBlossomPageContainer>
