@@ -421,7 +421,7 @@ const App = () => {
             />
             <List>
               <ArticleList openViewer={openViewer} />
-              <Slider />
+              <Slider toggleCustom={toggleCustom} />
             </List>
           </ContentContainer>
         ) : (
