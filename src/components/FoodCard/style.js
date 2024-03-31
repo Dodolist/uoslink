@@ -32,7 +32,7 @@ const FoodCardHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  background-color: #408cff;
+  background-color: ${(props) => props.theme.primary};
   border-radius: 0 0 16px 16px;
   gap: 16px;
 `;
@@ -104,7 +104,7 @@ const CornerWrapper = styled.div`
 `;
 
 const CornerText = styled.span`
-  color: #408cff;
+  color: ${(props) => props.theme.primary};
   font-size: 12px;
   font-weight: bold;
   margin: 2px 8px 0 0;
@@ -147,4 +147,20 @@ const TimeIcon = styled.img`
   }
 `;
 
-export { FoodCardContainer, FoodCardHeader, Wrapper, MenuContainer, InfoWrapper, MenuCard, NoMenuCard, NoMenuIcon, NoMenuText, CornerWrapper, CornerText, MenuWrapper, MenuRow, MenuIconName, TimeIcon };
+export {
+  FoodCardContainer,
+  FoodCardHeader,
+  Wrapper,
+  MenuContainer,
+  InfoWrapper,
+  MenuCard,
+  NoMenuCard,
+  NoMenuIcon,
+  NoMenuText,
+  CornerWrapper,
+  CornerText,
+  MenuWrapper,
+  MenuRow,
+  MenuIconName,
+  TimeIcon,
+};

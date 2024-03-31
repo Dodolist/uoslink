@@ -137,7 +137,9 @@ const NoticeAttachedFileItemNameWrapper = styled.a`
   &:hover {
     filter: brightness(0.9);
     background-color: ${(props) =>
-      props.theme.mode === "light" ? "#98bffa80" : "#00000040"};
+      props.theme.mode === "light"
+        ? props.theme.secondary + "80"
+        : "#00000040"};
   }
 
   &:active {

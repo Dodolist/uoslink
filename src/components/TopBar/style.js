@@ -25,6 +25,10 @@ const TopBarContainer = styled("div")`
   margin: 0 auto;
   border-radius: 0 0 8px 8px;
   background-color: ${(props) => props.theme.foreground}f4;
+  background-color: ${(props) =>
+    props.theme.custom === "default"
+      ? props.theme.foreground + "f4"
+      : props.theme.foreground};
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.05);
 `;
 
@@ -67,6 +71,5 @@ const ServiceName = styled("span")`
     -webkit-text-fill-color: transparent;
   `}
 `;
-
 
 export { TopBarContainer, TopBarLeft, ImgWrap, ServiceName };

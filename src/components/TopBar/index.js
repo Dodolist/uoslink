@@ -4,7 +4,14 @@ import logo from "../../images/logo.svg";
 import ServiceNotice from "../ServiceNotice";
 import TopBarRight from "./TopBarRight";
 
-const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar }) => {
+const TopBar = ({
+  theme,
+  custom,
+  isSideBarOpen,
+  toggleTheme,
+  toggleSideBar,
+  toggleCustom,
+}) => {
   return (
     <TopBarContainer>
       <TopBarLeft>
@@ -16,9 +23,11 @@ const TopBar = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar }) => {
       </TopBarLeft>
       <TopBarRight
         theme={theme}
+        custom={custom}
         isSideBarOpen={isSideBarOpen}
         toggleTheme={toggleTheme}
         toggleSideBar={toggleSideBar}
+        toggleCustom={toggleCustom}
       />
     </TopBarContainer>
   );

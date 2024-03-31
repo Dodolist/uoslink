@@ -7,7 +7,14 @@ import FoodCard from "../../FoodCard/index.js";
 import SettingCard from "../../SettingCard";
 import LibraryCard from "../../LibraryCard";
 
-const TopBarRight = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar }) => {
+const TopBarRight = ({
+  theme,
+  custom,
+  isSideBarOpen,
+  toggleTheme,
+  toggleSideBar,
+  toggleCustom,
+}) => {
   const [openedCardName, setOpenedCardName] = useState("");
 
   const handleToggleCard = (cardName) => {
@@ -46,10 +53,12 @@ const TopBarRight = ({ theme, isSideBarOpen, toggleTheme, toggleSideBar }) => {
         <SettingCard
           openedCardName={openedCardName}
           theme={theme}
+          custom={custom}
           isSideBarOpen={isSideBarOpen}
           handleClose={handleCloseCard}
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
+          toggleCustom={toggleCustom}
         />
         <img
           className="icon"

@@ -7,7 +7,7 @@ const ToastContainer = styled.div`
   flex-direction: column;
   min-width: 320px;
   border-radius: 8px;
-  background-color: #408cff;
+  background-color: ${(props) => props.theme.primary};
   justify-content: center;
   overflow: hidden;
   ${(props) =>

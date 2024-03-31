@@ -48,7 +48,7 @@ const ServiceNoticeText = styled("span")`
       display: flex;
       flex-direction: row;
       align-items: center;
-      color: #408cff;
+      color: ${(props) => props.theme.primary};
       font-weight: bold;
     `}
 `;
