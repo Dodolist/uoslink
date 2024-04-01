@@ -75,13 +75,12 @@ const ServiceName = styled("span")`
   `}
 `;
 
-
 const Logo = styled(LogoSVG)`
   path:first-child {
-    fill: ${props => props.theme.primary};
+    fill: ${(props) => props.theme.secondary};
   }
   path:last-child {
-    fill: ${props => props.theme.secondary};
+    fill: ${(props) => props.theme.primary};
   }
 `;
 
