@@ -14,8 +14,8 @@ const SideBarContainer = styled.div`
   transform: ${(props) => (props.isOpen ? 'translate(0, -50%)' : 'translate(100%, -50%)')};
   user-select: ${(props) => (props.isOpen ? 'auto' : 'none')};
   pointer-events: ${(props) => (props.isOpen ? 'auto' : 'none')};
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(8);
+  -webkit-backdrop-filter: blur(8);
 `
 
 const ShortCutList = styled.div`

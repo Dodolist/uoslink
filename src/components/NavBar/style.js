@@ -17,8 +17,8 @@ const NavBarContainer = styled.div`
   gap: 16px;
   background-color: ${(props) => props.theme.foreground};
   min-width: 140px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 `;
 
 const Section = styled.div`

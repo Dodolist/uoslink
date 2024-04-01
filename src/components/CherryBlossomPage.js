@@ -33,21 +33,37 @@ const flowerXYMoveAnimation = keyframes`
     margin-left: 0;
     rotate: 0;
   }
-  20% {
-    margin-left: 80px;
+  10% {
+    margin-left: 40px;
     rotate: 30deg;
   }
-  40% {
-    margin-left: -120px;
+  20% {
+    margin-left: -60px;
     rotate: -30deg;
   }
-  60% {
-    margin-left: 120px;
-    rotate: 30deg;
+  30% {
+    margin-left: 60px;
+    rotate: 60deg;
   }
-  80% {
-    margin-left: -80px;
-    rotate: -10deg;
+  40% {
+    margin-left: -40px;
+    rotate: 0deg;
+  }
+  50% {
+    margin-left: 40px;
+    rotate: -40deg;
+  }
+  60% {
+    margin-left: -60px;
+    rotate: 00deg;
+  }
+  70% {
+    margin-left: 60px;
+    rotate: 45deg;
+  }
+  90% {
+    margin-left: -40px;
+    rotate: -15deg;
   }
   100% {
     margin-left: 0;
@@ -106,7 +122,7 @@ const Flowerflake = ({ delay, imgNumber }) => {
     setPosition({ x, y });
   }, []);
 
-  const animationSpeed = Math.random() * 12 + 12;
+  const animationSpeed = Math.random() * 12 + 24;
 
   const blur = Math.random() * 2 * size;
 
