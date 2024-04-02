@@ -31,43 +31,39 @@ const CherryBlossomPageContainer = styled.div`
 const flowerXMoveAnimation = keyframes`
   0% {
     margin-left: 0;
-    rotate: 0;
+    transform: rotate3d(1, 1, 1, 0deg);
   }
   10% {
-    margin-left: 40px;
-    rotate: 30deg;
+    margin-left: 20px;
   }
   20% {
-    margin-left: -60px;
-    rotate: -30deg;
+    margin-left: -40px;
   }
   30% {
     margin-left: 60px;
-    rotate: 60deg;
   }
   40% {
-    margin-left: -40px;
-    rotate: 0deg;
+    margin-left: -80px;
   }
   50% {
-    margin-left: 40px;
-    rotate: -40deg;
+    margin-left: 100px;
+    transform: rotate3d(1, 1, 1, 90deg);
   }
   60% {
-    margin-left: -60px;
-    rotate: 00deg;
+    margin-left: -80px;
   }
   70% {
     margin-left: 60px;
-    rotate: 45deg;
+  }
+  80% {
+    margin-left: -40px;
   }
   90% {
-    margin-left: -40px;
-    rotate: -15deg;
+    margin-left: 20px;
   }
   100% {
     margin-left: 0;
-    rotate: 0;
+    transform: rotate3d(1, 1, 1, 0deg);
   }
 `;
 
@@ -112,7 +108,7 @@ const FlowerFlaskImg = styled.img`
   `}
 `;
 
-const Flowerflake = ({ delay, imgNumber }) => {
+const Flowerflake = ({ delay }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [size, setSize] = useState(Math.random() * 0.3 + 0.3);
 
@@ -123,7 +119,6 @@ const Flowerflake = ({ delay, imgNumber }) => {
   }, []);
 
   const animationSpeed = -40 * size + 48;
-
   const blur = -10 * size + 6;
 
   const FlowerflakeStyle = {
@@ -134,6 +129,7 @@ const Flowerflake = ({ delay, imgNumber }) => {
     filter: `blur(${blur}px)`,
   };
 
+  const imgNumber = Math.floor(Math.random() * 4) + 1;
   // flower1, flower2, flower3 중 랜덤으로 선택
   switch (imgNumber) {
     case 1:
@@ -167,9 +163,8 @@ const CherryBlossomPage = ({ theme, custom }) => {
   const flowerflakes = [];
   for (let i = 0; i < 32; i++) {
     const delay = Math.random() * 24 + 0.2 * i;
-    const imgNumber = Math.floor(Math.random() * 4) + 1;
     flowerflakes.push(
-      <Flowerflake key={i} delay={delay} imgNumber={imgNumber} />
+      <Flowerflake key={i} delay={delay} />
     );
   }
   return (
