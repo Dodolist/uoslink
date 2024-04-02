@@ -1,16 +1,16 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled, { ThemeProvider } from "styled-components";
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
-import {ReactComponent as BookmarkIconSVG} from "./images/bookmark-icon.svg";
-import {ReactComponent as NoticeFA1IconSVG} from "./images/notice-FA1-icon.svg";
-import {ReactComponent as NoticeFA2IconSVG} from "./images/notice-FA2-icon.svg";
-import {ReactComponent as NoticeFA35IconSVG} from "./images/notice-FA35-icon.svg";
-import {ReactComponent as NoticeDA1IconSVG} from "./images/notice-DA1-icon.svg";
-import {ReactComponent as NoticeSC1IconSVG} from "./images/notice-SC1-icon.svg";
-import {ReactComponent as NoticeFA34IconSVG} from "./images/notice-FA34-icon.svg";
-import {ReactComponent as SearchIconSVG} from "./images/search-icon.svg";
+import { ReactComponent as BookmarkIconSVG } from "./images/bookmark-icon.svg";
+import { ReactComponent as NoticeFA1IconSVG } from "./images/notice-FA1-icon.svg";
+import { ReactComponent as NoticeFA2IconSVG } from "./images/notice-FA2-icon.svg";
+import { ReactComponent as NoticeFA35IconSVG } from "./images/notice-FA35-icon.svg";
+import { ReactComponent as NoticeDA1IconSVG } from "./images/notice-DA1-icon.svg";
+import { ReactComponent as NoticeSC1IconSVG } from "./images/notice-SC1-icon.svg";
+import { ReactComponent as NoticeFA34IconSVG } from "./images/notice-FA34-icon.svg";
+import { ReactComponent as SearchIconSVG } from "./images/search-icon.svg";
 import TopBar from "./components/TopBar";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -71,18 +71,19 @@ const BookmarkIcon = styled(BookmarkIconSVG)`
   * {
     fill: ${(props) => props.theme.primary};
   }
-`
+`;
 
 const NoticeFA1Icon = styled(NoticeFA1IconSVG)`
   width: 100%;
   height: 100%;
-  path:nth-child(1), path:nth-child(2) {
+  path:nth-child(1),
+  path:nth-child(2) {
     fill: ${(props) => props.theme.primary};
   }
   path:last-child {
     fill: ${(props) => props.theme.secondary};
   }
-`
+`;
 
 const NoticeFA2Icon = styled(NoticeFA2IconSVG)`
   width: 100%;
@@ -93,7 +94,7 @@ const NoticeFA2Icon = styled(NoticeFA2IconSVG)`
   path:last-child {
     fill: ${(props) => props.theme.secondary};
   }
-`
+`;
 
 const NoticeFA35Icon = styled(NoticeFA35IconSVG)`
   width: 100%;
@@ -104,7 +105,7 @@ const NoticeFA35Icon = styled(NoticeFA35IconSVG)`
   path:nth-child(2) {
     fill: ${(props) => props.theme.secondary};
   }
-`
+`;
 
 const NoticeDA1Icon = styled(NoticeDA1IconSVG)`
   width: 100%;
@@ -112,7 +113,7 @@ const NoticeDA1Icon = styled(NoticeDA1IconSVG)`
   * {
     fill: ${(props) => props.theme.primary};
   }
-`
+`;
 
 const NoticeSC1Icon = styled(NoticeSC1IconSVG)`
   width: 100%;
@@ -123,7 +124,7 @@ const NoticeSC1Icon = styled(NoticeSC1IconSVG)`
   path {
     fill: ${(props) => props.theme.primary};
   }
-`
+`;
 
 const NoticeFA34Icon = styled(NoticeFA34IconSVG)`
   width: 100%;
@@ -140,7 +141,7 @@ const NoticeFA34Icon = styled(NoticeFA34IconSVG)`
   path:last-child {
     fill: ${(props) => props.theme.primary};
   }
-`
+`;
 
 const SearchIcon = styled(SearchIconSVG)`
   width: 100%;
@@ -148,7 +149,7 @@ const SearchIcon = styled(SearchIconSVG)`
   * {
     fill: ${(props) => props.theme.primary};
   }
-`
+`;
 
 const SectionList = [
   {
@@ -203,7 +204,9 @@ const App = () => {
   const [selectedNoticeId, setSelectedNoticeId] = useState("");
   const [selectedNoticeSection, setSelectedNoticeSection] = useState("");
   const [selectedNoticeLink, setSelectedNoticeLink] = useState("");
-  const [selectedSectionIcon, setSelectedSectionIcon] = useState(<NoticeFA1Icon />);
+  const [selectedSectionIcon, setSelectedSectionIcon] = useState(
+    <NoticeFA1Icon />
+  );
   const [selectedSectionName, setSelectedSectionName] = useState("일반공지");
   const [isSideBarOpen, setIsSideBarOpen] = useState(
     localStorage.getItem("isSideBarOpen") === "true" ? true : false
@@ -214,6 +217,7 @@ const App = () => {
   const [custom, setCustom] = useState(
     localStorage.getItem("custom") || "default"
   );
+  const [isClickCustomBanner, setIsClickCustomBanner] = useState(false);
 
   const themeObject = {
     light: {
@@ -383,6 +387,15 @@ const App = () => {
     setSearchText(searchText);
   };
 
+  const clickCustomBanner = () => {
+    if (!isClickCustomBanner) {
+      setIsClickCustomBanner(true);
+      setTimeout(() => {
+        setIsClickCustomBanner(false);
+      }, 100);
+    }
+  };
+
   return (
     <ThemeProvider
       theme={
@@ -398,6 +411,7 @@ const App = () => {
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
           toggleCustom={toggleCustom}
+          isClickCustomBanner={isClickCustomBanner}
         />
         {isOnline ? (
           <ContentContainer>
@@ -421,7 +435,7 @@ const App = () => {
             />
             <List>
               <ArticleList openViewer={openViewer} />
-              <Slider toggleCustom={toggleCustom} />
+              <Slider clickCustomBanner={clickCustomBanner} />
             </List>
           </ContentContainer>
         ) : (
@@ -449,11 +463,7 @@ const App = () => {
         closeSearchPage={closeSearchPage}
         searchNotice={searchNotice}
       />
-      <CherryBlossomPage
-        theme={theme}
-        custom={custom}
-      />
-
+      <CherryBlossomPage theme={theme} custom={custom} />
     </ThemeProvider>
   );
 };

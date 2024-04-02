@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { TopBarRightContainer, CardWrapper, FoodIcon, LibraryIcon, SettingIcon } from "./style";
+import React, { useState, useEffect } from "react";
+import {
+  TopBarRightContainer,
+  CardWrapper,
+  FoodIcon,
+  LibraryIcon,
+  SettingIcon,
+} from "./style";
 import FoodCard from "../../FoodCard/index.js";
 import SettingCard from "../../SettingCard";
 import LibraryCard from "../../LibraryCard";
@@ -11,8 +17,26 @@ const TopBarRight = ({
   toggleTheme,
   toggleSideBar,
   toggleCustom,
+  isClickCustomBanner,
 }) => {
   const [openedCardName, setOpenedCardName] = useState("");
+
+  useEffect(() => {
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const openAndCloseCard = async () => {
+      if (isClickCustomBanner) {
+        await delay(100);
+        if (openedCardName !== "setting") {
+          handleToggleCard("setting");
+          await delay(500);
+        }
+        toggleCustom();
+        await delay(500);
+        handleCloseCard();
+      }
+    };
+    openAndCloseCard();
+  }, [isClickCustomBanner]);
 
   const handleToggleCard = (cardName) => {
     if (cardName === openedCardName) handleCloseCard();
@@ -29,10 +53,7 @@ const TopBarRight = ({
           openedCardName={openedCardName}
           handleClose={handleCloseCard}
         />
-        <FoodIcon
-          className="icon"
-          onClick={() => handleToggleCard("food")}
-        />
+        <FoodIcon className="icon" onClick={() => handleToggleCard("food")} />
       </CardWrapper>
       <CardWrapper>
         <LibraryCard

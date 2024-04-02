@@ -1,5 +1,11 @@
 import React from "react";
-import { TopBarContainer, TopBarLeft, ImgWrap, ServiceName, Logo } from "./style";
+import {
+  TopBarContainer,
+  TopBarLeft,
+  ImgWrap,
+  ServiceName,
+  Logo,
+} from "./style";
 import ServiceNotice from "../ServiceNotice";
 import TopBarRight from "./TopBarRight";
 
@@ -10,6 +16,7 @@ const TopBar = ({
   toggleTheme,
   toggleSideBar,
   toggleCustom,
+  isClickCustomBanner,
 }) => {
   return (
     <TopBarContainer>
@@ -27,6 +34,7 @@ const TopBar = ({
         toggleTheme={toggleTheme}
         toggleSideBar={toggleSideBar}
         toggleCustom={toggleCustom}
+        isClickCustomBanner={isClickCustomBanner}
       />
     </TopBarContainer>
   );
