@@ -120,6 +120,7 @@ const Flowerflake = ({ delay }) => {
 
   const animationSpeed = -40 * size + 48;
   const blur = -10 * size + 6;
+  const rotate = Math.random() * 360;
 
   const FlowerflakeStyle = {
     animationDelay: `${delay}s`,
@@ -127,6 +128,7 @@ const Flowerflake = ({ delay }) => {
     left: `${position.x}vw`,
     scale: `${size}`,
     filter: `blur(${blur}px)`,
+    rotate: `${rotate}deg`,
   };
 
   const imgNumber = Math.floor(Math.random() * 4) + 1;
