@@ -19,7 +19,7 @@ const CherryBlossomPageContainer = styled.div`
 
   opacity: ${(props) => (props.isActive ? "1" : "0")};
   @media (max-width: 1440px) {
-    & > img:first-child {
+    & > img:nth-last-child(2) {
       width: 360px;
     }
     & > img:last-child {
