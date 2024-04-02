@@ -1,10 +1,32 @@
 import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import lightCherryBlossomTree1 from "../images/light-CherryBlossom-tree-1.png";
 import lightCherryBlossomTree2 from "../images/light-CherryBlossom-tree-2.png";
 import darkCherryBlossomTree1 from "../images/dark-CherryBlossom-tree-1.png";
 import darkCherryBlossomTree2 from "../images/dark-CherryBlossom-tree-2.png";
 import FlowerFlake from "./FlowerFlake";
+
+const leftTreeMove = keyframes`
+  0% {
+    bottom: -10%;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0;
+    opacity: 1;
+  }
+`;
+
+const rightTreeMove = keyframes`
+  0% {
+    bottom: -10%;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0;
+    opacity: 1;
+  }
+`;
 
 const CherryBlossomPageContainer = styled.div`
   position: fixed;
@@ -33,6 +55,10 @@ const CherryBlossomLeft = styled.img`
   user-select: none;
   pointer-events: none;
   opacity: ${(props) => (props.isActive ? "1" : "0")};
+
+  ${(props) => props.isActive && css`
+    animation: ${leftTreeMove} 2s ease-in-out;
+  `}
 `;
 
 const CherryBlossomRight = styled.img`
@@ -43,6 +69,9 @@ const CherryBlossomRight = styled.img`
   user-select: none;
   pointer-events: none;
   opacity: ${(props) => (props.isActive ? "1" : "0")};
+  ${(props) => props.isActive && css`
+    animation: ${rightTreeMove} 2s ease-in-out;
+  `}
 `;
 
 const FlakeWrapper = styled.div`
