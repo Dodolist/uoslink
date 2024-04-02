@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
-import BlackScreen from '../BlackScreen';
+import React, { useState, useRef, useEffect } from "react";
+import styled, { css, keyframes } from "styled-components";
+import BlackScreen from "../BlackScreen";
 
-import searchIcon from '../../images/32-search-icon.svg';
+import searchIcon from "../../images/32-search-icon.svg";
 
-const SearchPage = ({isSearchPageOpen, closeSearchPage, searchNotice}) => {
-  const [searchText, setSearchText] = useState('');
-  
+const SearchPage = ({ isSearchPageOpen, closeSearchPage, searchNotice }) => {
+  const [searchText, setSearchText] = useState("");
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [isSearchPageOpen]);
+
   const handleSearchTextChange = (e) => {
     setSearchText(e.target.value);
   };
 
   const handleEnter = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       searchNotice(searchText);
       closeSearchPage();
       setTimeout(() => {
-        setSearchText('');
+        setSearchText("");
       }, 200);
-
     }
   };
 
@@ -33,14 +37,14 @@ const SearchPage = ({isSearchPageOpen, closeSearchPage, searchNotice}) => {
           placeholder="공지사항 제목을 입력하세요"
           onChange={handleSearchTextChange}
           onKeyDown={handleEnter}
+          ref={inputRef}
         />
       </SearchPageContainer>
     </>
   );
-}
+};
 
 export default SearchPage;
-
 
 const SearchPageContainer = styled.div`
   z-index: 1000;
@@ -52,27 +56,31 @@ const SearchPageContainer = styled.div`
   display: flex;
   flex-direction: row;
 
-  background-color: ${props => props.theme.foreground};
+  background-color: ${(props) => props.theme.foreground};
   padding: 16px;
   border-radius: 24px;
 
   min-width: 800px;
 
-  ${props => props.isSearchPageOpen && css`
-    top: 64px;
-    opacity: 1;
-  `}
-`
+  ${(props) =>
+    props.isSearchPageOpen &&
+    css`
+      top: 64px;
+      opacity: 1;
+    `}
+`;
 
 const Icon = styled.img`
   width: 32px;
   height: 32px;
   filter: grayscale(1);
-  ${props => props.inputText && css`
-    animation: ${animation} 0.3s;
-    filter: grayscale(0);
-  `}
-`
+  ${(props) =>
+    props.inputText &&
+    css`
+      animation: ${animation} 0.3s;
+      filter: grayscale(0);
+    `}
+`;
 
 const SearchInput = styled.input`
   width: 100%;
@@ -81,13 +89,13 @@ const SearchInput = styled.input`
   outline: none;
   background-color: transparent;
 
-  color: ${props => props.theme.contentText};
+  color: ${(props) => props.theme.contentText};
   font-size: 16px;
 
   &::placeholder {
-    color: ${props => props.theme.subText};
+    color: ${(props) => props.theme.subText};
   }
-`
+`;
 
 const animation = keyframes`
   0% {
@@ -99,4 +107,4 @@ const animation = keyframes`
   100% {
     transform: scale(1);
   }
-`
+`;
