@@ -28,7 +28,7 @@ const CherryBlossomPageContainer = styled.div`
   }
 `;
 
-const flowerXYMoveAnimation = keyframes`
+const flowerXMoveAnimation = keyframes`
   0% {
     margin-left: 0;
     rotate: 0;
@@ -93,18 +93,18 @@ const CherryBlossomRight = styled.img`
 
 const flowerFlakeAnimation = keyframes`
   from {
-    top: -40%;
+    top: -64px;
   }
   to {
-    top: calc(100% + 100px);
+    top: calc(100% + 64px);
   }
 `;
 
 const FlowerFlaskImg = styled.img`
   position: absolute;
-  top: -40%;
+  top: -64px;
   animation: ${flowerFlakeAnimation} linear infinite,
-    ${flowerXYMoveAnimation} 4s ease-in-out infinite;
+    ${flowerXMoveAnimation} 4s ease-in-out infinite;
   ${(props) =>
     props.theme.mode === "dark" &&
     `
@@ -114,7 +114,7 @@ const FlowerFlaskImg = styled.img`
 
 const Flowerflake = ({ delay, imgNumber }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [size, setSize] = useState(Math.random() * 0.2 + 0.3);
+  const [size, setSize] = useState(Math.random() * 0.3 + 0.3);
 
   useEffect(() => {
     const x = Math.random() * 100;
@@ -122,9 +122,9 @@ const Flowerflake = ({ delay, imgNumber }) => {
     setPosition({ x, y });
   }, []);
 
-  const animationSpeed = Math.random() * 12 + 24;
+  const animationSpeed = -40 * size + 48;
 
-  const blur = Math.random() * 2 * size;
+  const blur = -10 * size + 6;
 
   const FlowerflakeStyle = {
     animationDelay: `${delay}s`,
@@ -166,7 +166,7 @@ const CherryBlossomPage = ({ theme, custom }) => {
   }, [theme]);
   const flowerflakes = [];
   for (let i = 0; i < 32; i++) {
-    const delay = Math.random() * 12 + 4;
+    const delay = Math.random() * 24 + 0.2 * i;
     const imgNumber = Math.floor(Math.random() * 4) + 1;
     flowerflakes.push(
       <Flowerflake key={i} delay={delay} imgNumber={imgNumber} />
