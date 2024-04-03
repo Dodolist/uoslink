@@ -56,9 +56,11 @@ const CherryBlossomLeft = styled.img`
   pointer-events: none;
   opacity: ${(props) => (props.isActive ? "1" : "0")};
 
-  ${(props) => props.isActive && css`
-    animation: ${leftTreeMove} 2s ease-in-out;
-  `}
+  ${(props) =>
+    props.isActive &&
+    css`
+      animation: ${leftTreeMove} 2s ease-in-out;
+    `}
 `;
 
 const CherryBlossomRight = styled.img`
@@ -69,9 +71,11 @@ const CherryBlossomRight = styled.img`
   user-select: none;
   pointer-events: none;
   opacity: ${(props) => (props.isActive ? "1" : "0")};
-  ${(props) => props.isActive && css`
-    animation: ${rightTreeMove} 2s ease-in-out;
-  `}
+  ${(props) =>
+    props.isActive &&
+    css`
+      animation: ${rightTreeMove} 2s ease-in-out;
+    `}
 `;
 
 const FlakeWrapper = styled.div`
@@ -94,6 +98,7 @@ const CherryBlossomPage = ({ theme, custom }) => {
   const [cherryBlossomTree2, setCherryBlossomTree2] = useState(
     lightCherryBlossomTree2
   );
+  const [delay, setDelay] = useState(Math.random() * 24);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -106,16 +111,11 @@ const CherryBlossomPage = ({ theme, custom }) => {
   }, [theme]);
   const flowerflakes = [];
   for (let i = 0; i < 32; i++) {
-    const delay = Math.random() * 24 + 0.2 * i;
-    flowerflakes.push(
-      <FlowerFlake key={i} delay={delay} />
-    );
+    flowerflakes.push(<FlowerFlake key={i} delay={delay + 0.2 * i} />);
   }
   return (
     <CherryBlossomPageContainer isActive={custom === "custom"}>
-      <FlakeWrapper>
-        {custom && flowerflakes}
-      </FlakeWrapper>
+      <FlakeWrapper>{custom && flowerflakes}</FlakeWrapper>
       <CherryBlossomLeft
         src={cherryBlossomTree1}
         isActive={custom === "custom"}
