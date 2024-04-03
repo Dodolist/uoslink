@@ -12,35 +12,43 @@ const flowerXMoveAnimation = keyframes`
   }
   10% {
     margin-left: 20px;
+    transform: rotate3d(1, 1, 1, 90deg);
   }
   20% {
     margin-left: -40px;
+    transform: rotate3d(1, 1, 1, 0deg);
   }
   30% {
     margin-left: 60px;
+    transform: rotate3d(1, 1, 1, 90deg);
   }
   40% {
     margin-left: -80px;
+    transform: rotate3d(1, 1, 1, 0deg);
   }
   50% {
     margin-left: 100px;
-    transform: rotate3d(1, 1, 1, 90deg);
+    transform: rotate3d(1, 1, 1, 0deg);
   }
   60% {
     margin-left: -80px;
+    transform: rotate3d(1, 1, 1, 90deg);
   }
   70% {
     margin-left: 60px;
+    transform: rotate3d(1, 1, 1, 0deg);
   }
   80% {
     margin-left: -40px;
+    transform: rotate3d(1, 1, 1, 90deg);
   }
   90% {
     margin-left: 20px;
+    transform: rotate3d(1, 1, 1, 0deg);
   }
   100% {
     margin-left: 0;
-    transform: rotate3d(1, 1, 1, 0deg);
+    transform: rotate3d(1, 1, 1, 90deg);
   }
 `;
 

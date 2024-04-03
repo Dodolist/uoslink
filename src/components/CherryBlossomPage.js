@@ -79,6 +79,7 @@ const CherryBlossomRight = styled.img`
 `;
 
 const FlakeWrapper = styled.div`
+  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;
@@ -98,7 +99,7 @@ const CherryBlossomPage = ({ theme, custom }) => {
   const [cherryBlossomTree2, setCherryBlossomTree2] = useState(
     lightCherryBlossomTree2
   );
-  const [delay, setDelay] = useState(Math.random() * 24);
+  const [delay, setDelay] = useState(Math.random() * 18);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -111,7 +112,7 @@ const CherryBlossomPage = ({ theme, custom }) => {
   }, [theme]);
   const flowerflakes = [];
   for (let i = 0; i < 32; i++) {
-    flowerflakes.push(<FlowerFlake key={i} delay={delay + 0.2 * i} />);
+    flowerflakes.push(<FlowerFlake key={i} delay={delay + 0.6 * i} />);
   }
   return (
     <CherryBlossomPageContainer isActive={custom === "custom"}>
