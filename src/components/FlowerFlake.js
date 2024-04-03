@@ -68,7 +68,7 @@ const FlowerFlaskImg = styled.img`
     ${flowerXMoveAnimation} 4s ease-in-out infinite;
 `;
 
-const FlowerFlake = ({ delay }) => {
+const FlowerFlake = ({ delay, custom }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [size, setSize] = useState(Math.random() * 0.3 + 0.3);
 
@@ -77,6 +77,7 @@ const FlowerFlake = ({ delay }) => {
     const y = Math.random() * window.innerHeight;
     setPosition({ x, y });
   }, []);
+  //이따 확인
 
   const animationSpeed = -40 * size + 48;
   const blur = -10 * size + 6;
@@ -95,13 +96,13 @@ const FlowerFlake = ({ delay }) => {
   // flower1, flower2, flower3 중 랜덤으로 선택
   switch (imgNumber) {
     case 1:
-      return (<FlowerFlaskImg src={flower1} style={FlowerFlakeStyle} />);
+      return <FlowerFlaskImg src={flower1} style={FlowerFlakeStyle} />;
     case 2:
-      return (<FlowerFlaskImg src={flower2} style={FlowerFlakeStyle} />);
+      return <FlowerFlaskImg src={flower2} style={FlowerFlakeStyle} />;
     case 3:
-      return (<FlowerFlaskImg src={flower3} style={FlowerFlakeStyle} />);
+      return <FlowerFlaskImg src={flower3} style={FlowerFlakeStyle} />;
     case 4:
-      return (<FlowerFlaskImg src={flower4} style={FlowerFlakeStyle} />);
+      return <FlowerFlaskImg src={flower4} style={FlowerFlakeStyle} />;
   }
 };
 
