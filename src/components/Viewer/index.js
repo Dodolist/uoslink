@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import { ReactComponent as AttachedFileIconSVG } from "../../images/attached-file-icon.svg";
-import { ReactComponent as LoadingIconSVG } from "../../images/loading-icon.svg";
+import LoadingIcon from '../../images/loading-icon';
 import closeIcon from "../../images/gray-close-icon.svg";
 import bookmarkIcon from "../../images/gray-bookmark24-icon.svg";
 import outlinkIcon from "../../images/outlink-icon.svg";
@@ -12,27 +12,9 @@ import BlackScreen from "../BlackScreen";
 import FloatButton from "./FloatButton";
 import Toast from "../Toast";
 
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(1080deg);
-  } 
-`;
-
 const AttachedFileIcon = styled(AttachedFileIconSVG)`
   rect, path {
     fill: ${(props) => props.theme.primary};
-    stroke: ${(props) => props.theme.primary};
-  }
-`;
-
-const LoadingIcon = styled(LoadingIconSVG)`
-  animation: ${rotateAnimation} 4s cubic-bezier(0.25, 0.51, 0.43, 0.7) infinite;
-  width: 48px;
-  height: 48px;
-  path {
     stroke: ${(props) => props.theme.primary};
   }
 `;
@@ -244,6 +226,7 @@ const LoadingText = styled.div`
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -2px;
+  transform: translateY(64px);
 `;
 
 const ToastContainer = styled.div`

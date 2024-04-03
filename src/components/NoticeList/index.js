@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
-import { NoticeListContainer, LoadingIcon, NoItemContainer, NoItemText, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon } from './style';
+import { NoticeListContainer, NoItemContainer, NoItemText, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon } from './style';
+import LoadingIcon from '../../images/loading-icon';
 import kebabIcon from '../../images/kebab-icon.svg';
 // import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
 import readCheckIcon from '../../images/read-check-icon.svg';

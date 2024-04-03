@@ -1,5 +1,13 @@
 import React from 'react';
-import { NavBarContainer, Section, SectionIcon, SectionName, NavBarDivider, SearchButton, ButtonIcon, ButtonName, BookmarkIcon, NoticeFA1Icon, NoticeFA2Icon, NoticeDA1Icon, NoticeFA35Icon, NoticeSC1Icon, NoticeFA34Icon, SearchIcon } from './style';
+import { NavBarContainer, Section, SectionIcon, SectionName, NavBarDivider, SearchButton, ButtonIcon, ButtonName } from './style';
+import BookmarkIcon from "../../images/bookmark-icon";
+import NoticeFA1Icon from "../../images/notice-FA1-icon";
+import NoticeFA2Icon from "../../images/notice-FA2-icon";
+import NoticeFA35Icon from "../../images/notice-FA35-icon";
+import NoticeDA1Icon from "../../images/notice-DA1-icon";
+import NoticeSC1Icon from "../../images/notice-SC1-icon";
+import NoticeFA34Icon from "../../images/notice-FA34-icon";
+import SearchIcon from "../../images/search-icon";
 
 const SectionList = [
   {

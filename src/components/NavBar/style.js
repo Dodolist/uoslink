@@ -1,12 +1,4 @@
 import styled, { css } from "styled-components";
-import {ReactComponent as BookmarkIconSVG} from "../../images/bookmark-icon.svg";
-import {ReactComponent as NoticeFA1IconSVG} from "../../images/notice-FA1-icon.svg";
-import {ReactComponent as NoticeFA2IconSVG} from "../../images/notice-FA2-icon.svg";
-import {ReactComponent as NoticeFA35IconSVG} from "../../images/notice-FA35-icon.svg";
-import {ReactComponent as NoticeDA1IconSVG} from "../../images/notice-DA1-icon.svg";
-import {ReactComponent as NoticeSC1IconSVG} from "../../images/notice-SC1-icon.svg";
-import {ReactComponent as NoticeFA34IconSVG} from "../../images/notice-FA34-icon.svg";
-import {ReactComponent as SearchIconSVG} from "../../images/search-icon.svg";
 
 const NavBarContainer = styled.div`
   position: relative;
@@ -125,75 +117,6 @@ const ButtonName = styled.span`
   user-select: none;
 `;
 
-const BookmarkIcon = styled(BookmarkIconSVG)`
-  * {
-    fill: ${(props) => props.theme.primary};
-  }
-`
-
-const NoticeFA1Icon = styled(NoticeFA1IconSVG)`
-  path:nth-child(1), path:nth-child(2) {
-    fill: ${(props) => props.theme.primary};
-  }
-  path:last-child {
-    fill: ${(props) => props.theme.secondary};
-  }
-`
-
-const NoticeFA2Icon = styled(NoticeFA2IconSVG)`
-  path:first-child {
-    fill: ${(props) => props.theme.primary};
-  }
-  path:last-child {
-    fill: ${(props) => props.theme.secondary};
-  }
-`
-
-const NoticeFA35Icon = styled(NoticeFA35IconSVG)`
-  path {
-    fill: ${(props) => props.theme.primary};
-  }
-  path:nth-child(2) {
-    fill: ${(props) => props.theme.secondary};
-  }
-`
-
-const NoticeDA1Icon = styled(NoticeDA1IconSVG)`
-  * {
-    fill: ${(props) => props.theme.primary};
-  }
-`
-
-const NoticeSC1Icon = styled(NoticeSC1IconSVG)`
-  circle {
-    fill: ${(props) => props.theme.secondary};
-  }
-  path {
-    fill: ${(props) => props.theme.primary};
-  }
-`
-
-const NoticeFA34Icon = styled(NoticeFA34IconSVG)`
-  circle {
-    fill: ${(props) => props.theme.primary};
-  }
-  circle:first-child {
-    fill: ${(props) => props.theme.secondary};
-  }
-  path {
-    fill: ${(props) => props.theme.secondary};
-  }
-  path:last-child {
-    fill: ${(props) => props.theme.primary};
-  }
-`
-
-const SearchIcon = styled(SearchIconSVG)`
-  * {
-    fill: ${(props) => props.theme.primary};
-  }
-`
-
 export {
   NavBarContainer,
   Section,
@@ -202,13 +125,5 @@ export {
   NavBarDivider,
   SearchButton,
   ButtonIcon,
-  ButtonName,
-  BookmarkIcon,
-  NoticeFA1Icon,
-  NoticeFA2Icon,
-  NoticeFA35Icon,
-  NoticeDA1Icon,
-  NoticeSC1Icon,
-  NoticeFA34Icon,
-  SearchIcon
+  ButtonName
 };

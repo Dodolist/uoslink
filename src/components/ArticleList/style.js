@@ -1,14 +1,4 @@
 import styled, { css, keyframes } from 'styled-components';
-import { ReactComponent as LoadingIconSVG } from "../../images/loading-icon.svg";
-
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(1080deg);
-  } 
-`;
 
 const showListAnimation = keyframes`
   from {
@@ -39,19 +29,6 @@ const ArticleListContainer = styled.div`
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라 브라우저 */
   }
-`
-
-const LoadingIcon = styled(LoadingIconSVG)`
-  path {
-    stroke: ${(props) => props.theme.primary};
-  }
-  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  width: 48px;
-  height: 48px;
 `
 
 const ArticleItemContainer = styled.div`
@@ -131,4 +108,4 @@ const ListName = styled.div`
   margin: 4px 0 8px 8px;
   opacity: 0;
 `
-export { ArticleListContainer, LoadingIcon, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName };
+export { ArticleListContainer, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName };

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   TopBarRightContainer,
   CardWrapper,
-  FoodIcon,
-  LibraryIcon,
-  SettingIcon,
+  IconWrapper
 } from "./style";
 import FoodCard from "../../FoodCard/index.js";
 import SettingCard from "../../SettingCard";
 import LibraryCard from "../../LibraryCard";
+import foodIcon from "../../../images/food-icon.svg";
+import libraryIcon from "../../../images/library-icon.svg";
+import settingIcon from "../../../images/setting-icon.svg";
 
 const TopBarRight = ({
   theme,
@@ -53,17 +54,26 @@ const TopBarRight = ({
           openedCardName={openedCardName}
           handleClose={handleCloseCard}
         />
-        <FoodIcon className="icon" onClick={() => handleToggleCard("food")} />
+        <IconWrapper>
+          <img
+            src={foodIcon}
+            calssName="icon"
+            onClick={() => handleToggleCard("food")}
+          />
+        </IconWrapper>
       </CardWrapper>
       <CardWrapper>
         <LibraryCard
           openedCardName={openedCardName}
           handleClose={handleCloseCard}
         />
-        <LibraryIcon
-          className="icon"
-          onClick={() => handleToggleCard("library")}
-        />
+        <IconWrapper>
+          <img
+            src={libraryIcon}
+            calssName="icon"
+            onClick={() => handleToggleCard("library")}
+          />
+        </IconWrapper>
       </CardWrapper>
       <CardWrapper>
         <SettingCard
@@ -76,10 +86,13 @@ const TopBarRight = ({
           toggleSideBar={toggleSideBar}
           toggleCustom={toggleCustom}
         />
-        <SettingIcon
-          className="icon"
-          onClick={() => handleToggleCard("setting")}
-        />
+        <IconWrapper>
+          <img
+            src={settingIcon}
+            className="icon"
+            onClick={() => handleToggleCard("setting")}
+          />
+        </IconWrapper>
       </CardWrapper>
     </TopBarRightContainer>
   );

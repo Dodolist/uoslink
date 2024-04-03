@@ -3,14 +3,14 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled, { ThemeProvider } from "styled-components";
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
-import { ReactComponent as BookmarkIconSVG } from "./images/bookmark-icon.svg";
-import { ReactComponent as NoticeFA1IconSVG } from "./images/notice-FA1-icon.svg";
-import { ReactComponent as NoticeFA2IconSVG } from "./images/notice-FA2-icon.svg";
-import { ReactComponent as NoticeFA35IconSVG } from "./images/notice-FA35-icon.svg";
-import { ReactComponent as NoticeDA1IconSVG } from "./images/notice-DA1-icon.svg";
-import { ReactComponent as NoticeSC1IconSVG } from "./images/notice-SC1-icon.svg";
-import { ReactComponent as NoticeFA34IconSVG } from "./images/notice-FA34-icon.svg";
-import { ReactComponent as SearchIconSVG } from "./images/search-icon.svg";
+import BookmarkIcon from "./images/bookmark-icon";
+import NoticeFA1Icon from "./images/notice-FA1-icon";
+import NoticeFA2Icon from "./images/notice-FA2-icon";
+import NoticeFA35Icon from "./images/notice-FA35-icon";
+import NoticeDA1Icon from "./images/notice-DA1-icon";
+import NoticeSC1Icon from "./images/notice-SC1-icon";
+import NoticeFA34Icon from "./images/notice-FA34-icon";
+import SearchIcon from "./images/search-icon";
 import TopBar from "./components/TopBar";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -63,92 +63,6 @@ const OfflineText = styled.span`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: -2px;
-`;
-
-const BookmarkIcon = styled(BookmarkIconSVG)`
-  width: 100%;
-  height: 100%;
-  * {
-    fill: ${(props) => props.theme.primary};
-  }
-`;
-
-const NoticeFA1Icon = styled(NoticeFA1IconSVG)`
-  width: 100%;
-  height: 100%;
-  path:nth-child(1),
-  path:nth-child(2) {
-    fill: ${(props) => props.theme.primary};
-  }
-  path:last-child {
-    fill: ${(props) => props.theme.secondary};
-  }
-`;
-
-const NoticeFA2Icon = styled(NoticeFA2IconSVG)`
-  width: 100%;
-  height: 100%;
-  path:first-child {
-    fill: ${(props) => props.theme.primary};
-  }
-  path:last-child {
-    fill: ${(props) => props.theme.secondary};
-  }
-`;
-
-const NoticeFA35Icon = styled(NoticeFA35IconSVG)`
-  width: 100%;
-  height: 100%;
-  path {
-    fill: ${(props) => props.theme.primary};
-  }
-  path:nth-child(2) {
-    fill: ${(props) => props.theme.secondary};
-  }
-`;
-
-const NoticeDA1Icon = styled(NoticeDA1IconSVG)`
-  width: 100%;
-  height: 100%;
-  * {
-    fill: ${(props) => props.theme.primary};
-  }
-`;
-
-const NoticeSC1Icon = styled(NoticeSC1IconSVG)`
-  width: 100%;
-  height: 100%;
-  circle {
-    fill: ${(props) => props.theme.secondary};
-  }
-  path {
-    fill: ${(props) => props.theme.primary};
-  }
-`;
-
-const NoticeFA34Icon = styled(NoticeFA34IconSVG)`
-  width: 100%;
-  height: 100%;
-  circle {
-    fill: ${(props) => props.theme.primary};
-  }
-  circle:first-child {
-    fill: ${(props) => props.theme.secondary};
-  }
-  path {
-    fill: ${(props) => props.theme.secondary};
-  }
-  path:last-child {
-    fill: ${(props) => props.theme.primary};
-  }
-`;
-
-const SearchIcon = styled(SearchIconSVG)`
-  width: 100%;
-  height: 100%;
-  * {
-    fill: ${(props) => props.theme.primary};
-  }
 `;
 
 const SectionList = [
