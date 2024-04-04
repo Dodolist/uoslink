@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import {
-  TopBarRightContainer,
-  CardWrapper,
-  IconWrapper
-} from "./style";
+import React, { useState, useEffect, lazy } from "react";
+import { TopBarRightContainer, CardWrapper, IconWrapper } from "./style";
 import FoodCard from "../../FoodCard/index.js";
-import SettingCard from "../../SettingCard";
-import LibraryCard from "../../LibraryCard";
 import foodIcon from "../../../images/food-icon.svg";
 import libraryIcon from "../../../images/library-icon.svg";
 import settingIcon from "../../../images/setting-icon.svg";
+const SettingCard = lazy(() => import("../../SettingCard"));
+const LibraryCard = lazy(() => import("../../LibraryCard"));
 
 const TopBarRight = ({
   theme,

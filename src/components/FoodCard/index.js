@@ -1,5 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { FoodCardContainer, FoodCardHeader, Wrapper, MenuContainer, InfoWrapper, MenuCard, NoMenuCard, NoMenuIcon, NoMenuText, CornerWrapper, CornerText, MenuWrapper, MenuRow, MenuIconName, TimeIcon, BreakfastIcon, LunchIcon, DinnerIcon } from "./style";
+import {
+  FoodCardContainer,
+  FoodCardHeader,
+  Wrapper,
+  MenuContainer,
+  InfoWrapper,
+  MenuCard,
+  NoMenuCard,
+  NoMenuIcon,
+  NoMenuText,
+  CornerWrapper,
+  CornerText,
+  MenuWrapper,
+  MenuRow,
+  MenuIconName,
+  TimeIcon,
+  BreakfastIcon,
+  LunchIcon,
+  DinnerIcon,
+} from "./style";
 import axios from "axios";
 import noMenuIcon from "../../images/no-menu-icon.svg";
 import noMenu0031Icon from "../../images/no-menu-0031-icon.svg";
@@ -93,21 +112,19 @@ const FoodCard = ({ openedCardName, handleClose }) => {
       changeRenderComponent();
       return;
     }
-    if (openedCardName === "food") {
-      axios
-        .get(
-          "https://www.iflab.run/api/food/" +
-            selectedFoodPlace +
-            "/" +
-            selectedFoodDate
-        )
-        .then((response) => {
-          setFoodInfo(response.data);
-        })
-        .catch((error) => {
-          console.error("API 요청 중 오류 발생:");
-        });
-    }
+    axios
+      .get(
+        "https://www.iflab.run/api/food/" +
+          selectedFoodPlace +
+          "/" +
+          selectedFoodDate
+      )
+      .then((response) => {
+        setFoodInfo(response.data);
+      })
+      .catch((error) => {
+        console.error("API 요청 중 오류 발생:");
+      });
   }, [openedCardName, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
   useEffect(() => {

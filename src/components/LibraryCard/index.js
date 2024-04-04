@@ -4,7 +4,12 @@ import TopBar from "./TopBar.js";
 import MainInfo from "./MainInfo.js";
 import SubInfo from "./SubInfo.js";
 import PlaceList from "./PlaceList.js";
-import { LibraryCardContainer, LibraryCardHeader, PlaceContainer, InfoWrapper } from "./style";
+import {
+  LibraryCardContainer,
+  LibraryCardHeader,
+  PlaceContainer,
+  InfoWrapper,
+} from "./style";
 
 const LibaryCard = ({ openedCardName, handleClose }) => {
   const [libraryInfo, setLibraryInfo] = useState([]);
@@ -17,16 +22,14 @@ const LibaryCard = ({ openedCardName, handleClose }) => {
   );
 
   useEffect(() => {
-    if(openedCardName === "library") {
-      axios
-        .get("https://www.iflab.run/api/scraping/library/" + selectedLibraryPlace)
-        .then((response) => {
-          setLibraryInfo(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    axios
+      .get("https://www.iflab.run/api/scraping/library/" + selectedLibraryPlace)
+      .then((response) => {
+        setLibraryInfo(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [openedCardName, selectedLibraryPlace]);
 
   useEffect(() => {
