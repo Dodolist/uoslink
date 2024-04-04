@@ -16,7 +16,7 @@ const ServiceNotice = () => {
         "https://www.iflab.run/api/check/version/" +
         chrome.runtime.getManifest().version;
     } catch (error) {
-      url = "https://www.iflab.run/api/check/version/0.9.9.2";
+      url = "https://www.iflab.run/api/check/version/0.9.9.3";
     }
     setTimeout(() => {
       axios
