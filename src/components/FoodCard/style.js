@@ -1,4 +1,7 @@
 import styled, { css } from "styled-components";
+import { ReactComponent as BreakfastIconSVG } from "../../images/breakfast-icon.svg";
+import { ReactComponent as LunchIconSVG } from "../../images/lunch-icon.svg";
+import { ReactComponent as DinnerIconSVG } from "../../images/dinner-icon.svg";
 
 const FoodCardContainer = styled("div")`
   transition: all 0.3s;
@@ -32,7 +35,7 @@ const FoodCardHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  background-color: #408cff;
+  background-color: ${(props) => props.theme.primary};
   border-radius: 0 0 16px 16px;
   gap: 16px;
 `;
@@ -104,7 +107,7 @@ const CornerWrapper = styled.div`
 `;
 
 const CornerText = styled.span`
-  color: #408cff;
+  color: ${(props) => props.theme.primary};
   font-size: 12px;
   font-weight: bold;
   margin: 2px 8px 0 0;
@@ -131,8 +134,13 @@ const MenuIconName = styled.div`
   gap: 2px;
 `;
 
-const TimeIcon = styled.img`
+const TimeIcon = styled.div`
   transition: all 0.3s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   opacity: ${(props) => (props.selected ? "1" : "0.25")};
   background-color: ${(props) =>
@@ -147,4 +155,41 @@ const TimeIcon = styled.img`
   }
 `;
 
-export { FoodCardContainer, FoodCardHeader, Wrapper, MenuContainer, InfoWrapper, MenuCard, NoMenuCard, NoMenuIcon, NoMenuText, CornerWrapper, CornerText, MenuWrapper, MenuRow, MenuIconName, TimeIcon };
+const BreakfastIcon = styled(BreakfastIconSVG)`
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+const LunchIcon = styled(LunchIconSVG)`
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+const DinnerIcon = styled(DinnerIconSVG)`
+  * {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
+
+export {
+  FoodCardContainer,
+  FoodCardHeader,
+  Wrapper,
+  MenuContainer,
+  InfoWrapper,
+  MenuCard,
+  NoMenuCard,
+  NoMenuIcon,
+  NoMenuText,
+  CornerWrapper,
+  CornerText,
+  MenuWrapper,
+  MenuRow,
+  MenuIconName,
+  TimeIcon,
+  BreakfastIcon,
+  LunchIcon,
+  DinnerIcon,
+};

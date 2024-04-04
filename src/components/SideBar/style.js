@@ -14,6 +14,8 @@ const SideBarContainer = styled.div`
   transform: ${(props) => (props.isOpen ? 'translate(0, -50%)' : 'translate(100%, -50%)')};
   user-select: ${(props) => (props.isOpen ? 'auto' : 'none')};
   pointer-events: ${(props) => (props.isOpen ? 'auto' : 'none')};
+  backdrop-filter: blur(8);
+  -webkit-backdrop-filter: blur(8);
 `
 
 const ShortCutList = styled.div`
@@ -88,7 +90,7 @@ const AddButtonWrap = styled.div`
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: ${(props) => props.theme.background };
+  background-color: ${(props) => props.theme.mode === 'light' ? '#e5e5e5' : '#3c414c'};
   border-radius: 8px;
 
   cursor: pointer;

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ArticleListContainer, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName, LoadingIcon } from './style';
 import loadingIcon from '../../images/loading-icon.svg';
-import { ArticleListContainer, LoadingIcon, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName } from './style';
+import loadingIconCherry from '../../images/cherry-loading-icon.svg';
 
 const SectionList = [
   {
@@ -60,8 +61,12 @@ const ArticleList = ({openViewer}) => {
   return (
     <ArticleListContainer>
       {isLoading ? (
-        <LoadingIcon src={loadingIcon} />
-      ) : (
+        localStorage.getItem('custom') === 'custom' ? (
+          <LoadingIcon src={loadingIconCherry} alt="loading" />
+        ) : (
+          <LoadingIcon src={loadingIcon} alt="loading" />
+        )
+        ): (
         <>
           <ListName>Top 5 공지사항</ListName>
           {items.map((item, index) => (

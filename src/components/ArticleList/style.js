@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
+
 const rotateAnimation = keyframes`
   from {
     transform: rotate(0deg);
@@ -32,19 +33,11 @@ const ArticleListContainer = styled.div`
 
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라 브라우저 */
   }
-`
-
-const LoadingIcon = styled.img`
-  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  width: 48px;
-  height: 48px;
 `
 
 const ArticleItemContainer = styled.div`
@@ -124,4 +117,15 @@ const ListName = styled.div`
   margin: 4px 0 8px 8px;
   opacity: 0;
 `
-export { ArticleListContainer, LoadingIcon, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName };
+
+const LoadingIcon = styled.img`
+  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+`
+
+export { ArticleListContainer, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName, LoadingIcon };

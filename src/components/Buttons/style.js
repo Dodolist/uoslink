@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css } from "styled-components";
 
 const Button = styled.button`
   color: ${(props) => props.theme.titleText};
@@ -24,25 +24,33 @@ const Button = styled.button`
     filter: brightness(0.8);
   }
 
-  ${(props) => props.color === 'blue' && css`
-    color: #ffffff;
-    background-color: #408cff;
-  `}
-  ${(props) => props.color === 'red' && css`
-    color: #ffffff;
-    background-color: #ff5a5f;
-  `}
-  ${(props) => props.type === 'disabled' && css`
-    opacity: 0.5;
-    user-select: none;
-    pointer-events: none;
-  `}
-  ${(props) => props.size === 'small' && css`
-    width: fit-content;
-    font-size: 14px;
-    padding: 12px 16px;
-    min-width: 74px;
-  `}
-`
+  ${(props) =>
+    props.color === "blue" &&
+    css`
+      color: #ffffff;
+      background-color: ${(props) => props.theme.primary};
+    `}
+  ${(props) =>
+    props.color === "red" &&
+    css`
+      color: #ffffff;
+      background-color: #ff5a5f;
+    `}
+  ${(props) =>
+    props.type === "disabled" &&
+    css`
+      opacity: 0.5;
+      user-select: none;
+      pointer-events: none;
+    `}
+  ${(props) =>
+    props.size === "small" &&
+    css`
+      width: fit-content;
+      font-size: 14px;
+      padding: 12px 16px;
+      min-width: 74px;
+    `}
+`;
 
-export { Button }
+export { Button };

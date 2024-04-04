@@ -32,7 +32,7 @@ const LibraryCardHeader = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  background-color: #408cff;
+  background-color: ${(props) => props.theme.primary};
   border-radius: 0 0 16px 16px;
   gap: 16px;
 `;

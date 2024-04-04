@@ -1,24 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styled, { css, keyframes } from "styled-components";
-import attachedFileIcon from "../../images/attached-file-icon.svg";
+import styled, { css } from "styled-components";
+import { ReactComponent as AttachedFileIconSVG } from "../../images/attached-file-icon.svg";
+import LoadingIcon from '../../images/loading-icon';
 import closeIcon from "../../images/gray-close-icon.svg";
 import bookmarkIcon from "../../images/gray-bookmark24-icon.svg";
 import outlinkIcon from "../../images/outlink-icon.svg";
 import copyIcon from "../../images/copy-icon.svg";
-import loadingIcon from "../../images/loading-icon.svg";
 import checkIcon from "../../images/check-icon.svg";
 import BlackScreen from "../BlackScreen";
 import FloatButton from "./FloatButton";
 import Toast from "../Toast";
 
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
+const AttachedFileIcon = styled(AttachedFileIconSVG)`
+  rect, path {
+    fill: ${(props) => props.theme.primary};
+    stroke: ${(props) => props.theme.primary};
   }
-  to {
-    transform: rotate(1080deg);
-  } 
 `;
 
 const ViewerContainer = styled.div`
@@ -43,6 +41,8 @@ const ViewerContainer = styled.div`
 
   user-select: ${(props) => (props.isShow ? "auto" : "none")};
   pointer-events: ${(props) => (props.isShow ? "auto" : "none")};
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 
   transition: ${(props) => (props.dragging ? "none" : "all 0.3s ease")};
 `;
@@ -135,9 +135,10 @@ const NoticeAttachedFileItemNameWrapper = styled.a`
   text-decoration: none;
 
   &:hover {
-    filter: brightness(0.9);
     background-color: ${(props) =>
-      props.theme.mode === "light" ? "#98bffa80" : "#00000040"};
+      props.theme.mode === "light"
+        ? props.theme.secondary + "80"
+        : "#00000040"};
   }
 
   &:active {
@@ -220,17 +221,12 @@ const LoadingWrapper = styled.div`
   gap: 16px;
 `;
 
-const LoadingIcon = styled.img`
-  animation: ${rotateAnimation} 4s cubic-bezier(0.25, 0.51, 0.43, 0.7) infinite;
-  width: 48px;
-  height: 48px;
-`;
-
 const LoadingText = styled.div`
   color: ${(props) => props.theme.titleText};
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -2px;
+  transform: translateY(64px);
 `;
 
 const ToastContainer = styled.div`
@@ -483,7 +479,7 @@ const Viewer = ({
                 {NoticeItem.attachedFile.map((file, index) => (
                   <NoticeAttachedFileItem key={index}>
                     <NoticeAttachedFileItemNameWrapper href={file.downloadLink}>
-                      <img src={attachedFileIcon} />
+                      <AttachedFileIcon />
                       <NoticeAttachedFileItemName>
                         {file.name}
                       </NoticeAttachedFileItemName>
@@ -548,7 +544,7 @@ const Viewer = ({
       <BlackScreen isOpen={isViewerOpen} />
       <ViewerContainer isShow={isViewerOpen}>
         <LoadingWrapper>
-          <LoadingIcon src={loadingIcon} />
+          <LoadingIcon />
           <LoadingText>공지사항을 불러오고 있어요!</LoadingText>
         </LoadingWrapper>
         <FloatButtonWrapper>

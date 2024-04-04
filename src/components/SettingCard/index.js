@@ -15,10 +15,12 @@ import ConfirmModal from "../Modal/ConfirmModal";
 const SettingCard = ({
   openedCardName,
   theme,
+  custom,
   isSideBarOpen,
   handleClose,
   toggleTheme,
   toggleSideBar,
+  toggleCustom,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("");
@@ -80,6 +82,9 @@ const SettingCard = ({
           <img className="icon" src={closeIcon} onClick={handleClose} />
         </SettingCardTopBar>
         <SettingContainer>
+          <SettingItem title="벚꽃모드 변경">
+            <Toggle active={custom === "custom"} handleClick={toggleCustom} />
+          </SettingItem>
           <SettingItem title="다크모드 변경">
             <Toggle active={theme === "dark"} handleClick={toggleTheme} />
           </SettingItem>

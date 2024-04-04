@@ -32,6 +32,8 @@ const NoticeListContainer = styled.div`
 
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라 브라우저 */
   }
@@ -131,16 +133,6 @@ const NoItemText = styled.span`
   text-align: center;
 `;
 
-const LoadingIcon = styled.img`
-  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  width: 48px;
-  height: 48px;
-`
-
 const NoticeOptionButton = styled.img`
   position: absolute;
   top: 12px;
@@ -212,4 +204,14 @@ const NoticeOptionIcon = styled.img`
   height: 16px;
 `
 
-export { NoticeListContainer, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoItemContainer, NoItemText, LoadingIcon, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon };
+const LoadingIcon = styled.img`
+  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+`
+
+export { NoticeListContainer, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoItemContainer, NoItemText, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon, LoadingIcon };

@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { ReactComponent as LogoSVG } from "../../images/logo.svg";
 
 // 글자 배경색 바뀌는 애니메이션 제작
 const blink = keyframes`
@@ -25,6 +26,10 @@ const TopBarContainer = styled("div")`
   margin: 0 auto;
   border-radius: 0 0 8px 8px;
   background-color: ${(props) => props.theme.foreground}f4;
+  background-color: ${(props) =>
+    props.theme.custom === "default"
+      ? props.theme.foreground + "f4"
+      : props.theme.foreground};
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.05);
 `;
 
@@ -41,6 +46,8 @@ const TopBarLeft = styled("div")`
 const ImgWrap = styled("div")`
   position: relative;
   display: flex;
+  width: 32px;
+  height: 32px;
 `;
 
 const ServiceName = styled("span")`
@@ -68,5 +75,13 @@ const ServiceName = styled("span")`
   `}
 `;
 
+const Logo = styled(LogoSVG)`
+  path:first-child {
+    fill: ${(props) => props.theme.secondary};
+  }
+  path:last-child {
+    fill: ${(props) => props.theme.primary};
+  }
+`;
 
-export { TopBarContainer, TopBarLeft, ImgWrap, ServiceName };
+export { TopBarContainer, TopBarLeft, ImgWrap, ServiceName, Logo };

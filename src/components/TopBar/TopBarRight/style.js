@@ -14,4 +14,15 @@ const CardWrapper = styled.div`
   display: flex;
 `;
 
-export { TopBarRightContainer, CardWrapper };
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: ${(props) => props.theme.primary};
+`;
+
+export { TopBarRightContainer, CardWrapper, IconWrapper };

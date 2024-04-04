@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const ToggleSwitch = styled.label`
   transition: all 0.3s;
@@ -9,8 +9,19 @@ const ToggleSwitch = styled.label`
   height: 16px;
   border-radius: 12px;
   cursor: pointer;
-  background-color: ${props => props.active ? '#408cff' : props.theme.mode === 'light' ? '#e5e6ec' : '#5d616f' };
-`
+  background-color: ${(props) =>
+    props.active
+      ? "#408cff"
+      : props.theme.mode === "light"
+      ? "#e5e6ec"
+      : "#5d616f"};
+  background-color: ${(props) =>
+    props.active
+      ? props.theme.primary
+      : props.theme.mode === "light"
+      ? "#e5e6ec"
+      : "#5d616f"};
+`;
 
 const ToggleSwtichButton = styled.div`
   transition: all 0.3s;
@@ -18,7 +29,8 @@ const ToggleSwtichButton = styled.div`
   height: 12px;
   border-radius: 50%;
   background-color: #ffffff;
-  transform: ${props => props.active ? 'translateX(18px)' : 'translateX(2px)'};
-`
+  transform: ${(props) =>
+    props.active ? "translateX(18px)" : "translateX(2px)"};
+`;
 
 export { ToggleSwitch, ToggleSwtichButton };

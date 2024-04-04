@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
-import { NoticeListContainer, LoadingIcon, NoItemContainer, NoItemText, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon } from './style';
+import { NoticeListContainer, NoItemContainer, NoItemText, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon, LoadingIcon } from './style';
 import loadingIcon from '../../images/loading-icon.svg';
+import loadingIconCherry from '../../images/cherry-loading-icon.svg';
 import kebabIcon from '../../images/kebab-icon.svg';
 // import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
 import readCheckIcon from '../../images/read-check-icon.svg';
@@ -162,8 +163,12 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
     <>
       <NoticeListContainer ref={listRef}>
         {isLoading ? (
-          <LoadingIcon src={loadingIcon} />
-        ) : (items.length === 0 && selectedSection === 'BM') ? (
+          localStorage.getItem('custom') === 'custom' ? (
+            <LoadingIcon src={loadingIconCherry} alt="loading" />
+          ) : (
+            <LoadingIcon src={loadingIcon} alt="loading" />
+          )
+          ): (items.length === 0 && selectedSection === 'BM') ? (
           <NoItemContainer key={selectedSection}>
             <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
             </NoItemContainer>

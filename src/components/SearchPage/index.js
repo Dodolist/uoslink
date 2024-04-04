@@ -30,7 +30,7 @@ const SearchPage = ({ isSearchPageOpen, closeSearchPage, searchNotice }) => {
     <>
       <BlackScreen isOpen={isSearchPageOpen} method={closeSearchPage} />
       <SearchPageContainer isSearchPageOpen={isSearchPageOpen}>
-        <Icon src={searchIcon} inputText={searchText} />
+        <SearchIcon inputText={searchText} />
         <SearchInput
           type="text"
           value={searchText}

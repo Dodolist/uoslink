@@ -1,29 +1,33 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import "./App.css";
+import React, { useState, useEffect, useCallback } from "react";
+import styled, { ThemeProvider } from "styled-components";
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
-import bookmarkIcon from './images/bookmark-icon.svg';
-import noticeFA1Icon from './images/notice-FA1-icon.svg';
-import noticeFA2Icon from './images/notice-FA2-icon.svg';
-import noticeFA35Icon from './images/notice-FA35-icon.svg';
-import noticeDA1Icon from './images/notice-DA1-icon.svg';
-import noticeSC1Icon from './images/notice-SC1-icon.svg';
-import noticeFA34Icon from './images/notice-FA34-icon.svg';
-import searchIcon from './images/search-icon.svg';
-import TopBar from './components/TopBar';
-import NavBar from './components/NavBar';
-import SideBar from './components/SideBar';
-import SelectedSection from './components/SelectedSection';
-import NoticeList from './components/NoticeList';
-import ArticleList from './components/ArticleList';
-import SearchPage from './components/SearchPage';
-import GroundBackground from './components/GroundBackground';
-import Slider from './components/Slider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import BookmarkIcon from "./images/bookmark-icon";
+import NoticeFA1Icon from "./images/notice-FA1-icon";
+import NoticeFA2Icon from "./images/notice-FA2-icon";
+import NoticeFA35Icon from "./images/notice-FA35-icon";
+import NoticeDA1Icon from "./images/notice-DA1-icon";
+import NoticeSC1Icon from "./images/notice-SC1-icon";
+import NoticeFA34Icon from "./images/notice-FA34-icon";
+import SearchIcon from "./images/search-icon";
+import TopBar from "./components/TopBar";
+import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
+import SelectedSection from "./components/SelectedSection";
+import NoticeList from "./components/NoticeList";
+import ArticleList from "./components/ArticleList";
+import SearchPage from "./components/SearchPage";
+import GroundBackground from "./components/GroundBackground";
+import Slider from "./components/Slider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLaptopMedical,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 
-import Viewer from './components/Viewer';
+import Viewer from "./components/Viewer";
+import CherryBlossomPage from "./components/CherryBlossomPage";
 
 const ContentContainer = styled.div`
   display: grid;
@@ -35,7 +39,7 @@ const ContentContainer = styled.div`
   max-width: 1280px;
   margin: 40px auto 0 auto;
   gap: 16px 24px;
-    
+
   scrollbar-width: none;
 `;
 
@@ -52,7 +56,7 @@ const Offline = styled.div`
   padding: 64px;
   border-radius: 16px;
   background-color: #ffdb7c;
-`
+`;
 
 const OfflineText = styled.span`
   color: #00000080;
@@ -63,40 +67,40 @@ const OfflineText = styled.span`
 
 const SectionList = [
   {
-    id: 'BM',
-    icon: bookmarkIcon,
-    name: '내 북마크'
+    id: "BM",
+    icon: <BookmarkIcon />,
+    name: "내 북마크",
   },
   {
-    id: 'FA1',
-    icon: noticeFA1Icon,
-    name: '일반공지',
-    link: 'https://www.uos.ac.kr/korNotice/list.do?list_id=FA1'
+    id: "FA1",
+    icon: <NoticeFA1Icon />,
+    name: "일반공지",
+    link: "https://www.uos.ac.kr/korNotice/list.do?list_id=FA1",
   },
   {
-    id: 'FA2',
-    icon: noticeFA2Icon,
-    name: '학사공지',
+    id: "FA2",
+    icon: <NoticeFA2Icon />,
+    name: "학사공지",
   },
   {
-    id: 'DA1',
-    icon: noticeDA1Icon,
-    name: '학과공지',
+    id: "DA1",
+    icon: <NoticeDA1Icon />,
+    name: "학과공지",
   },
   {
-    id: 'FA35',
-    icon: noticeFA35Icon,
-    name: '창업공지',
+    id: "FA35",
+    icon: <NoticeFA35Icon />,
+    name: "창업공지",
   },
   {
-    id: 'SC1',
-    icon: noticeSC1Icon,
-    name: '장학공지',
+    id: "SC1",
+    icon: <NoticeSC1Icon />,
+    name: "장학공지",
   },
   {
-    id: 'FA34',
-    icon: noticeFA34Icon,
-    name: '직원채용',
+    id: "FA34",
+    icon: <NoticeFA34Icon />,
+    name: "직원채용",
   },
 ];
 
@@ -105,53 +109,88 @@ const List = styled.div`
   height: calc(100% - 24px);
   flex-direction: column;
   gap: 24px;
-`
-
+`;
 
 const App = () => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [selectedSection, setSelectedSection] = useState('FA1');
-  const [selectedNoticeId, setSelectedNoticeId] = useState('');
-  const [selectedNoticeSection, setSelectedNoticeSection] = useState('');
-  const [selectedNoticeLink, setSelectedNoticeLink] = useState('');
-  const [selectedSectionIcon, setSelectedSectionIcon] = useState(noticeFA1Icon);
-  const [selectedSectionName, setSelectedSectionName] = useState('일반공지');
-  const [isSideBarOpen, setIsSideBarOpen] = useState(localStorage.getItem('isSideBarOpen') === 'true' ? true : false);
+  const [selectedSection, setSelectedSection] = useState("FA1");
+  const [selectedNoticeId, setSelectedNoticeId] = useState("");
+  const [selectedNoticeSection, setSelectedNoticeSection] = useState("");
+  const [selectedNoticeLink, setSelectedNoticeLink] = useState("");
+  const [selectedSectionIcon, setSelectedSectionIcon] = useState(
+    <NoticeFA1Icon />
+  );
+  const [selectedSectionName, setSelectedSectionName] = useState("일반공지");
+  const [isSideBarOpen, setIsSideBarOpen] = useState(
+    localStorage.getItem("isSideBarOpen") === "true" ? true : false
+  );
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isSearchPageOpen, setIsSearchPageOpen] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  
+  const [searchText, setSearchText] = useState("");
+  const [custom, setCustom] = useState(
+    localStorage.getItem("custom") || "default"
+  );
+  const [isClickCustomBanner, setIsClickCustomBanner] = useState(false);
+
   const themeObject = {
     light: {
-      mode: 'light',
-      background: '#e5e6ec',
-      foreground: '#f0f1f5',
-      titleText: '#3c414c',
-      contentText: '#5c5e66',
-      subText: '#a9adb9',
-      primary: '#408cff',
-      secondary: '#98bffa',
-      boxShadow: '0 4px 24px 0 #cecece',
+      custom: "default",
+      mode: "light",
+      background: "#e5e6ec",
+      foreground: "#f0f1f5",
+      titleText: "#3c414c",
+      contentText: "#5c5e66",
+      subText: "#a9adb9",
+      primary: "#408cff",
+      secondary: "#98bffa",
+      boxShadow: "0 4px 24px 0 #cecece",
     },
     dark: {
-      mode: 'dark',
-      background: '#1d2128',
-      foreground: '#2c3038',
-      titleText: '#a0a4b3',
-      contentText: '#b4b7c4',
-      subText: '#5d616f',
-      primary: '#408cff',
-      secondary: '#98bffa',
-      boxShadow: '0 4px 24px 0 #3c414c',
-    }
+      custom: "default",
+      mode: "dark",
+      background: "#1d2128",
+      foreground: "#2c3038",
+      titleText: "#a0a4b3",
+      contentText: "#b4b7c4",
+      subText: "#5d616f",
+      primary: "#408cff",
+      secondary: "#98bffa",
+      boxShadow: "0 4px 24px 0 #3c414c",
+    },
   };
 
+  const cherryThemeObject = {
+    light: {
+      custom: "custom",
+      mode: "light",
+      background: "linear-gradient(to bottom, #FDF3FF 50%, #FFC5D3 100%)",
+      foreground: "#ffffffcc",
+      titleText: "#3c414c",
+      contentText: "#5c5e66",
+      subText: "#a9adb9",
+      primary: "#ff99be",
+      secondary: "#FFC8DC",
+      boxShadow: "0 4px 24px 0 #E0C9C9",
+    },
+    dark: {
+      custom: "custom",
+      mode: "dark",
+      background: "linear-gradient(to bottom, #091A37 50%, #CF8997 100%)",
+      foreground: "#2c3038cc",
+      titleText: "#a0a4b3",
+      contentText: "#b4b7c4",
+      subText: "#5d616f",
+      primary: "#ff99be",
+      secondary: "#FFC8DC",
+      boxShadow: "0 4px 24px 0 #4C3C40",
+    },
+  };
   const selectSection = (id) => {
     setSelectedSection(id);
-    
-    for(let i = 0; i < SectionList.length; i++) {
-      if(SectionList[i].id === id) {
+
+    for (let i = 0; i < SectionList.length; i++) {
+      if (SectionList[i].id === id) {
         setSelectedSectionIcon(SectionList[i].icon);
         setSelectedSectionName(SectionList[i].name);
       }
@@ -159,35 +198,40 @@ const App = () => {
   };
 
   useEffect(() => {
-    if(!localStorage.getItem('isSideBarOpen')) {
-      localStorage.setItem('isSideBarOpen', 'true');
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.style.backgroundColor = "#1d2128";
     } else {
-      setIsSideBarOpen(localStorage.getItem('isSideBarOpen') === 'true');
+      document.body.style.backgroundColor = "#e5e6ec";
+    }
+    if (!localStorage.getItem("isSideBarOpen")) {
+      localStorage.setItem("isSideBarOpen", "true");
+    } else {
+      setIsSideBarOpen(localStorage.getItem("isSideBarOpen") === "true");
     }
   }, []);
 
   useEffect(() => {
-    if(localStorage.getItem('activeSnow')) {
-      localStorage.removeItem('activeSnow');
+    if (!localStorage.getItem("custom")) {
+      localStorage.setItem("custom", "default");
     }
   }, []);
 
   useEffect(() => {
     // 온라인 및 오프라인 상태 변경 이벤트 핸들러 등록
-    window.addEventListener('online', handleOnlineStatusChange);
-    window.addEventListener('offline', handleOnlineStatusChange);
+    window.addEventListener("online", handleOnlineStatusChange);
+    window.addEventListener("offline", handleOnlineStatusChange);
 
     return () => {
       // 컴포넌트 언마운트 시 이벤트 핸들러 제거
-      window.removeEventListener('online', handleOnlineStatusChange);
-      window.removeEventListener('offline', handleOnlineStatusChange);
+      window.removeEventListener("online", handleOnlineStatusChange);
+      window.removeEventListener("offline", handleOnlineStatusChange);
     };
   }, []);
 
   const handleOnlineStatusChange = () => {
     setIsOnline(navigator.onLine);
   };
-  
+
   const toggleTheme = () => {
     /*
     chrome.history.search({text: '', maxResults: 20}, function(data) {
@@ -196,22 +240,33 @@ const App = () => {
       }
     });
     */
-    if (theme === 'light') {
-      setTheme('dark');
-      localStorage.setItem('theme', 'dark');
+    if (theme === "light") {
+      setTheme("dark");
+      localStorage.setItem("theme", "dark");
+      document.body.style.backgroundColor = "#1d2128";
     } else {
-      setTheme('light');
-      localStorage.setItem('theme', 'light');
+      setTheme("light");
+      localStorage.setItem("theme", "light");
+      document.body.style.backgroundColor = "#e5e6ec";
     }
   };
-
+  const toggleCustom = () => {
+    //themeObject와 cherryThemeObject 변경
+    if (custom === "default") {
+      setCustom("custom");
+      localStorage.setItem("custom", "custom");
+    } else {
+      setCustom("default");
+      localStorage.setItem("custom", "default");
+    }
+  };
   const toggleSideBar = () => {
     if (isSideBarOpen) {
       setIsSideBarOpen(false);
-      localStorage.setItem('isSideBarOpen', false);
+      localStorage.setItem("isSideBarOpen", false);
     } else {
       setIsSideBarOpen(true);
-      localStorage.setItem('isSideBarOpen', true);
+      localStorage.setItem("isSideBarOpen", true);
     }
   };
 
@@ -224,9 +279,9 @@ const App = () => {
 
   const closeViewer = () => {
     setTimeout(() => {
-      setSelectedNoticeId('');
-      setSelectedNoticeSection('');
-      setSelectedNoticeLink('');
+      setSelectedNoticeId("");
+      setSelectedNoticeSection("");
+      setSelectedNoticeLink("");
     }, 200);
     setIsViewerOpen(false);
   };
@@ -240,25 +295,39 @@ const App = () => {
   };
 
   const searchNotice = (searchText) => {
-    setSelectedSection('SEARCH');
-    setSelectedSectionIcon(searchIcon);
+    setSelectedSection("SEARCH");
+    setSelectedSectionIcon(<SearchIcon />);
     setSelectedSectionName(searchText);
     setSearchText(searchText);
   };
 
+  const clickCustomBanner = () => {
+    if (!isClickCustomBanner) {
+      setIsClickCustomBanner(true);
+      setTimeout(() => {
+        setIsClickCustomBanner(false);
+      }, 100);
+    }
+  };
 
   return (
-    <ThemeProvider theme={themeObject[theme]}>
+    <ThemeProvider
+      theme={
+        custom === "default" ? themeObject[theme] : cherryThemeObject[theme]
+      }
+    >
       <div className="App">
         <GroundBackground />
         <TopBar
           theme={theme}
+          custom={custom}
           isSideBarOpen={isSideBarOpen}
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
+          toggleCustom={toggleCustom}
+          isClickCustomBanner={isClickCustomBanner}
         />
-        {
-        isOnline ? (
+        {isOnline ? (
           <ContentContainer>
             <div className="dummy" />
             <SelectedSection
@@ -279,21 +348,22 @@ const App = () => {
               searchText={searchText}
             />
             <List>
-              <ArticleList
-                openViewer={openViewer}
-              />
-              <Slider />
+              <ArticleList openViewer={openViewer} />
+              <Slider clickCustomBanner={clickCustomBanner} />
             </List>
           </ContentContainer>
         ) : (
           <Offline>
-            <FontAwesomeIcon icon={faTriangleExclamation} size="4x" bounce style={{color: "#ffb800",}} />
+            <FontAwesomeIcon
+              icon={faTriangleExclamation}
+              size="4x"
+              bounce
+              style={{ color: "#ffb800" }}
+            />
             <OfflineText>인터넷이 연결되어 있지 않아요.</OfflineText>
           </Offline>
         )}
-        <SideBar
-          isSideBarOpen={isSideBarOpen}
-        />
+        <SideBar isSideBarOpen={isSideBarOpen} />
       </div>
       <Viewer
         isViewerOpen={isViewerOpen}
@@ -307,6 +377,7 @@ const App = () => {
         closeSearchPage={closeSearchPage}
         searchNotice={searchNotice}
       />
+      <CherryBlossomPage theme={theme} custom={custom} />
     </ThemeProvider>
   );
 };
