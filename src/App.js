@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, lazy } from "react";
 import styled, { ThemeProvider } from "styled-components";
 //import libraryIcon from './images/library-icon.svg';
 //import mapIcon from './images/map-icon.svg';
@@ -17,17 +17,17 @@ import SideBar from "./components/SideBar";
 import SelectedSection from "./components/SelectedSection";
 import NoticeList from "./components/NoticeList";
 import ArticleList from "./components/ArticleList";
-import SearchPage from "./components/SearchPage";
 import GroundBackground from "./components/GroundBackground";
 import Slider from "./components/Slider";
+import SearchPage from "./components/SearchPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLaptopMedical,
   faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Viewer from "./components/Viewer";
 import CherryBlossomPage from "./components/CherryBlossomPage";
+const Viewer = lazy(() => import("./components/Viewer"));
 
 const ContentContainer = styled.div`
   display: grid;
