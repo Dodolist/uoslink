@@ -93,19 +93,21 @@ const FoodCard = ({ openedCardName, handleClose }) => {
       changeRenderComponent();
       return;
     }
-    axios
-      .get(
-        "https://www.iflab.run/api/food/" +
-          selectedFoodPlace +
-          "/" +
-          selectedFoodDate
-      )
-      .then((response) => {
-        setFoodInfo(response.data);
-      })
-      .catch((error) => {
-        console.error("API 요청 중 오류 발생:");
-      });
+    if (openedCardName === "food") {
+      axios
+        .get(
+          "https://www.iflab.run/api/food/" +
+            selectedFoodPlace +
+            "/" +
+            selectedFoodDate
+        )
+        .then((response) => {
+          setFoodInfo(response.data);
+        })
+        .catch((error) => {
+          console.error("API 요청 중 오류 발생:");
+        });
+    }
   }, [openedCardName, selectedFoodTime, selectedFoodPlace, selectedFoodDate]);
 
   useEffect(() => {

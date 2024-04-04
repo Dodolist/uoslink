@@ -17,14 +17,16 @@ const LibaryCard = ({ openedCardName, handleClose }) => {
   );
 
   useEffect(() => {
-    axios
-      .get("https://www.iflab.run/api/scraping/library/" + selectedLibraryPlace)
-      .then((response) => {
-        setLibraryInfo(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(openedCardName === "library") {
+      axios
+        .get("https://www.iflab.run/api/scraping/library/" + selectedLibraryPlace)
+        .then((response) => {
+          setLibraryInfo(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [openedCardName, selectedLibraryPlace]);
 
   useEffect(() => {
