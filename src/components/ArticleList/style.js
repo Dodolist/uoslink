@@ -1,5 +1,14 @@
 import styled, { css, keyframes } from 'styled-components';
 
+const rotateAnimation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1080deg);
+  } 
+`;
+
 const showListAnimation = keyframes`
   from {
     opacity: 0;
@@ -108,4 +117,15 @@ const ListName = styled.div`
   margin: 4px 0 8px 8px;
   opacity: 0;
 `
-export { ArticleListContainer, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName };
+
+const LoadingIcon = styled.img`
+  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+`
+
+export { ArticleListContainer, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName, LoadingIcon };

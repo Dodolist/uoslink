@@ -1,5 +1,14 @@
 import styled, { css, keyframes } from 'styled-components';
 
+const rotateAnimation = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(1080deg);
+  } 
+`;
+
 const showListAnimation = keyframes`
   from {
     opacity: 0;
@@ -195,4 +204,14 @@ const NoticeOptionIcon = styled.img`
   height: 16px;
 `
 
-export { NoticeListContainer, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoItemContainer, NoItemText, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon };
+const LoadingIcon = styled.img`
+  animation: ${rotateAnimation} 4s cubic-bezier(.25,.51,.43,.7) infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 48px;
+  height: 48px;
+`
+
+export { NoticeListContainer, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoItemContainer, NoItemText, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon, LoadingIcon };
