@@ -22,8 +22,7 @@ import Slider from "./components/Slider";
 import SearchPage from "./components/SearchPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faLaptopMedical,
-  faTriangleExclamation,
+  faTriangleExclamation
 } from "@fortawesome/free-solid-svg-icons";
 
 import CherryBlossomPage from "./components/CherryBlossomPage";
