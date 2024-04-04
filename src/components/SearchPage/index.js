@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css, keyframes } from "styled-components";
 import BlackScreen from "../BlackScreen";
-
-import searchIcon from "../../images/32-search-icon.svg";
+import { ReactComponent as SearchIconSVG } from "../../images/32-search-icon.svg";
 
 const SearchPage = ({ isSearchPageOpen, closeSearchPage, searchNotice }) => {
   const [searchText, setSearchText] = useState("");
@@ -70,7 +69,7 @@ const SearchPageContainer = styled.div`
     `}
 `;
 
-const Icon = styled.img`
+const SearchIcon = styled(SearchIconSVG)`
   width: 32px;
   height: 32px;
   filter: grayscale(1);
@@ -80,6 +79,9 @@ const Icon = styled.img`
       animation: ${animation} 0.3s;
       filter: grayscale(0);
     `}
+  path {
+    fill: ${(props) => props.theme.primary};
+  }
 `;
 
 const SearchInput = styled.input`
