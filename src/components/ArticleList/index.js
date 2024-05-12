@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { ArticleListContainer, ArticleItemContainer, ArticleWrapper, ArticleInfoWrapper, ArticleRank, ArticleInfo, ArticleTitle, ListName, LoadingIcon } from './style';
+import {
+  ArticleListContainer,
+  ArticleItemContainer,
+  ArticleWrapper,
+  ArticleInfoWrapper,
+  ArticleRank,
+  ArticleInfo,
+  ArticleTitle,
+  ListName,
+  LoadingIcon,
+} from './style';
 import loadingIcon from '../../images/loading-icon.svg';
-import loadingIconCherry from '../../images/cherry-loading-icon.svg';
+//import loadingIconCherry from '../../images/cherry-loading-icon.svg';
 
 const SectionList = [
   {
@@ -32,13 +42,13 @@ const ArticleList = ({openViewer}) => {
   const [isLoading, setIsLoading] = useState(true);
   var alreadyReadList;
 
-  if(localStorage.getItem('noticeId') == null) {
-     alreadyReadList = {
-      'FA1': [],
-      'FA2': [],
-      'FA34': [],
-      'FA35': [],
-      'SC1': []
+  if (localStorage.getItem('noticeId') == null) {
+    alreadyReadList = {
+      FA1: [],
+      FA2: [],
+      FA34: [],
+      FA35: [],
+      SC1: [],
     };
     localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
   } else {
@@ -48,29 +58,31 @@ const ArticleList = ({openViewer}) => {
   useEffect(() => {
     let url = 'https://www.iflab.run/api/notice/ranking';
     setIsLoading(true);
-    axios.get(url)
-      .then((response) => {
+    axios
+      .get(url)
+      .then(response => {
         setItems(response.data);
         setIsLoading(false);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('API 요청 중 오류 발생:');
       });
   }, []);
-
   return (
     <ArticleListContainer>
       {isLoading ? (
-        localStorage.getItem('custom') === 'custom' ? (
-          <LoadingIcon src={loadingIconCherry} alt="loading" />
-        ) : (
-          <LoadingIcon src={loadingIcon} alt="loading" />
-        )
-        ): (
+        // custom theme
+        // localStorage.getItem('custom') === 'custom' ? (
+        //   <LoadingIcon src={loadingIconCherry} alt="loading" />
+        // ) : (
+        //   <LoadingIcon src={loadingIcon} alt="loading" />
+        // )
+        <LoadingIcon src={loadingIcon} alt="loading" />
+      ) : (
         <>
           <ListName>Top 5 공지사항</ListName>
           {items.map((item, index) => (
-            <ArticleItem key={index} data={item} rank={index+1} />
+            <ArticleItem key={index} data={item} rank={index + 1} />
           ))}
         </>
       )}
@@ -81,14 +93,14 @@ const ArticleList = ({openViewer}) => {
     openViewer(id, section, link);
     // 이미 읽은 공지면 return
     // 그렇지 않으면 localStorage에 저장
-    if(alreadyReadList[section].includes(id)) {
+    if (alreadyReadList[section].includes(id)) {
       return;
     }
     alreadyReadList[section].push(id);
     localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
-  };
+  }
 
-  function ArticleItem({ data, rank }) {
+  function ArticleItem({data, rank}) {
     const [alreadyRead, setAlreadyRead] = useState(false);
     const [sectionName, setSectionName] = useState('');
 
@@ -97,8 +109,8 @@ const ArticleList = ({openViewer}) => {
     }, [data.id]);
 
     useEffect(() => {
-      for(let i = 0; i < SectionList.length; i++) {
-        if(SectionList[i].id === data.section) {
+      for (let i = 0; i < SectionList.length; i++) {
+        if (SectionList[i].id === data.section) {
           setSectionName(SectionList[i].name);
         }
       }
@@ -111,10 +123,11 @@ const ArticleList = ({openViewer}) => {
     function clickArticleItem(id, section, link) {
       sendArticleInfo(id, section, link);
       setAlreadyRead(true);
-    };
+    }
 
     return (
-      <ArticleItemContainer onClick={() => clickArticleItem(data.id, data.section, data.link)}>
+      <ArticleItemContainer
+        onClick={() => clickArticleItem(data.id, data.section, data.link)}>
         <ArticleWrapper alreadyRead={alreadyRead}>
           <ArticleRank>{rank}</ArticleRank>
           <ArticleInfoWrapper>
@@ -128,5 +141,5 @@ const ArticleList = ({openViewer}) => {
 };
 
 export default React.memo(ArticleList, (prevProps, nextProps) => {
-    return prevProps.selectedSection === nextProps.selectedSection;
+  return prevProps.selectedSection === nextProps.selectedSection;
 });
