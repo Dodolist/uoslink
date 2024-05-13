@@ -214,6 +214,10 @@ const App = () => {
   // }, []);
 
   useEffect(() => {
+    if (localStorage.getItem('custom')) localStorage.removeItem('custom');
+  }, []);
+
+  useEffect(() => {
     // 온라인 및 오프라인 상태 변경 이벤트 핸들러 등록
     window.addEventListener('online', handleOnlineStatusChange);
     window.addEventListener('offline', handleOnlineStatusChange);
