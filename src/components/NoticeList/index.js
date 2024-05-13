@@ -1,8 +1,23 @@
 import axios from 'axios';
-import React, { useEffect, useState, useRef } from 'react';
-import { NoticeListContainer, NoItemContainer, NoItemText, NoticeItemContainer, NoticeWrapper, NoticeTitle, NoticeInfoWrapper, NoticeInfo, NoticeOptionButton, NoticeOptionWrapper, NoticeOptionItem, NoticeOptionText, NoticeOptionIcon, LoadingIcon } from './style';
+import React, {useEffect, useState, useRef} from 'react';
+import {
+  NoticeListContainer,
+  NoItemContainer,
+  NoItemText,
+  NoticeItemContainer,
+  NoticeWrapper,
+  NoticeTitle,
+  NoticeInfoWrapper,
+  NoticeInfo,
+  NoticeOptionButton,
+  NoticeOptionWrapper,
+  NoticeOptionItem,
+  NoticeOptionText,
+  NoticeOptionIcon,
+  LoadingIcon,
+} from './style';
 import loadingIcon from '../../images/loading-icon.svg';
-import loadingIconCherry from '../../images/cherry-loading-icon.svg';
+//import loadingIconCherry from '../../images/cherry-loading-icon.svg';
 import kebabIcon from '../../images/kebab-icon.svg';
 // import bookmarkIcon from '../../images/gray-bookmark24-icon.svg';
 import readCheckIcon from '../../images/read-check-icon.svg';
@@ -19,11 +34,11 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
 
   const openModal = () => {
     setIsModalOpen(true);
-  }
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
 
   const loadMajorNoticeList = () => {
     // 학과공지 불러오기
@@ -33,7 +48,8 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
     // 학과 공지사항 불러오는 API
     let academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
     let url = 'https://www.iflab.run/api/notice/major/' + academicInfo.major_id;
-    axios.get(url)
+    axios
+      .get(url)
       .then(response => {
         setItems(response.data);
         sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
@@ -44,14 +60,14 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
       });
   };
 
-  if(localStorage.getItem('noticeId') == null) {
-     alreadyReadList = {
-      'FA1': [],
-      'FA2': [],
-      'FA34': [],
-      'DA1': [],
-      'FA35': [],
-      'SC1': []
+  if (localStorage.getItem('noticeId') == null) {
+    alreadyReadList = {
+      FA1: [],
+      FA2: [],
+      FA34: [],
+      DA1: [],
+      FA35: [],
+      SC1: [],
     };
     localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
   } else {
@@ -62,21 +78,21 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
     if (listRef.current) {
       listRef.current.scrollTop = 0;
     }
-    if(selectedSection === 'SEARCH') {
+    if (selectedSection === 'SEARCH') {
       setIsLoading(true);
       let url = 'https://www.iflab.run/api/search/notice/' + searchText;
-      axios.get(url)
-        .then((response) => {
+      axios
+        .get(url)
+        .then(response => {
           setItems(response.data);
           setIsLoading(false);
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('API 요청 중 오류 발생:');
         });
-    }
-    else if(selectedSection === 'DA1') {
+    } else if (selectedSection === 'DA1') {
       const noticeId = JSON.parse(localStorage.getItem('noticeId'));
-      if(noticeId['DA1'] === undefined) {
+      if (noticeId['DA1'] === undefined) {
         noticeId['DA1'] = [];
         localStorage.setItem('noticeId', JSON.stringify(noticeId));
       }
@@ -85,7 +101,7 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
       // localStorage에 유저의 학과 정보가 있는지 확인 후
       // 학과 정보가 있으면 api실행하여 공지를 불러옴
       setIsLoading(true);
-      if(localStorage.getItem('academicInfo') !== null) {
+      if (localStorage.getItem('academicInfo') !== null) {
         let academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
         if (sessionStorage.getItem(selectedSection) != null) {
           // sessionStorage에 선택된 섹션의 공지가 있는 경우
@@ -97,30 +113,32 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
           setItems([]);
 
           // 학과 공지사항 불러오는 API
-          let url = 'https://www.iflab.run/api/notice/major/' + academicInfo.major_id;
-          axios.get(url)
+          let url =
+            'https://www.iflab.run/api/notice/major/' + academicInfo.major_id;
+          axios
+            .get(url)
             .then(response => {
               setItems(response.data);
-              sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
+              sessionStorage.setItem(
+                selectedSection,
+                JSON.stringify(response.data),
+              );
             })
             .catch(error => {
               console.error('API 요청 중 오류 발생:');
             });
-          
         }
       } else {
         setItems([]);
       }
       setIsLoading(false);
-    }
-
-    else if(selectedSection === 'BM') {
+    } else if (selectedSection === 'BM') {
       // 북마크가 선택된 경우
       // localStorage에 북마크가 있는지 확인 후
       // 북마크가 있으면 불러옴
       // 없으면 빈 배열을 불러오고 localStorage에 빈 배열을 저장
       setIsLoading(true);
-      if(localStorage.getItem('bookmark') !== null) {
+      if (localStorage.getItem('bookmark') !== null) {
         let bookmark = JSON.parse(localStorage.getItem('bookmark'));
         bookmark = bookmark.sort((a, b) => {
           const aDate = new Date(a.writtenAt);
@@ -133,9 +151,7 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
         setItems([]);
       }
       setIsLoading(false);
-    }
-
-    else if(sessionStorage.getItem(selectedSection) != null) {
+    } else if (sessionStorage.getItem(selectedSection) != null) {
       // sessionStorage에 선택된 섹션의 공지가 있는 경우
       setItems(JSON.parse(sessionStorage.getItem(selectedSection)));
       setIsLoading(false);
@@ -147,10 +163,14 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
       // 공지사항 불러오는 API
       let url = 'https://www.iflab.run/api/notices/' + selectedSection;
 
-      axios.get(url)
+      axios
+        .get(url)
         .then(response => {
           setItems(response.data);
-          sessionStorage.setItem(selectedSection, JSON.stringify(response.data));
+          sessionStorage.setItem(
+            selectedSection,
+            JSON.stringify(response.data),
+          );
           setIsLoading(false);
         })
         .catch(error => {
@@ -163,33 +183,37 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
     <>
       <NoticeListContainer ref={listRef}>
         {isLoading ? (
-          localStorage.getItem('custom') === 'custom' ? (
-            <LoadingIcon src={loadingIconCherry} alt="loading" />
-          ) : (
-            <LoadingIcon src={loadingIcon} alt="loading" />
-          )
-          ): (items.length === 0 && selectedSection === 'BM') ? (
+          // localStorage.getItem('custom') === 'custom' ? (
+          //   <LoadingIcon src={loadingIconCherry} alt="loading" />
+          // ) : (
+          //   <LoadingIcon src={loadingIcon} alt="loading" />
+          // )
+          <LoadingIcon src={loadingIcon} alt="loading" />
+        ) : items.length === 0 && selectedSection === 'BM' ? (
           <NoItemContainer key={selectedSection}>
             <NoItemText>북마크 된 공지사항이 없어요.</NoItemText>
-            </NoItemContainer>
-        ) : (items.length === 0 && selectedSection === 'DA1') ? (
+          </NoItemContainer>
+        ) : items.length === 0 && selectedSection === 'DA1' ? (
           <NoItemContainer key={selectedSection}>
             <NoItemText>학과를 선택하고 공지사항을 받아보세요!</NoItemText>
-            <Button color={"blue"} size={"small"} onClick={openModal}>
+            <Button color={'blue'} size={'small'} onClick={openModal}>
               학과 선택하기
             </Button>
           </NoItemContainer>
-        ) : (items.map((item, index) => (
-            <NoticeItem key={index} data={item} />
-          ))
+        ) : (
+          items.map((item, index) => <NoticeItem key={index} data={item} />)
         )}
       </NoticeListContainer>
-      <MajorInputModal isModalOpen={isModalOpen} closeModal={closeModal} handleConfirm={loadMajorNoticeList}/>
+      <MajorInputModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        handleConfirm={loadMajorNoticeList}
+      />
     </>
   );
 
   function sendNoticeInfo(id, section, link) {
-    if(selectedSection === 'DA1') {
+    if (selectedSection === 'DA1') {
       const academicInfo = JSON.parse(localStorage.getItem('academicInfo'));
       openViewer(id, academicInfo.college_id, link);
     } else {
@@ -201,14 +225,14 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
     }
     // 이미 읽은 공지면 return
     // 그렇지 않으면 localStorage에 저장
-    if(alreadyReadList[selectedSection].includes(id)) {
+    if (alreadyReadList[selectedSection].includes(id)) {
       return;
     }
     alreadyReadList[selectedSection].push(id);
     localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
-  };
+  }
 
-  function NoticeItem({ data }) {
+  function NoticeItem({data}) {
     const [alreadyRead, setAlreadyRead] = useState(false);
     const [isClickedOption, setIsClickedOption] = useState(false);
     useEffect(() => {
@@ -224,12 +248,12 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
     function clickNoticeItem(id, section, link) {
       sendNoticeInfo(id, section, link);
       setAlreadyRead(true);
-    };
+    }
 
     function clickOptionButton(e) {
       setIsClickedOption(!isClickedOption);
       e.stopPropagation();
-    };
+    }
 
     // option Item 눌렀을 때
     function clickOptionItem(e, option, id) {
@@ -239,15 +263,16 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
       setTimeout(() => {
         if (option === 'read') {
           setAlreadyRead(true);
-          if(alreadyReadList[selectedSection].includes(id)) {
+          if (alreadyReadList[selectedSection].includes(id)) {
             return;
           }
           alreadyReadList[selectedSection].push(id);
           localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
-        }
-        else if (option === 'unread') {
+        } else if (option === 'unread') {
           setAlreadyRead(false);
-          alreadyReadList[selectedSection] = alreadyReadList[selectedSection].filter((item) => item !== id);
+          alreadyReadList[selectedSection] = alreadyReadList[
+            selectedSection
+          ].filter(item => item !== id);
           localStorage.setItem('noticeId', JSON.stringify(alreadyReadList));
         }
       }, 100);
@@ -255,40 +280,53 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
 
     return (
       <NoticeItemContainer
-        onClick={() => selectedSection === 'BM' ? clickNoticeItem(data.id, data.section, data.link) : selectedSection === 'SEARCH' ? clickNoticeItem('SEARCH', data.section, data.link) : clickNoticeItem(data.id, selectedSection, data.link)}
+        onClick={() =>
+          selectedSection === 'BM'
+            ? clickNoticeItem(data.id, data.section, data.link)
+            : selectedSection === 'SEARCH'
+            ? clickNoticeItem('SEARCH', data.section, data.link)
+            : clickNoticeItem(data.id, selectedSection, data.link)
+        }
         showOption={isClickedOption}
-        onMouseLeave={() => setIsClickedOption(false)}
-      >
-        <NoticeWrapper
-          alreadyRead={alreadyRead}
-          showOption={isClickedOption}
-        >
+        onMouseLeave={() => setIsClickedOption(false)}>
+        <NoticeWrapper alreadyRead={alreadyRead} showOption={isClickedOption}>
           <NoticeTitle>{data.title}</NoticeTitle>
           <NoticeInfoWrapper>
             {selectedSection === 'BM' || selectedSection === 'SEARCH' ? (
               <NoticeInfo blue="true">
-                {data.section === 'FA1' ? '일반공지' :
-                data.section === 'FA2' ? '학사공지' :
-                data.section === 'FA35' ? '창업공지' :
-                data.section === 'SC1' ? '장학공지' :
-                data.section === 'FA34' ? '직원채용' :
-                '힉과공지'}
+                {data.section === 'FA1'
+                  ? '일반공지'
+                  : data.section === 'FA2'
+                  ? '학사공지'
+                  : data.section === 'FA35'
+                  ? '창업공지'
+                  : data.section === 'SC1'
+                  ? '장학공지'
+                  : data.section === 'FA34'
+                  ? '직원채용'
+                  : '힉과공지'}
               </NoticeInfo>
             ) : null}
             <NoticeInfo>{data.author}</NoticeInfo>
             <NoticeInfo>{data.writtenAt}</NoticeInfo>
-            <NoticeInfo>{(selectedSection !== 'BM' && selectedSection !== 'SEARCH') ? `${data.views}회` : null}</NoticeInfo>
+            <NoticeInfo>
+              {selectedSection !== 'BM' && selectedSection !== 'SEARCH'
+                ? `${data.views}회`
+                : null}
+            </NoticeInfo>
           </NoticeInfoWrapper>
         </NoticeWrapper>
         <NoticeOptionButton onClick={clickOptionButton} src={kebabIcon} />
         <NoticeOptionWrapper isClicked={isClickedOption}>
           {alreadyRead ? (
-            <NoticeOptionItem onClick={(event) => clickOptionItem(event, 'unread', data.id)}>
+            <NoticeOptionItem
+              onClick={event => clickOptionItem(event, 'unread', data.id)}>
               <NoticeOptionText>읽지 않음으로 표시</NoticeOptionText>
               <NoticeOptionIcon src={unreadCheckIcon} />
             </NoticeOptionItem>
           ) : (
-            <NoticeOptionItem onClick={(event) => clickOptionItem(event, 'read', data.id)}>
+            <NoticeOptionItem
+              onClick={event => clickOptionItem(event, 'read', data.id)}>
               <NoticeOptionText>읽음으로 표시</NoticeOptionText>
               <NoticeOptionIcon src={readCheckIcon} />
             </NoticeOptionItem>
@@ -300,6 +338,8 @@ const NoticeList = ({selectedSection, searchText, openViewer}) => {
 };
 
 export default React.memo(NoticeList, (prevProps, nextProps) => {
-    return prevProps.selectedSection === nextProps.selectedSection
-          && prevProps.searchText === nextProps.searchText;
+  return (
+    prevProps.selectedSection === nextProps.selectedSection &&
+    prevProps.searchText === nextProps.searchText
+  );
 });
