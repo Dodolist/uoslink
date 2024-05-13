@@ -125,9 +125,9 @@ const App = () => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isSearchPageOpen, setIsSearchPageOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [custom, setCustom] = useState(
-    localStorage.getItem('custom') || 'default',
-  );
+  // const [custom, setCustom] = useState(
+  //   localStorage.getItem('custom') || 'default',
+  // );
   const [isClickCustomBanner, setIsClickCustomBanner] = useState(false);
 
   const themeObject = {
@@ -207,11 +207,11 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!localStorage.getItem('custom')) {
-      localStorage.setItem('custom', 'default');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem('custom')) {
+  //     localStorage.setItem('custom', 'default');
+  //   }
+  // }, []);
 
   useEffect(() => {
     // 온라인 및 오프라인 상태 변경 이벤트 핸들러 등록
@@ -247,16 +247,16 @@ const App = () => {
       document.body.style.backgroundColor = '#e5e6ec';
     }
   };
-  const toggleCustom = () => {
-    //themeObject와 cherryThemeObject 변경
-    if (custom === 'default') {
-      setCustom('custom');
-      localStorage.setItem('custom', 'custom');
-    } else {
-      setCustom('default');
-      localStorage.setItem('custom', 'default');
-    }
-  };
+  // const toggleCustom = () => {
+  //   //themeObject와 cherryThemeObject 변경
+  //   if (custom === 'default') {
+  //     setCustom('custom');
+  //     localStorage.setItem('custom', 'custom');
+  //   } else {
+  //     setCustom('default');
+  //     localStorage.setItem('custom', 'default');
+  //   }
+  // };
   const toggleSideBar = () => {
     if (isSideBarOpen) {
       setIsSideBarOpen(false);
@@ -313,11 +313,11 @@ const App = () => {
         <GroundBackground />
         <TopBar
           theme={theme}
-          custom={custom}
+          // custom={custom}
           isSideBarOpen={isSideBarOpen}
           toggleTheme={toggleTheme}
           toggleSideBar={toggleSideBar}
-          toggleCustom={toggleCustom}
+          // toggleCustom={toggleCustom}
           isClickCustomBanner={isClickCustomBanner}
         />
         {isOnline ? (
