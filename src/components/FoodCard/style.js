@@ -48,6 +48,8 @@ const Wrapper = styled.div`
 
 const MenuContainer = styled.div`
   display: flex;
+  max-height: 400px;
+  overflow-y: scroll;
   flex-direction: column;
   padding: 12px;
   gap: 16px;
