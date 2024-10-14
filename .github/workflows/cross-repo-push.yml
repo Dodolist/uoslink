@@ -1,0 +1,32 @@
+name: Cross-Repo Push
+
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  push-to-other-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Push to target repo
+        env:
+          TARGET_REPO: git@github.com:baebae02/uoslink.git
+          GH_USERNAME: 'baebae02'
+          GH_EMAIL: 'bae4614@gmail.com'
+        run: |
+          git config --global user.name "$GH_USERNAME"
+          git config --global user.email "$GH_EMAIL"
+          git commit --amend --author="$GH_USERNAME <$GH_EMAIL>" --no-edit
+          git remote add target_repo $TARGET_REPO
+          GIT_COMMITTER_NAME="$GH_USERNAME" GIT_COMMITTER_EMAIL="$GH_EMAIL" git push target_repo deploy:main --force
